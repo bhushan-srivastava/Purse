@@ -1,0 +1,1 @@
+// TODO: export the const app = express() after all the config for the app is done like app.use, lodash, etc
