@@ -28,3 +28,4 @@ yarn-error.log*
 # remove this line later
 /user interface design
 */user_interface_design
+/mern-expense-tracker
