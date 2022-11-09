@@ -8,6 +8,24 @@ import Visualization from "./graphs/Visualization"
 import Logout from "./auth/authentication/Logout";
 
 const MainRouter = () => {
+    const privateRoutes = [
+        {
+            path: "/",
+            redirectTo: "/welcome",
+            privateComponent: () => { return <Home /> }
+        },
+        {
+            path: "/visualization",
+            redirectTo: "/login",
+            privateComponent: () => { return <Visualization /> }
+        },
+        {
+            path: "/logout",
+            redirectTo: "/welcome",
+            privateComponent: () => { return <Logout /> }
+        }
+    ]
+
     return (
         <BrowserRouter>
             <Routes>
@@ -15,10 +33,25 @@ const MainRouter = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 {/* <Route path="/" element={<Home />} /> */}
-                <Route
+                {
+                    privateRoutes.map((ele, index) => {
+                        return (
+                            <Route
+                                key={index}
+                                path={ele.path}
+                                element={
+                                    <PrivateRoute redirectTo={ele.redirectTo}>
+                                        {ele.privateComponent()}
+                                    </PrivateRoute>
+                                }
+                            />
+                        )
+                    })
+                }
+                {/* <Route
                     path="/"
                     element={
-                        <PrivateRoute redirectTo="/login">
+                        <PrivateRoute redirectTo="/welcome">
                             <Home />
                         </PrivateRoute>
                     }
@@ -38,7 +71,7 @@ const MainRouter = () => {
                             <Logout />
                         </PrivateRoute>
                     }
-                />
+                /> */}
             </Routes>
         </BrowserRouter>
     );
