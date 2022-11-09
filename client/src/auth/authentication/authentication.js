@@ -1,1 +1,1 @@
-// TODO: isAuthenticated()
+// TODO: getAuthentication()

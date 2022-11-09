@@ -1,1 +1,1 @@
-// TODO: isAuthorized()
+// TODO: getAuthorization()
