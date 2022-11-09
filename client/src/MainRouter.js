@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Welcome from "./static/Welcome"
 import Register from "./auth/authentication/Register"
 import Login from "./auth/authentication/Login"
+import ForgotPassword from "./auth/authentication/ForgotPassword"
 import PrivateRoute from "./auth/authorization/PrivateRoute";
 import Home from "./transactions/Home"
 import Visualization from "./graphs/Visualization"
@@ -32,6 +33,7 @@ const MainRouter = () => {
                 <Route path="/welcome" element={<Welcome />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/forgot" element={<ForgotPassword />} />
                 {/* <Route path="/" element={<Home />} /> */}
                 {
                     privateRoutes.map((ele, index) => {
