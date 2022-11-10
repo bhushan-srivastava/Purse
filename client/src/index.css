@@ -21,6 +21,33 @@ html {
   background-color: #1890ff;
 }
 
+.layout-header {
+  background-color: #1890ff;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-left: 20px;
+}
+
+.layout-header h1 {
+  color: white;
+}
+
+.layout-header .logo {
+  max-height: 25px;
+  max-width: 25px;
+}
+
+.layout-content {
+  background-color: white;
+}
+
+.layout-footer {
+  background-color: white;
+}
+
 .ant-form-item-control-input-content {
   display: flex;
   flex-direction: row;
