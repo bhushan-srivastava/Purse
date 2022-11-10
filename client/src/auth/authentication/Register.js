@@ -18,7 +18,6 @@ const Register = () => {
     return (
         <div className="register-page">
             <div className="register-box">
-                <img src="../../../public/favicon.png" alt="Purse-logo" />
                 <Form
                     name="register-form"
                     initialValues={{ remember: true }}

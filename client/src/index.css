@@ -18,7 +18,7 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #335ddc;
+  background-color: #1890ff;
 }
 
 .ant-form-item-control-input-content {
@@ -33,11 +33,6 @@ html {
   letter-spacing: 1px;
 }
 
-.ant-message {
-  top: auto;
-  bottom: 20px;
-}
-
 .login-page,
 .forgot-page,
 .register-page {
@@ -45,6 +40,10 @@ html {
   justify-content: center;
   align-items: center;
   min-height: 95vh;
+  background-image: url(static/images/logo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .login-box,
@@ -52,7 +51,7 @@ html {
 .register-box {
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.822);
   box-shadow: 0 0 40px rgb(0 0 0 / 16%);
   flex-wrap: wrap;
   align-content: stretch;
@@ -65,6 +64,10 @@ html {
 }
 
 @media screen and (max-width: 900px) {
+  .ant-message {
+    top: auto;
+    bottom: 20px;
+  }
 
   .login-box,
   .forgot-box,
@@ -77,5 +80,11 @@ html {
   #forgot-form,
   #register-form {
     max-width: 100vw;
+  }
+
+  .login-page,
+  .forgot-page,
+  .register-page {
+    background-size: cover;
   }
 }
