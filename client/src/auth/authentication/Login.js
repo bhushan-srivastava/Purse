@@ -1,18 +1,18 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
+import { useNavigate } from "react-router-dom"
 
 const Login = () => {
-    // <div>
-    //     Login
-    //     {/* constantly keep showing login (if not logged in)
-    //         and show "/" if logged in */}
-    // </div>
+    const navigate = useNavigate()
 
     const onFinish = values => {
         console.log('Success:', values);
+        message.success("Login successful")
+        navigate("/welcome") // make this "/"
     };
 
     const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
+        message.error("Login unsuccessful")
     };
 
     return (
@@ -30,6 +30,7 @@ const Login = () => {
                         rules={[{ required: true, message: 'Please enter your email!' }]}
                     >
                         <Input
+                            size='large'
                             type='email'
                             placeholder="Email"
                         />
@@ -39,8 +40,8 @@ const Login = () => {
                         name="password"
                         rules={[{ required: true, message: 'Please enter your password!' }]}
                     >
-                        <Input
-                            type='password'
+                        <Input.Password
+                            size='large'
                             placeholder="Password"
                         />
                     </Form.Item>
@@ -52,7 +53,7 @@ const Login = () => {
                     <Form.Item>
                         <a href="/register">Or register now!</a>
 
-                        <Button type="primary" htmlType="submit" className="login-form-button">
+                        <Button type="primary" htmlType="submit" size='large'>
                             Login
                         </Button>
                     </Form.Item>

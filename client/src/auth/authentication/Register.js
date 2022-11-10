@@ -1,18 +1,24 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
+import { useNavigate } from "react-router-dom"
 
 const Register = () => {
+    const navigate = useNavigate()
 
     const onFinish = values => {
         console.log('Success:', values);
+        message.success("Registration successful")
+        navigate("/welcome") // make this "/"
     };
 
     const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
+        message.error("Registration unsuccessful")
     };
 
     return (
         <div className="register-page">
             <div className="register-box">
+                <img src="../../../public/favicon.png" alt="Purse-logo" />
                 <Form
                     name="register-form"
                     initialValues={{ remember: true }}
@@ -25,6 +31,7 @@ const Register = () => {
                         rules={[{ required: true, message: 'Please enter your name!' }]}
                     >
                         <Input
+                            size='large'
                             placeholder="First name"
                         />
                     </Form.Item>
@@ -34,6 +41,7 @@ const Register = () => {
                         rules={[{ required: true, message: 'Please enter your email!' }]}
                     >
                         <Input
+                            size='large'
                             placeholder="Email"
                         />
                     </Form.Item>
@@ -42,8 +50,8 @@ const Register = () => {
                         name="password"
                         rules={[{ required: true, message: 'Please enter your password!' }]}
                     >
-                        <Input
-                            type='password'
+                        <Input.Password
+                            size='large'
                             placeholder="Password"
                         />
                     </Form.Item>
@@ -51,7 +59,7 @@ const Register = () => {
                     <Form.Item>
                         <a href="/login">Or login instead</a>
 
-                        <Button type="primary" htmlType="submit" className="register-form-button">
+                        <Button type="primary" htmlType="submit" size='large'>
                             Register
                         </Button>
                     </Form.Item>

@@ -1,12 +1,18 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, InputNumber, message } from 'antd';
+import { useNavigate } from "react-router-dom"
 
 const ForgotPassword = () => {
+    const navigate = useNavigate()
+
     const onFinish = values => {
         console.log('Success:', values);
+        message.success("Password reset successful")
+        navigate("/welcome") // make this "/"
     };
 
     const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
+        message.error("Password reset unsuccessful")
     };
 
     return (
@@ -19,19 +25,19 @@ const ForgotPassword = () => {
                     onFinishFailed={onFinishFailed}
                 >
                     <h1>Reset password</h1>
-                    <span>
+                    <p>
                         Please enter the verification code sent to your email.
                         <br />
-                        It may take some time for the mail to reach.
-                    </span>
+                        It may take some time for the email to reach.
+                    </p>
 
                     <Form.Item
                         name="verification-code"
                         rules={[{ required: true, message: 'Please enter the verification code' }]}
                     >
-                        <Input
-                            type='number'
-                            placeholder="Verification code"
+                        <InputNumber
+                            size='large'
+                            placeholder="Code"
                         />
                     </Form.Item>
 
@@ -39,8 +45,8 @@ const ForgotPassword = () => {
                         name="new-password"
                         rules={[{ required: true, message: 'Please enter your new password!' }]}
                     >
-                        <Input
-                            type='password'
+                        <Input.Password
+                            size='large'
                             placeholder="New password"
                         />
                     </Form.Item>
@@ -48,7 +54,7 @@ const ForgotPassword = () => {
                     <Form.Item>
                         <a href="/login">Back to login</a>
 
-                        <Button type="primary" htmlType="submit" className="forgot-form-button">
+                        <Button type="primary" htmlType="submit" size='large'>
                             Reset
                         </Button>
                     </Form.Item>
