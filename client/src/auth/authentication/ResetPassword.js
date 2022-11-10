@@ -1,7 +1,7 @@
 import { Button, Form, Input, InputNumber, message } from 'antd';
 import { useNavigate } from "react-router-dom"
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
     const navigate = useNavigate()
 
     const onFinish = values => {
@@ -16,10 +16,10 @@ const ForgotPassword = () => {
     };
 
     return (
-        <div className="forgot-page">
-            <div className="forgot-box">
+        <div className="reset-page">
+            <div className="reset-box">
                 <Form
-                    name="forgot-form"
+                    name="reset-form"
                     initialValues={{ remember: true }}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
@@ -64,4 +64,4 @@ const ForgotPassword = () => {
     );
 }
 
-export default ForgotPassword;
+export default ResetPassword;

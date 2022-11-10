@@ -34,7 +34,7 @@ html {
 }
 
 .login-page,
-.forgot-page,
+.reset-page,
 .register-page {
   display: flex;
   justify-content: center;
@@ -47,7 +47,7 @@ html {
 }
 
 .login-box,
-.forgot-box,
+.reset-box,
 .register-box {
   display: flex;
   flex-direction: column;
@@ -58,7 +58,7 @@ html {
 }
 
 #login-form,
-#forgot-form,
+#reset-form,
 #register-form {
   padding: 60px;
 }
@@ -70,20 +70,20 @@ html {
   }
 
   .login-box,
-  .forgot-box,
+  .reset-box,
   .register-box {
     flex-direction: column;
     box-shadow: none;
   }
 
   #login-form,
-  #forgot-form,
+  #reset-form,
   #register-form {
     max-width: 100vw;
   }
 
   .login-page,
-  .forgot-page,
+  .reset-page,
   .register-page {
     background-size: cover;
   }
