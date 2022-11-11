@@ -5,8 +5,9 @@ import Login from "./auth/authentication/Login"
 import ResetPassword from "./auth/authentication/ResetPassword"
 import PrivateRoute from "./auth/authorization/PrivateRoute";
 import Home from "./transactions/Home"
-import Visualization from "./graphs/Visualization"
+// import Visualization from "./graphs/Visualization"
 import Logout from "./auth/authentication/Logout";
+import ErrorPage from "./ErrorPage"
 // test
 import DefaultLayout from "./default_layout/DefaultLayout"
 
@@ -16,11 +17,6 @@ const MainRouter = () => {
             path: "/",
             redirectTo: "/welcome",
             privateComponent: () => { return <Home /> }
-        },
-        {
-            path: "/visualization",
-            redirectTo: "/login",
-            privateComponent: () => { return <Visualization /> }
         },
         {
             path: "/logout",
@@ -35,6 +31,7 @@ const MainRouter = () => {
                 {/* test route */}
                 <Route path="/test" element={
                     <DefaultLayout >
+                        t/v, o/v, s/v
                         <p>table</p>
                         <p>graph</p>
                     </DefaultLayout>} />
@@ -59,6 +56,14 @@ const MainRouter = () => {
                         )
                     })
                 }
+                <Route path="*" element={
+                    <ErrorPage
+                        statusCode="404"
+                        errorTitle="404"
+                        subTitle="Sorry, the page you visited does not exist."
+                    />
+                }
+                />
             </Routes>
         </BrowserRouter>
     );

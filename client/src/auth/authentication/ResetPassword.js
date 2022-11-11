@@ -1,4 +1,4 @@
-import { Button, Form, Input, InputNumber, message } from 'antd';
+import { Button, Form, Input, InputNumber, message, Typography } from 'antd';
 import { useNavigate } from "react-router-dom"
 
 const ResetPassword = () => {
@@ -24,7 +24,11 @@ const ResetPassword = () => {
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                 >
-                    <h1>Reset password</h1>
+
+                    <Typography.Title>
+                        Reset password
+                    </Typography.Title>
+
                     <p>
                         Please enter the verification code sent to your email.
                         <br />

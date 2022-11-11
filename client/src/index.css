@@ -21,97 +21,18 @@ html {
   background-color: #1890ff;
 }
 
-.layout-header {
-  background-color: #1890ff;
-  color: white;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: baseline;
-  padding-left: 20px;
-}
-
-.layout-header h1 {
-  color: white;
-}
-
-.layout-header .logo {
-  max-height: 25px;
-  max-width: 25px;
-}
-
-.layout-content {
-  background-color: white;
-}
-
-.layout-footer {
-  background-color: white;
-}
-
-.ant-form-item-control-input-content {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-content: center;
-  align-items: flex-end;
+.ant-typography h1,
+h1.ant-typography {
+  margin-bottom: 5px;
 }
 
 .ant-btn {
   letter-spacing: 1px;
 }
 
-.login-page,
-.reset-page,
-.register-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 95vh;
-  background-image: url(static/images/logo.png);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-.login-box,
-.reset-box,
-.register-box {
-  display: flex;
-  flex-direction: column;
-  background-color: rgba(255, 255, 255, 0.822);
-  box-shadow: 0 0 40px rgb(0 0 0 / 16%);
-  flex-wrap: wrap;
-  align-content: stretch;
-}
-
-#login-form,
-#reset-form,
-#register-form {
-  padding: 60px;
-}
-
 @media screen and (max-width: 900px) {
   .ant-message {
     top: auto;
     bottom: 20px;
-  }
-
-  .login-box,
-  .reset-box,
-  .register-box {
-    flex-direction: column;
-    box-shadow: none;
-  }
-
-  #login-form,
-  #reset-form,
-  #register-form {
-    max-width: 100vw;
-  }
-
-  .login-page,
-  .reset-page,
-  .register-page {
-    background-size: cover;
   }
 }

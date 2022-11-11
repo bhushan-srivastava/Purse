@@ -1,4 +1,4 @@
-import { Button, Form, Input, message } from 'antd';
+import { Button, Form, Input, message, Typography } from 'antd';
 import { useNavigate } from "react-router-dom"
 
 const Register = () => {
@@ -24,7 +24,11 @@ const Register = () => {
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                 >
-                    <h1>Register to Purse</h1>
+
+                    <Typography.Title>
+                        Register to Purse
+                    </Typography.Title>
+
                     <Form.Item
                         name="first-name"
                         rules={[{ required: true, message: 'Please enter your name!' }]}

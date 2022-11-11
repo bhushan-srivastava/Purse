@@ -1,0 +1,46 @@
+.layout-header {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-left: 20px;
+    padding-right: 22px;
+}
+
+.layout-header .title {
+    font-size: x-large;
+}
+
+.layout-header .logo {
+    max-height: 25px;
+    max-width: 25px;
+    margin-right: 5px;
+}
+
+.user-dropdown-list {
+    color: #1890ff;
+    cursor: pointer;
+}
+
+.layout-content {
+    background-color: white;
+}
+
+.main-content-layout .layout-header {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.main-content-layout {
+    background-color: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    margin: auto 20px;
+    padding: 20px;
+}
+
+@media screen and (max-width: 900px) {
+    .main-content-layout {
+        box-shadow: none;
+    }
+}

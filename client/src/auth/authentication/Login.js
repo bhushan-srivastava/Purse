@@ -1,4 +1,4 @@
-import { Button, Form, Input, message } from 'antd';
+import { Button, Form, Input, message, Typography } from 'antd';
 import { useNavigate } from "react-router-dom"
 
 const Login = () => {
@@ -24,7 +24,11 @@ const Login = () => {
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                 >
-                    <h1>Login to Purse</h1>
+
+                    <Typography.Title>
+                        Login to Purse
+                    </Typography.Title>
+
                     <Form.Item
                         name="email"
                         rules={[{ required: true, message: 'Please enter your email!' }]}
