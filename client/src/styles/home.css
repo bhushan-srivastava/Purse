@@ -1,0 +1,13 @@
+.transactions-table table {
+    table-layout: fixed !important;
+}
+
+.transactions-table thead>td {
+    font-weight: bolder;
+}
+
+@media screen and (max-width: 900px) {
+    .ant-table-expand-icon-col {
+        width: 35px;
+    }
+}
