@@ -30,6 +30,9 @@
 .main-content-layout .layout-header {
     padding-left: 0;
     padding-right: 0;
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 25px;
 }
 
 .main-content-layout {
