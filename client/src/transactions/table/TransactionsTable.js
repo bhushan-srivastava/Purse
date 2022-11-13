@@ -63,6 +63,7 @@ const columns = [
         title: 'Date',
         dataIndex: 'date',
         key: 'date',
+        defaultSortOrder: 'descend', // has to be outside of sorter object
         sorter: {
             compare: (record1, record2) => { return (new Date(record1.date) - new Date(record2.date)) },
             multiple: 2 // priority in the multiple column sorting
