@@ -65,7 +65,13 @@ const columns = [
         key: 'date',
         defaultSortOrder: 'descend', // has to be outside of sorter object
         sorter: {
-            compare: (record1, record2) => { return (new Date(record1.date) - new Date(record2.date)) },
+            compare:
+                (record1, record2) => {
+                    return (
+                        new Date(record1.date) > new Date(record2.date)
+                            ? true : false
+                    )
+                },
             multiple: 2 // priority in the multiple column sorting
         }
     },
@@ -74,7 +80,13 @@ const columns = [
         dataIndex: 'amount',
         key: 'amount',
         sorter: {
-            compare: (record1, record2) => { return (record1.amount - record2.amount) },
+            compare:
+                (record1, record2) => {
+                    return (
+                        record1.amount > record2.amount
+                            ? true : false
+                    )
+                },
             multiple: 1 // priority in the multiple column sorting
         }
     },

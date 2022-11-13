@@ -2,6 +2,10 @@
     margin: auto 10px;
 }
 
+.main-content-layout .layout-header button:first-of-type {
+    margin-left: 0px;
+}
+
 .transactions-table table {
     table-layout: fixed !important;
 }
