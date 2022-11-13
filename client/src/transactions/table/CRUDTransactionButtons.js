@@ -1,12 +1,12 @@
 import { Button } from "antd";
-import { FilterFilled, SortAscendingOutlined, PlusOutlined, EditFilled, AreaChartOutlined, TableOutlined /*, LineChartOutlined */ } from "@ant-design/icons"
+import { FilterFilled, /* SortAscendingOutlined, */ PlusOutlined, EditFilled, AreaChartOutlined, TableOutlined /*, LineChartOutlined */ } from "@ant-design/icons"
 
 const CRUDTransactionButtons = () => {
     return (
         <>
             <Button type='primary' icon={<FilterFilled />} />
 
-            <Button type='primary' icon={<SortAscendingOutlined />} />
+            {/* <Button type='primary' icon={<SortAscendingOutlined />} /> */}
 
             <Button type='primary' icon={<AreaChartOutlined />} />
 

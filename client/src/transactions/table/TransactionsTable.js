@@ -3,7 +3,7 @@ import { Table } from "antd";
 const dataSource = [
     {
         key: 1,
-        date: new Date().toDateString().substring(4),
+        date: new Date("Nov 07 2022").toDateString().substring(4),
         amount: 123,
         title: "title1",
         type: "spent",
@@ -14,7 +14,7 @@ const dataSource = [
     },
     {
         key: 2,
-        date: new Date().toDateString().substring(4),
+        date: new Date("Nov 08 2022").toDateString().substring(4),
         amount: 456,
         title: "title2",
         type: "earned",
@@ -25,7 +25,7 @@ const dataSource = [
     },
     {
         key: 3,
-        date: new Date().toDateString().substring(4),
+        date: new Date("Nov 09 2022").toDateString().substring(4),
         amount: 789,
         title: "title3",
         type: "spent",
@@ -36,7 +36,7 @@ const dataSource = [
     },
     {
         key: 4,
-        date: new Date().toDateString().substring(4),
+        date: new Date("Nov 10 2022").toDateString().substring(4),
         amount: 10111,
         title: "title4",
         type: "earned",
@@ -47,7 +47,7 @@ const dataSource = [
     },
     {
         key: 5,
-        date: new Date().toDateString().substring(4),
+        date: new Date("Nov 11 2022").toDateString().substring(4),
         amount: 13141,
         title: "title5",
         type: "spent",
@@ -63,11 +63,19 @@ const columns = [
         title: 'Date',
         dataIndex: 'date',
         key: 'date',
+        sorter: {
+            compare: (record1, record2) => { return (new Date(record1.date) - new Date(record2.date)) },
+            multiple: 2
+        }
     },
     {
         title: 'Amt',
         dataIndex: 'amount',
-        key: 'amount'
+        key: 'amount',
+        sorter: {
+            compare: (record1, record2) => { return (record1.amount - record2.amount) },
+            multiple: 1
+        }
     },
     {
         title: 'Type',
