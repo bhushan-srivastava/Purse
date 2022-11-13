@@ -1,3 +1,7 @@
+.main-content-layout .layout-header button {
+    margin: auto 5px;
+}
+
 .transactions-table table {
     table-layout: fixed !important;
 }

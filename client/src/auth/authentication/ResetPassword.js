@@ -5,15 +5,16 @@ const ResetPassword = () => {
     const navigate = useNavigate()
 
     const onFinish = values => {
+        // if correct values then antd success message or antd error message
         console.log('Success:', values);
         message.success("Password reset successful")
         navigate("/welcome") // make this "/"
     };
 
-    const onFinishFailed = errorInfo => {
-        console.log('Failed:', errorInfo);
-        message.error("Password reset unsuccessful")
-    };
+    // const onFinishFailed = errorInfo => {
+    //     console.log('Failed:', errorInfo);
+    //     message.error("Password reset unsuccessful")
+    // };
 
     return (
         <div className="reset-page">
@@ -22,7 +23,7 @@ const ResetPassword = () => {
                     name="reset-form"
                     initialValues={{ remember: true }}
                     onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
+                // onFinishFailed={onFinishFailed}
                 >
 
                     <Typography.Title>

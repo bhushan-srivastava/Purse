@@ -5,15 +5,16 @@ const Login = () => {
     const navigate = useNavigate()
 
     const onFinish = values => {
+        // if correct values then antd success message or antd error message
         console.log('Success:', values);
         message.success("Login successful")
         navigate("/welcome") // make this "/"
     };
 
-    const onFinishFailed = errorInfo => {
-        console.log('Failed:', errorInfo);
-        message.error("Login unsuccessful")
-    };
+    // const onFinishFailed = errorInfo => {
+    //     console.log('Failed:', errorInfo);
+    //     message.error("Login unsuccessful")
+    // };
 
     return (
         <div className="login-page">
@@ -22,7 +23,7 @@ const Login = () => {
                     name="login-form"
                     initialValues={{ remember: true }}
                     onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
+                // onFinishFailed={onFinishFailed}
                 >
 
                     <Typography.Title>

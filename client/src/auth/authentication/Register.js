@@ -5,15 +5,16 @@ const Register = () => {
     const navigate = useNavigate()
 
     const onFinish = values => {
+        // if correct values then antd success message or antd error message
         console.log('Success:', values);
         message.success("Registration successful")
         navigate("/welcome") // make this "/"
     };
 
-    const onFinishFailed = errorInfo => {
-        console.log('Failed:', errorInfo);
-        message.error("Registration unsuccessful")
-    };
+    // const onFinishFailed = errorInfo => {
+    //     console.log('Failed:', errorInfo);
+    //     message.error("Registration unsuccessful")
+    // };
 
     return (
         <div className="register-page">
@@ -22,7 +23,7 @@ const Register = () => {
                     name="register-form"
                     initialValues={{ remember: true }}
                     onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
+                // onFinishFailed={onFinishFailed}
                 >
 
                     <Typography.Title>
