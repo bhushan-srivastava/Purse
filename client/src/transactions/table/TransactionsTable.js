@@ -65,7 +65,7 @@ const columns = [
         key: 'date',
         sorter: {
             compare: (record1, record2) => { return (new Date(record1.date) - new Date(record2.date)) },
-            multiple: 2
+            multiple: 2 // priority in the multiple column sorting
         }
     },
     {
@@ -74,7 +74,7 @@ const columns = [
         key: 'amount',
         sorter: {
             compare: (record1, record2) => { return (record1.amount - record2.amount) },
-            multiple: 1
+            multiple: 1 // priority in the multiple column sorting
         }
     },
     {
