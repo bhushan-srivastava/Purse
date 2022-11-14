@@ -8,8 +8,11 @@ import Home from "./transactions/Home"
 // import Visualization from "./graphs/Visualization"
 import Logout from "./auth/authentication/Logout";
 import ErrorPage from "./ErrorPage"
-// test
-import DefaultLayout from "./default_layout/DefaultLayout"
+
+/* test */
+// import DefaultLayout from "./default_layout/DefaultLayout"
+// import EditName from "./user/EditName"
+import DeleteAccount from "./user/DeleteAccount"
 
 const MainRouter = () => {
     const privateRoutes = [
@@ -30,11 +33,17 @@ const MainRouter = () => {
             <Routes>
                 {/* test route */}
                 <Route path="/test" element={
-                    <DefaultLayout >
-                        t/v, o/v, s/v
-                        <p>table</p>
-                        <p>graph</p>
-                    </DefaultLayout>} />
+                    // <DefaultLayout >
+                    //     t/v, o/v, s/v
+                    //     <p>table</p>
+                    //     <p>graph</p>
+                    // </DefaultLayout>
+
+                    // <EditName />
+
+                    <DeleteAccount />
+                }
+                />
 
 
                 <Route path="/welcome" element={<Welcome />} />

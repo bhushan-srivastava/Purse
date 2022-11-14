@@ -1,5 +1,5 @@
-import { Table, Button } from "antd";
-import { EditFilled, DeleteFilled } from "@ant-design/icons"
+import { Table, Button, Popconfirm /*, message */ } from "antd";
+import { EditFilled, DeleteFilled, QuestionCircleOutlined } from "@ant-design/icons"
 
 const dataSource = [
     {
@@ -103,7 +103,17 @@ const columns = [
                 <span className="action-span">
                     <Button type='text' icon={<EditFilled />} />
 
-                    <Button type='link' danger={true} icon={<DeleteFilled />} />
+                    <Popconfirm
+                        title={"Delete?"}
+                        okText="Yes"
+                        cancelText="No"
+                        icon={<QuestionCircleOutlined />}
+                        okButtonProps={{ danger: true, type: "default" }}
+                    // onConfirm={() => { message.success("success") }}
+                    // onCancel={() => { message.error("error") }}
+                    >
+                        <Button type='text' danger={true} icon={<DeleteFilled />} />
+                    </Popconfirm>
                 </span>
             )
         },
