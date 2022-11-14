@@ -1,4 +1,5 @@
-import { Table } from "antd";
+import { Table, Button } from "antd";
+import { EditFilled, DeleteFilled } from "@ant-design/icons"
 
 const dataSource = [
     {
@@ -97,7 +98,15 @@ const columns = [
     },
     {
         title: 'Action',
+        render: () => {
+            return (
+                <span className="action-span">
+                    <Button type='text' icon={<EditFilled />} />
 
+                    <Button type='link' danger={true} icon={<DeleteFilled />} />
+                </span>
+            )
+        },
         key: 'actions',
     }
 ]

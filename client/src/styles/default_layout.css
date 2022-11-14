@@ -26,13 +26,13 @@
     padding-left: 0;
     padding-right: 0;
     height: auto;
-    margin-top: 20px;
-    margin-bottom: 25px;
+    /* margin-top: 20px;
+    margin-bottom: 25px; */
 
     /* maybe temporary */
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
 }
 
 .main-content-layout {
@@ -40,14 +40,6 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     margin: 20px;
     padding: 20px;
-}
-
-@media screen and (min-width: 901px) {
-    .main-content-layout .layout-header {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-    }
 }
 
 @media screen and (max-width: 900px) {

@@ -4,19 +4,23 @@ import { FilterFilled, /* SortAscendingOutlined, */ PlusOutlined, EditFilled, Ar
 const CRUDTransactionButtons = () => {
     return (
         <>
-            <Button type='primary' icon={<FilterFilled />} />
+            <span>
+                <Button size="large" type='text' icon={<FilterFilled />} />
 
-            {/* <Button type='primary' icon={<SortAscendingOutlined />} /> */}
+                {/* <Button type='primary' icon={<SortAscendingOutlined />} /> */}
 
-            <Button type='primary' icon={<AreaChartOutlined />} />
+                <Button size="large" type='text' icon={<AreaChartOutlined />} />
 
-            {/* <Button size='middle' type='primary' icon={<LineChartOutlined />} /> */}
+                {/* <Button size='middle' type='primary' icon={<LineChartOutlined />} /> */}
 
-            <Button type='primary' icon={<TableOutlined />} />
+                <Button size="large" type='text' icon={<TableOutlined />} />
 
-            <Button type='primary' icon={<EditFilled />}></Button>
+                <Button size="large" type='text' icon={<EditFilled />} />
+            </span>
 
-            <Button type='primary' icon={<PlusOutlined />} />
+            <span>
+                <Button type='primary' icon={<PlusOutlined />} />
+            </span>
         </>
     );
 }

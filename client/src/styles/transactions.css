@@ -1,5 +1,5 @@
 .main-content-layout .layout-header button {
-    margin: auto 10px;
+    margin: auto 5px;
 }
 
 .main-content-layout .layout-header button:first-of-type {
@@ -8,6 +8,10 @@
 
 .transactions-table table {
     table-layout: fixed !important;
+}
+
+.transactions-table .action-span {
+    display: flex;
 }
 
 .transactions-table thead>td {

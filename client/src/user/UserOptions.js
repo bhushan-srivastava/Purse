@@ -1,16 +1,16 @@
 import { Dropdown } from 'antd';
-import { EditOutlined, UserDeleteOutlined, LogoutOutlined } from "@ant-design/icons"
+import { EditFilled, UserDeleteOutlined, LogoutOutlined } from "@ant-design/icons"
 
 const items = [
     {
         label: 'Edit name',
         key: 'edit-name',
-        icon: <EditOutlined />
+        icon: <EditFilled />
     },
     {
         label: 'Change password',
         key: 'change-password',
-        icon: <EditOutlined />
+        icon: <EditFilled />
     },
     {
         label: 'Delete account',
