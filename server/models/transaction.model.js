@@ -5,26 +5,26 @@ const transactionSchema = new mongoose.Schema(
         user_id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'users',
-            required: 'User ID is required'
+            required: [true, 'User ID is required']
         },
         title: {
             type: String,
             trim: true,
-            required: 'Title is required'
+            required: [true, 'Title is required']
         },
         amount: {
             type: Number,
             min: [0, 'Amount cannot be lesser than 0'],
-            required: 'Amount is required'
+            required: [true, 'Amount is required']
         },
         date: {
             type: Date,
-            required: 'Date is required'
+            required: [true, 'Date is required']
         },
         type: {
             type: String,
             trim: true,
-            required: 'Type is required',
+            required: [true, 'Type is required'],
             enum: {
                 values: ['Spent', 'Earned'],
                 message: 'Type can be Spent/Earned'
@@ -33,18 +33,18 @@ const transactionSchema = new mongoose.Schema(
         category: {
             type: String,
             trim: true,
-            required: 'Category is required',
+            required: [true, 'Category is required']
         },
         description: {
             type: String,
-            trim: true,
+            trim: true
         },
         recurring: {
             type: Boolean
         },
         remind_after_days: {
             type: Number,
-            min: [0, 'Days cannot be lesser than 0'],
+            min: [0, 'Days cannot be lesser than 0']
         }
     }
 )
