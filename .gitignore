@@ -14,6 +14,10 @@
 # misc
 *.DS_Store
 *.env.local
+.env
+*/.env
+*.env
+*/*.env
 *.env.development.local
 development.env
 *.env.test.local
