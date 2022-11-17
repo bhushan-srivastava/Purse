@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import { isDate } from 'validator'
 
 const transactionSchema = new mongoose.Schema(
     {
@@ -19,7 +20,11 @@ const transactionSchema = new mongoose.Schema(
         },
         date: {
             type: Date,
-            required: [true, 'Date is required']
+            required: [true, 'Date is required'],
+            validate: {
+                validator: isDate,
+                message: 'Date is invalid'
+            }
         },
         type: {
             type: String,
@@ -49,4 +54,6 @@ const transactionSchema = new mongoose.Schema(
     }
 )
 
-export default mongoose.model('transactions', transactionSchema)
+const Transactions = mongoose.model('transactions', transactionSchema)
+
+export default Transactions
