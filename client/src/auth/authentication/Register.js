@@ -5,7 +5,7 @@ const Register = () => {
     const navigate = useNavigate()
 
     const register = (formValues) => {
-        fetch('/register', {
+        fetch('/api/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

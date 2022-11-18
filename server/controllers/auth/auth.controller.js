@@ -1,4 +1,4 @@
-import Users from "../../models/userModel.js"
+import Users from "../../models/user.model.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
@@ -132,6 +132,4 @@ function requireAuth(req, res, next) {
     }
 };
 
-const authController = { register, login, sendResetEmail, reset, logout, requireAuth }
-
-export default authController
+export { register, login, sendResetEmail, reset, logout, requireAuth }
