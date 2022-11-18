@@ -5,8 +5,6 @@ const Register = () => {
     const navigate = useNavigate()
 
     const register = (formValues) => {
-        console.log(formValues);
-
         fetch('/register', {
             method: 'POST',
             headers: {
@@ -21,7 +19,6 @@ const Register = () => {
                     navigate("/login")
                 }
                 else {
-                    console.log(responseData);
                     message.error(responseData.message)
                 }
             });
