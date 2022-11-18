@@ -4,7 +4,7 @@ import 'antd/dist/antd.min.css'
 import "@fontsource/roboto";
 import "./styles/auth.css"
 import "./styles/user.css"
-import "./styles/default_layout.css"
+import "./styles/home.css"
 import "./styles/transactions.css"
 import './index.css';
 

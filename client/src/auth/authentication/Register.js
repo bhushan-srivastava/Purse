@@ -1,20 +1,31 @@
-import { Button, Form, Input, message, Typography } from 'antd';
+import { Button, Form, Input, Typography, message } from 'antd';
 import { useNavigate } from "react-router-dom"
 
 const Register = () => {
     const navigate = useNavigate()
 
-    const onFinish = values => {
-        // if correct values then antd success message or antd error message
-        console.log('Success:', values);
-        message.success("Registration successful")
-        navigate("/welcome") // make this "/"
-    };
+    const register = (formValues) => {
+        console.log(formValues);
 
-    // const onFinishFailed = errorInfo => {
-    //     console.log('Failed:', errorInfo);
-    //     message.error("Registration unsuccessful")
-    // };
+        fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formValues)
+        })
+            .then((response) => response.json())
+            .then((responseData) => {
+                if (responseData.message === 'User registered successfully') {
+                    message.success("Registration successful")
+                    navigate("/login")
+                }
+                else {
+                    console.log(responseData);
+                    message.error(responseData.message)
+                }
+            });
+    }
 
     return (
         <div className="register-page">
@@ -22,7 +33,7 @@ const Register = () => {
                 <Form
                     name="register-form"
                     initialValues={{ remember: true }}
-                    onFinish={onFinish}
+                    onFinish={register}
                 // onFinishFailed={onFinishFailed}
                 >
 
@@ -31,7 +42,7 @@ const Register = () => {
                     </Typography.Title>
 
                     <Form.Item
-                        name="first-name"
+                        name="name"
                         rules={[{ required: true, message: 'Please enter your name!' }]}
                     >
                         <Input

@@ -1,9 +1,10 @@
 import { Layout, Typography } from 'antd';
-import logo from "../static/images/logo.png"
-import UserOptions from '../user/UserOptions';
-import CRUDTransactionButtons from '../transactions/table/CRUDTransactionButtons';
+import logo from "./static/images/logo.png"
+import CRUDTransactionButtons from './transactions/table/CRUDTransactionButtons';
+import TransactionsTable from './transactions/table/TransactionsTable';
+import UserOptions from './user/UserOptions';
 
-const DefaultLayout = (props) => {
+const Home = () => {
     return (
         <Layout>
             <Layout.Header className='layout-header'>
@@ -20,15 +21,15 @@ const DefaultLayout = (props) => {
             <Layout.Content className='layout-content'>
 
                 <Layout className='main-content-layout'>
-                    <Typography.Title>{props.children[0]}</Typography.Title>
+                    <Typography.Title>Transactions</Typography.Title>
 
                     <Layout.Header className='layout-header'>
                         <CRUDTransactionButtons />
                     </Layout.Header>
 
                     <Layout.Content>
-                        {console.log(props, props.children)}
-                        {props.children[1]}
+                        <TransactionsTable />
+                        {/* graph */}
                     </Layout.Content>
                 </Layout>
             </Layout.Content>
@@ -36,4 +37,4 @@ const DefaultLayout = (props) => {
     );
 }
 
-export default DefaultLayout;
+export default Home;

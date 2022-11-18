@@ -4,15 +4,10 @@ import Register from "./auth/authentication/Register"
 import Login from "./auth/authentication/Login"
 import ResetPassword from "./auth/authentication/ResetPassword"
 import PrivateRoute from "./auth/authorization/PrivateRoute";
-import Home from "./transactions/Home"
+import Home from "./Home"
 // import Visualization from "./graphs/Visualization"
 import Logout from "./auth/authentication/Logout";
 import ErrorPage from "./ErrorPage"
-
-/* test */
-// import DefaultLayout from "./default_layout/DefaultLayout"
-// import EditName from "./user/EditName"
-import DeleteAccount from "./user/DeleteAccount"
 
 const MainRouter = () => {
     const privateRoutes = [
@@ -31,21 +26,6 @@ const MainRouter = () => {
     return (
         <BrowserRouter>
             <Routes>
-                {/* test route */}
-                <Route path="/test" element={
-                    // <DefaultLayout >
-                    //     t/v, o/v, s/v
-                    //     <p>table</p>
-                    //     <p>graph</p>
-                    // </DefaultLayout>
-
-                    // <EditName />
-
-                    <DeleteAccount />
-                }
-                />
-
-
                 <Route path="/welcome" element={<Welcome />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
