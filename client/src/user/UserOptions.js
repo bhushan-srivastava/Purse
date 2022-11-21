@@ -1,9 +1,25 @@
-import { Dropdown } from 'antd';
+import { Dropdown, message } from 'antd';
 import { EditFilled, LogoutOutlined } from "@ant-design/icons"
 import { useNavigate } from "react-router-dom"
 
 const UserOptions = () => {
     const navigate = useNavigate()
+
+    const logout = async () => {
+        const response = await fetch('/api/auth/logout', {
+            method: 'GET'
+        })
+
+        const responseData = await response.json()
+
+        if (responseData.message === 'Logout successful') {
+            message.success(responseData.message)
+            navigate("/welcome")
+        }
+        else {
+            message.error(responseData.message)
+        }
+    }
 
     const onClick = (event) => {
         if (event.key === 'change-password') {
@@ -11,7 +27,7 @@ const UserOptions = () => {
             navigate("/forgot")
         }
         else if (event.key === 'logout') {
-            console.log('logout procedure please');
+            logout()
         }
     }
 
@@ -29,9 +45,12 @@ const UserOptions = () => {
         }
     ]
 
+    const name = document.cookie.replace('purseName=', '')
+
     return (
         <Dropdown menu={{ items, onClick }} trigger={['click']} placement='bottomRight' className='user-dropdown-list'>
-            <p>User</p>
+            {/* <p>User</p> */}
+            <p>{name}</p>
             {/* user get using local storage */}
         </Dropdown>
     );

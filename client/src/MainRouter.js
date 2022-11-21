@@ -1,12 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Welcome from "./static/Welcome"
-import Register from "./auth/authentication/Register"
-import Login from "./auth/authentication/Login"
-import ResetPassword from "./auth/authentication/ResetPassword"
-import PrivateRoute from "./auth/authorization/PrivateRoute";
+import Register from "./auth/Register"
+import Login from "./auth/Login"
+import ResetPassword from "./auth/ResetPassword"
+import PrivateRoute from "./auth/PrivateRoute";
 import Home from "./Home"
 // import Visualization from "./graphs/Visualization"
-import Logout from "./auth/authentication/Logout";
 import ErrorPage from "./ErrorPage"
 
 const MainRouter = () => {
@@ -15,11 +14,6 @@ const MainRouter = () => {
             path: "/",
             redirectTo: "/welcome",
             privateComponent: () => { return <Home /> }
-        },
-        {
-            path: "/logout",
-            redirectTo: "/welcome",
-            privateComponent: () => { return <Logout /> }
         }
     ]
 

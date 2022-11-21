@@ -1,0 +1,19 @@
+.loader-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.loader {
+    max-width: 50vw;
+    max-height: 50vh;
+}
+
+@media screen and (max-width: 900px) {
+    .loader {
+        max-width: 80vw;
+        max-height: 80vh;
+    }
+}

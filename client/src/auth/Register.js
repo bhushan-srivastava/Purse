@@ -4,24 +4,24 @@ import { useNavigate } from "react-router-dom"
 const Register = () => {
     const navigate = useNavigate()
 
-    const register = (formValues) => {
-        fetch('/api/auth/register', {
+    const register = async (formValues) => {
+        const response = await fetch('/api/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formValues)
         })
-            .then((response) => response.json())
-            .then((responseData) => {
-                if (responseData.message === 'User registered successfully') {
-                    message.success("Registration successful")
-                    navigate("/login")
-                }
-                else {
-                    message.error(responseData.message)
-                }
-            });
+
+        const responseData = await response.json()
+
+        if (responseData.message === 'User registered successfully') {
+            message.success("Registration successful")
+            navigate("/login")
+        }
+        else {
+            message.error(responseData.message)
+        }
     }
 
     return (
@@ -29,7 +29,6 @@ const Register = () => {
             <div className="register-box">
                 <Form
                     name="register-form"
-                    initialValues={{ remember: true }}
                     onFinish={register}
                 // onFinishFailed={onFinishFailed}
                 >
@@ -40,7 +39,17 @@ const Register = () => {
 
                     <Form.Item
                         name="name"
-                        rules={[{ required: true, message: 'Please enter your name!' }]}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please enter your name!'
+                            },
+                            {
+                                min: 4,
+                                message: 'Name must have atleast 4 characters'
+                            }
+                        ]}
+                        hasFeedback={true}
                     >
                         <Input
                             size='large'
@@ -50,7 +59,17 @@ const Register = () => {
 
                     <Form.Item
                         name="email"
-                        rules={[{ required: true, message: 'Please enter your email!' }]}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please enter your email!'
+                            },
+                            {
+                                type: 'email',
+                                message: 'Please enter a valid email!'
+                            }
+                        ]}
+                        hasFeedback={true}
                     >
                         <Input
                             size='large'
@@ -60,7 +79,18 @@ const Register = () => {
 
                     <Form.Item
                         name="password"
-                        rules={[{ required: true, message: 'Please enter your password!' }]}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please enter your password!'
+                            },
+                            {
+                                min: 8,
+                                message: 'Password must have atleast 8 characters!'
+                            }
+                        ]}
+                        hasFeedback={true}
+
                     >
                         <Input.Password
                             size='large'

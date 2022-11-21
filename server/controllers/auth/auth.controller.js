@@ -83,6 +83,7 @@ async function login(req, res) {
     // for production
     // res.cookie('purse', token, { httpOnly: true, secure: true, maxAge: maxAge * 1000 });
     res.cookie('purse', token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.cookie('purseName', user.name, { maxAge: maxAge * 1000 });
     res.status(200).json({ message: 'Login successful', name: user.name });
 }
 
@@ -105,8 +106,8 @@ async function reset(req, res) {
 }
 
 async function logout(req, res) {
-    // res.clearCookie('purse', '', { maxAge: 1 });
-    res.cookie('purse', '', { maxAge: 1 });
+    res.clearCookie('purse'); // works
+    res.clearCookie('purseName');
     res.status(200).json({ message: 'Logout successful' })
 }
 
@@ -118,11 +119,11 @@ function requireAuth(req, res, next) {
     // check json web token exists & is verified
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET,
-            (err, decodedToken) => {
+            function (err, decodedToken) {
                 if (err) {
                     res.status(401).json({ message: 'Unauthorized' })
                 }
-                else {
+                else if (decodedToken) {
                     next();
                 }
             });
@@ -132,4 +133,8 @@ function requireAuth(req, res, next) {
     }
 };
 
-export { register, login, sendResetEmail, reset, logout, requireAuth }
+function getAuth(req, res) {
+    res.status(200).json({ message: 'Authorized' })
+}
+
+export { register, login, sendResetEmail, reset, logout, requireAuth, getAuth }
