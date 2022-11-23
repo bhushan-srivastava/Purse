@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema(
         name: {
             type: String,
             trim: true,
-            required: [true, 'Name is required']
+            required: [true, 'Name is required'],
+            minLength: [4, 'Name must have atleast 4 characters'] // if err then change to 'minlength' (no camelCase)
         },
         email: {
             type: String,
@@ -26,21 +27,27 @@ const userSchema = new mongoose.Schema(
             minLength: [8, 'Password must have atleast 8 characters'] // if err then change to 'minlength' (no camelCase)
         },
         reset_code: {
-            type: Number
+            type: String
         }
     }
 )
 
 // fire a function before doc saved to db
 userSchema.pre('save', async function (next) {
-    const saltRounds = 10
+    const saltRounds = 10 // can also be a salt string
 
     // generate a salt and hash on separate function calls
     // const salt = await bcrypt.genSalt(saltRounds);
     // this.password = await bcrypt.hash(this.password, salt);
 
-    // auto-gen a salt and hash
-    this.password = await bcrypt.hash(this.password, saltRounds);
+    if (this.reset_code) {
+        // auto-gen a salt and hash
+        this.reset_code = await bcrypt.hash(this.reset_code, saltRounds);
+    }
+    else {
+        // auto-gen a salt and hash
+        this.password = await bcrypt.hash(this.password, saltRounds);
+    }
 
     next();
 })

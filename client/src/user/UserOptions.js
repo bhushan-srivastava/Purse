@@ -1,5 +1,5 @@
 import { Dropdown, message } from 'antd';
-import { EditFilled, LogoutOutlined } from "@ant-design/icons"
+import { LogoutOutlined } from "@ant-design/icons"
 import { useNavigate } from "react-router-dom"
 
 const UserOptions = () => {
@@ -22,21 +22,12 @@ const UserOptions = () => {
     }
 
     const onClick = (event) => {
-        if (event.key === 'change-password') {
-            console.log('change password procedure please');
-            navigate("/forgot")
-        }
-        else if (event.key === 'logout') {
+        if (event.key === 'logout') {
             logout()
         }
     }
 
     const items = [
-        {
-            label: 'Change password',
-            key: 'change-password',
-            icon: <EditFilled />
-        },
         {
             label: 'Logout',
             key: 'logout',

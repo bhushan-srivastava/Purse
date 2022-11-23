@@ -1,53 +1,70 @@
-import { Button, Form, Input, InputNumber, message, Typography } from 'antd';
+import { Button, Form, Input, message, Typography } from 'antd';
 import { useNavigate } from "react-router-dom"
-import { useState, useEffect } from 'react';
-import getAuth from '../authorization/authorization';
+import { useState } from 'react';
+import Loader from "../../Loader"
 
 const ResetPassword = () => {
     const navigate = useNavigate()
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [emailSent, setEmailSent] = useState(false)
 
-    useEffect(() => {
-        let mounted = true;
+    const resetPassword = async (formValues) => {
+        if (!emailSent) {
+            setIsLoading(true)
 
-        getAuth()
-            .then((result) => {
-                if (mounted) {
-                    setIsLoggedIn(result)
-                }
+            const response = await fetch('/api/auth/forgot/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formValues)
             })
-            .catch(
-                (error) => {
-                    if (mounted) {
-                        setIsLoggedIn(false)
-                    }
-                });
 
-        return () => {
-            mounted = false;
+            const responseData = await response.json()
+
+            if (responseData.message === 'Reset code sent') {
+                setEmailSent(true)
+                setIsLoading(false)
+                message.success(responseData.message)
+            }
+            else {
+                setIsLoading(false)
+                message.error(responseData.message)
+            }
         }
-    }, []);
+        else {
+            setIsLoading(true)
 
+            const response = await fetch('/api/auth/forgot/reset-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formValues)
+            })
 
-    const onFinish = values => {
-        // if correct values then antd success message or antd error message
-        console.log('Success:', values);
-        message.success("Password reset successful")
-        navigate("/welcome") // make this "/"
+            const responseData = await response.json()
+
+            if (responseData.message === 'Password reset successful') {
+                setIsLoading(false)
+                message.success(responseData.message)
+                navigate("/login")
+            }
+            else {
+                setIsLoading(false)
+                message.error(responseData.message)
+            }
+        }
     };
 
-    // const onFinishFailed = errorInfo => {
-    //     console.log('Failed:', errorInfo);
-    //     message.error("Password reset unsuccessful")
-    // };
-
     return (
-        <div className="reset-page">
+        < div className="reset-page" >
+            {isLoading ? <Loader /> : null}
             <div className="reset-box">
                 <Form
                     name="reset-form"
-                    onFinish={onFinish}
+                    onFinish={resetPassword}
                 // onFinishFailed={onFinishFailed}
                 >
 
@@ -55,54 +72,46 @@ const ResetPassword = () => {
                         Reset password
                     </Typography.Title>
 
-                    {!isLoggedIn ?
-                        <>
-                            <p>
-                                Please enter your email.
-                                <br />
-                                We will send a verification code to your email
-                            </p>
+                    <p>
+                        Please enter your email to get a verification code.
+                        {/* <br /> */}
+                        It may take some time for the email to reach.
+                    </p>
 
-                            <Form.Item
-                                name="email"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please enter your email!'
-                                    },
-                                    {
-                                        type: 'email',
-                                        message: 'Please enter a valid email!'
-                                    }
-                                ]}
-                                hasFeedback={true}
-                            >
-                                <Input
-                                    size='large'
-                                    placeholder="Email"
-                                />
-                            </Form.Item>
-                        </>
-                        :
-                        <>
-                            <p>
-                                Please enter the verification code sent to your email.
-                                <br />
-                                It may take some time for the email to reach.
-                            </p>
+                    <Form.Item
+                        name="email"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please enter your email!'
+                            },
+                            {
+                                type: 'email',
+                                message: 'Please enter a valid email!'
+                            }
+                        ]}
+                        hasFeedback={true}
+                    >
+                        <Input
+                            size='large'
+                            placeholder="Email"
+                        />
+                    </Form.Item>
 
+                    {emailSent ?
+                        <>
                             <Form.Item
-                                name="verification-code"
+                                name="verificationCode"
                                 rules={[{ required: true, message: 'Please enter the verification code!' }]}
                             >
-                                <InputNumber
+                                <Input
                                     size='large'
                                     placeholder="Code"
                                 />
                             </Form.Item>
 
                             <Form.Item
-                                name="new-password"
+                                name="newPassword"
                                 rules={[
                                     {
                                         required: true,
@@ -121,6 +130,8 @@ const ResetPassword = () => {
                                 />
                             </Form.Item>
                         </>
+                        :
+                        null
                     }
 
                     <Form.Item>

@@ -1,7 +1,7 @@
 export default async function getAuth() {
     try {
         const response = await fetch('/api/auth', {
-            method: 'GET',
+            method: 'GET'
         })
 
         const responseData = await response.json()

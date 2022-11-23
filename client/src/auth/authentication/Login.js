@@ -34,6 +34,8 @@ const Login = () => {
     }, []);
 
     const login = async (formValues) => {
+        setIsLoading(true)
+
         const response = await fetch('/api/auth/login', {
             method: 'POST',
             headers: {
@@ -45,86 +47,92 @@ const Login = () => {
         const responseData = await response.json()
 
         if (responseData.message === 'Login successful') {
+            setIsLoading(false)
             message.success(responseData.message)
             navigate("/")
         }
+        else if (responseData.message === 'Password to be reset') {
+            setIsLoading(false)
+            message.error(responseData.message)
+            navigate("/forgot")
+        }
         else {
+            setIsLoading(false)
             message.error(responseData.message)
         }
     }
 
     return (
-        isLoading ? <Loader />
+        isLoggedIn ? <Navigate to='/' />
             :
-            isLoggedIn ? <Navigate to='/' />
-                :
-                <div className="login-page">
-                    <div className="login-box">
-                        <Form
-                            name="login-form"
-                            onFinish={login}
-                        // onFinishFailed={onFinishFailed}
+            <div className="login-page">
+                {isLoading ? <Loader /> : null}
+                <div className="login-box">
+                    <Form
+                        name="login-form"
+                        onFinish={login}
+                    // onFinishFailed={onFinishFailed}
+                    >
+
+                        <Typography.Title>
+                            Login to Purse
+                        </Typography.Title>
+
+                        <Form.Item
+                            name="email"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please enter your email!'
+                                },
+                                {
+                                    type: 'email',
+                                    message: 'Please enter a valid email!'
+                                }
+                            ]}
+                            hasFeedback={true}
                         >
+                            <Input
+                                size='large'
+                                placeholder="Email"
+                            />
+                        </Form.Item>
 
-                            <Typography.Title>
-                                Login to Purse
-                            </Typography.Title>
+                        <Form.Item
+                            name="password"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please enter your password!'
+                                },
+                                {
+                                    min: 8,
+                                    message: 'Password must have atleast 8 characters!'
+                                }
+                            ]}
+                            hasFeedback={true}
 
-                            <Form.Item
-                                name="email"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please enter your email!'
-                                    },
-                                    {
-                                        type: 'email',
-                                        message: 'Please enter a valid email!'
-                                    }
-                                ]}
-                                hasFeedback={true}
-                            >
-                                <Input
-                                    size='large'
-                                    placeholder="Email"
-                                />
-                            </Form.Item>
+                        >
+                            <Input.Password
+                                size='large'
+                                placeholder="Password"
+                            />
+                        </Form.Item>
 
-                            <Form.Item
-                                name="password"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please enter your password!'
-                                    },
-                                    {
-                                        min: 8,
-                                        message: 'Password must have atleast 8 characters!'
-                                    }
-                                ]}
-                                hasFeedback={true}
+                        <Form.Item>
+                            <a href="/forgot">Forgot password</a>
+                        </Form.Item>
 
-                            >
-                                <Input.Password
-                                    size='large'
-                                    placeholder="Password"
-                                />
-                            </Form.Item>
+                        <Form.Item>
+                            <a href="/register">Or register now!</a>
 
-                            <Form.Item>
-                                <a href="/forgot">Forgot password</a>
-                            </Form.Item>
-
-                            <Form.Item>
-                                <a href="/register">Or register now!</a>
-
-                                <Button type="primary" htmlType="submit" size='large'>
-                                    Login
-                                </Button>
-                            </Form.Item>
-                        </Form>
-                    </div>
+                            <Button type="primary" htmlType="submit" size='large'>
+                                Login
+                            </Button>
+                        </Form.Item>
+                    </Form>
                 </div>
+            </div>
     );
 }
 

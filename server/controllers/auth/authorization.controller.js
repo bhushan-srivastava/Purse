@@ -18,6 +18,7 @@ function requireAuth(req, res, next) {
                     res.status(401).json({ message: 'Unauthorized' })
                 }
                 else if (decodedToken) {
+                    req.body.email = decodedToken.email
                     next();
                 }
             });
