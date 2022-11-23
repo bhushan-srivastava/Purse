@@ -1,6 +1,7 @@
 import { Button, Form, Input, InputNumber, message, Typography } from 'antd';
 import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from 'react';
+import getAuth from '../authorization/authorization';
 
 const ResetPassword = () => {
     const navigate = useNavigate()
@@ -10,22 +11,14 @@ const ResetPassword = () => {
     useEffect(() => {
         let mounted = true;
 
-        fetch('/api/auth', {
-            method: 'GET',
-        })
-            .then(response => response.json())
-            .then(responseData => {
+        getAuth()
+            .then((result) => {
                 if (mounted) {
-                    if (responseData.message === 'Authorized') {
-                        setIsLoggedIn(true)
-                    }
-                    else {
-                        setIsLoggedIn(false)
-                    }
+                    setIsLoggedIn(result)
                 }
             })
             .catch(
-                (err) => {
+                (error) => {
                     if (mounted) {
                         setIsLoggedIn(false)
                     }

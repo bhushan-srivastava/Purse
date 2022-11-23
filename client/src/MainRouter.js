@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Welcome from "./static/Welcome"
-import Register from "./auth/Register"
-import Login from "./auth/Login"
-import ResetPassword from "./auth/ResetPassword"
-import PrivateRoute from "./auth/PrivateRoute";
+import Register from "./auth/authentication/Register"
+import Login from "./auth/authentication/Login"
+import ResetPassword from "./auth/authentication/ResetPassword"
+import PrivateRoute from "./auth/authorization/PrivateRoute";
 import Home from "./Home"
 // import Visualization from "./graphs/Visualization"
 import ErrorPage from "./ErrorPage"

@@ -1,7 +1,8 @@
 import { Button, Form, Input, message, Typography } from 'antd';
 import { Navigate, useNavigate } from "react-router-dom"
 import { useState, useEffect } from 'react';
-import Loader from '../Loader';
+import Loader from '../../Loader';
+import getAuth from '../authorization/authorization';
 
 const Login = () => {
     const navigate = useNavigate()
@@ -12,24 +13,15 @@ const Login = () => {
     useEffect(() => {
         let mounted = true;
 
-        fetch('/api/auth', {
-            method: 'GET',
-        })
-            .then(response => response.json())
-            .then(responseData => {
+        getAuth()
+            .then((result) => {
                 if (mounted) {
-                    if (responseData.message === 'Authorized') {
-                        setIsLoggedIn(true)
-                        setIsLoading(false)
-                    }
-                    else {
-                        setIsLoggedIn(false)
-                        setIsLoading(false)
-                    }
+                    setIsLoggedIn(result)
+                    setIsLoading(false)
                 }
             })
             .catch(
-                (err) => {
+                (error) => {
                     if (mounted) {
                         setIsLoggedIn(false)
                         setIsLoading(false)

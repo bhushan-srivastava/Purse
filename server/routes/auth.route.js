@@ -1,5 +1,6 @@
 import { Router } from "express"
-import { register, login, sendResetEmail, reset, logout, requireAuth, getAuth } from "../controllers/auth/auth.controller.js"
+import { register, login, sendResetEmail, reset, logout } from "../controllers/auth/authentication.controller.js"
+import { requireAuth, getAuth } from "../controllers/auth/authorization.controller.js"
 
 const router = Router()
 router.route('/api/auth').get(requireAuth, getAuth)
