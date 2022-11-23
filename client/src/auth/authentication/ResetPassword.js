@@ -8,55 +8,54 @@ const ResetPassword = () => {
 
     const [isLoading, setIsLoading] = useState(false)
     const [emailSent, setEmailSent] = useState(false)
+
     const resetPassword = async (formValues) => {
-        setEmailSent(true)
+        if (!emailSent) {
+            setIsLoading(true)
 
-        // if (!emailSent) {
-        //     setIsLoading(true)
+            const response = await fetch('/api/auth/forgot/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formValues)
+            })
 
-        //     const response = await fetch('/api/auth/forgot/send-email', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(formValues)
-        //     })
+            const responseData = await response.json()
 
-        //     const responseData = await response.json()
+            if (responseData.message === 'Reset code sent') {
+                setEmailSent(true)
+                setIsLoading(false)
+                message.success(responseData.message)
+            }
+            else {
+                setIsLoading(false)
+                message.error(responseData.message)
+            }
+        }
+        else {
+            setIsLoading(true)
 
-        //     if (responseData.message === 'Reset code sent') {
-        //         setEmailSent(true)
-        //         setIsLoading(false)
-        //         message.success(responseData.message)
-        //     }
-        //     else {
-        //         setIsLoading(false)
-        //         message.error(responseData.message)
-        //     }
-        // }
-        // else {
-        //     setIsLoading(true)
+            const response = await fetch('/api/auth/forgot/reset-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formValues)
+            })
 
-        //     const response = await fetch('/api/auth/forgot/reset-password', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(formValues)
-        //     })
+            const responseData = await response.json()
 
-        //     const responseData = await response.json()
-
-        //     if (responseData.message === 'Password reset successful') {
-        //         setIsLoading(false)
-        //         message.success(responseData.message)
-        //         navigate("/login")
-        //     }
-        //     else {
-        //         setIsLoading(false)
-        //         message.error(responseData.message)
-        //     }
-        // }
+            if (responseData.message === 'Password reset successful') {
+                setIsLoading(false)
+                message.success(responseData.message)
+                navigate("/login")
+            }
+            else {
+                setIsLoading(false)
+                message.error(responseData.message)
+            }
+        }
     };
 
     return (
