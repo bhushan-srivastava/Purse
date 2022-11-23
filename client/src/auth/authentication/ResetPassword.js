@@ -8,54 +8,55 @@ const ResetPassword = () => {
 
     const [isLoading, setIsLoading] = useState(false)
     const [emailSent, setEmailSent] = useState(false)
-
     const resetPassword = async (formValues) => {
-        if (!emailSent) {
-            setIsLoading(true)
+        setEmailSent(true)
 
-            const response = await fetch('/api/auth/forgot/send-email', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formValues)
-            })
+        // if (!emailSent) {
+        //     setIsLoading(true)
 
-            const responseData = await response.json()
+        //     const response = await fetch('/api/auth/forgot/send-email', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify(formValues)
+        //     })
 
-            if (responseData.message === 'Reset code sent') {
-                setEmailSent(true)
-                setIsLoading(false)
-                message.success(responseData.message)
-            }
-            else {
-                setIsLoading(false)
-                message.error(responseData.message)
-            }
-        }
-        else {
-            setIsLoading(true)
+        //     const responseData = await response.json()
 
-            const response = await fetch('/api/auth/forgot/reset-password', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formValues)
-            })
+        //     if (responseData.message === 'Reset code sent') {
+        //         setEmailSent(true)
+        //         setIsLoading(false)
+        //         message.success(responseData.message)
+        //     }
+        //     else {
+        //         setIsLoading(false)
+        //         message.error(responseData.message)
+        //     }
+        // }
+        // else {
+        //     setIsLoading(true)
 
-            const responseData = await response.json()
+        //     const response = await fetch('/api/auth/forgot/reset-password', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify(formValues)
+        //     })
 
-            if (responseData.message === 'Password reset successful') {
-                setIsLoading(false)
-                message.success(responseData.message)
-                navigate("/login")
-            }
-            else {
-                setIsLoading(false)
-                message.error(responseData.message)
-            }
-        }
+        //     const responseData = await response.json()
+
+        //     if (responseData.message === 'Password reset successful') {
+        //         setIsLoading(false)
+        //         message.success(responseData.message)
+        //         navigate("/login")
+        //     }
+        //     else {
+        //         setIsLoading(false)
+        //         message.error(responseData.message)
+        //     }
+        // }
     };
 
     return (
@@ -74,7 +75,7 @@ const ResetPassword = () => {
 
                     <p>
                         Please enter your email to get a verification code.
-                        {/* <br /> */}
+                        <br />
                         It may take some time for the email to reach.
                     </p>
 
