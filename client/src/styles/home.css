@@ -42,6 +42,27 @@
     padding: 20px;
 }
 
+.category-dropdown-list {
+    display: inline;
+}
+
+.ant-modal {
+    top: 60px;
+}
+
+.ant-input-number-full-width {
+    width: 100%;
+}
+
+.range-filter {
+    display: flex;
+}
+
+.modal-submit-button {
+    display: flex;
+    justify-content: right;
+}
+
 @media screen and (max-width: 900px) {
     .main-content-layout {
         margin: auto 20px;
