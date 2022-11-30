@@ -1,17 +1,18 @@
 import mongoose from "mongoose"
-import { isDate } from 'validator'
+import validator from 'validator'
 
 const transactionSchema = new mongoose.Schema(
     {
         user_id: {
-            type: mongoose.Schema.Types.ObjectId,
+            type: mongoose.Types.ObjectId,
             ref: 'users',
             required: [true, 'User ID is required']
         },
         title: {
             type: String,
             trim: true,
-            required: [true, 'Title is required']
+            required: [true, 'Title is required'],
+            minLength: [4, 'Title must have atleast 4 characters'] // if err then change to 'minlength' (no camelCase)
         },
         amount: {
             type: Number,
@@ -22,7 +23,7 @@ const transactionSchema = new mongoose.Schema(
             type: Date,
             required: [true, 'Date is required'],
             validate: {
-                validator: isDate,
+                validator: validator.isDate,
                 message: 'Date is invalid'
             }
         },
@@ -38,6 +39,7 @@ const transactionSchema = new mongoose.Schema(
         category: {
             type: String,
             trim: true,
+            lowercase: true,
             required: [true, 'Category is required']
         },
         description: {
