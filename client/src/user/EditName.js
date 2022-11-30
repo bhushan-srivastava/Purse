@@ -33,6 +33,10 @@ const EditName = ({ open, saveName, onCancel }) => {
                 </Form.Item>
 
                 <Form.Item className='modal-submit-button'>
+                    <Button htmlType="reset" size='large' onClick={onCancel}>
+                        Cancel
+                    </Button>
+
                     <Button type="primary" htmlType="submit" size='large'>
                         Save
                     </Button>

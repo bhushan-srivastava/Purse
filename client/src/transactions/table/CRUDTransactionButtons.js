@@ -40,6 +40,7 @@ const CRUDTransactionButtons = () => {
     const [filterFormOpen, setFilterFormOpen] = useState(false)
     function filterButtonClick() { setFilterFormOpen(true) }
     const applyFilters = () => { setFilterFormOpen(false) }
+    const clearFilters = () => { setFilterFormOpen(false) }
     const onFilterCancel = () => { setFilterFormOpen(false) }
 
     return (
@@ -59,6 +60,7 @@ const CRUDTransactionButtons = () => {
             <FilterTransactions
                 open={filterFormOpen}
                 applyFilters={applyFilters}
+                clearFilters={clearFilters}
                 onCancel={onFilterCancel}
             />
 

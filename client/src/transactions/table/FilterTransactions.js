@@ -8,10 +8,26 @@ const transactionCategories = [
     {
         value: "cdef",
         label: "cdef"
+    },
+    {
+        value: "efgh",
+        label: "efgh"
+    },
+    {
+        value: "ghij",
+        label: "ghij"
+    },
+    {
+        value: "ijkl",
+        label: "ijkl"
+    },
+    {
+        value: "klmn",
+        label: "klmn"
     }
 ]
 
-const FilterTransactions = ({ open, applyFilters, onCancel }) => {
+const FilterTransactions = ({ open, applyFilters, clearFilters, onCancel }) => {
     return (
         <Modal
             open={open}
@@ -23,9 +39,6 @@ const FilterTransactions = ({ open, applyFilters, onCancel }) => {
                 name="filter-form"
                 // initialValues={editData || null}
                 onFinish={applyFilters}
-                // onFinish={() => { console.log('hello'); }}
-                onFinishFailed={() => { console.log('hello'); }}
-
             >
                 <span className='range-filter'>
                     <Form.Item
@@ -91,8 +104,12 @@ const FilterTransactions = ({ open, applyFilters, onCancel }) => {
                     name="category"
                 >
                     <Select
+                        allowClear={true}
                         showSearch={true}
-                        placeholder='Category'
+                        placeholder='Categories'
+                        mode="multiple"
+                        maxTagCount={2}
+                        // maxTagTextLength={2}
                         options={transactionCategories}
                         size='large'
                         // allowClear={true}
@@ -117,6 +134,10 @@ const FilterTransactions = ({ open, applyFilters, onCancel }) => {
                 </Form.Item>
 
                 <Form.Item className='modal-submit-button'>
+                    <Button htmlType="reset" size='large' onClick={clearFilters}>
+                        Clear Filters
+                    </Button>
+
                     <Button type="primary" htmlType="submit" size='large'>
                         Apply Filters
                     </Button>

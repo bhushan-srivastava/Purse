@@ -63,6 +63,10 @@
     justify-content: right;
 }
 
+.modal-submit-button button:nth-last-child(2) {
+    margin-right: 10px;
+}
+
 @media screen and (max-width: 900px) {
     .main-content-layout {
         margin: auto 20px;
