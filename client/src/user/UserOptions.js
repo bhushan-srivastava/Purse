@@ -1,33 +1,42 @@
-import { Dropdown, message } from 'antd';
-import { LogoutOutlined } from "@ant-design/icons"
+import { Dropdown } from 'antd';
+import { EditFilled, LogoutOutlined } from "@ant-design/icons"
 import { useNavigate } from "react-router-dom"
+import logout from '../auth/authentication/logout';
+import { useState } from 'react';
+import EditName from './EditName';
 
 const UserOptions = () => {
     const navigate = useNavigate()
 
-    const logout = async () => {
-        const response = await fetch('/api/auth/logout', {
-            method: 'GET'
-        })
+    const [editNameFormOpen, setEditNameFormOpen] = useState(false)
 
-        const responseData = await response.json()
+    const saveName = () => { setEditNameFormOpen(false) }
+    const onEditNameCancel = () => { setEditNameFormOpen(false) }
 
-        if (responseData.message === 'Logout successful') {
-            message.success(responseData.message)
-            navigate("/welcome")
-        }
-        else {
-            message.error(responseData.message)
-        }
-    }
-
-    const onClick = (event) => {
+    const userOptionsClick = async (event) => {
         if (event.key === 'logout') {
-            logout()
+            await logout()
+            navigate('/welcome')
+        }
+        else if (event.key === 'change-password') {
+            navigate('/forgot')
+        }
+        else if (event.key === 'edit-name') {
+            setEditNameFormOpen(true)
         }
     }
 
-    const items = [
+    const userItems = [
+        {
+            label: 'Edit name',
+            key: 'edit-name',
+            icon: <EditFilled />
+        },
+        {
+            label: 'Change password',
+            key: 'change-password',
+            icon: <EditFilled />
+        },
         {
             label: 'Logout',
             key: 'logout',
@@ -39,11 +48,19 @@ const UserOptions = () => {
     const name = document.cookie.replace('purseName=', '')
 
     return (
-        <Dropdown menu={{ items, onClick }} trigger={['click']} placement='bottomRight' className='user-dropdown-list'>
-            {/* <p>User</p> */}
-            <p>{name}</p>
-            {/* user get using local storage */}
-        </Dropdown>
+        <>
+            <EditName
+                open={editNameFormOpen}
+                saveName={saveName}
+                onCancel={onEditNameCancel}
+            />
+
+            <Dropdown menu={{ items: userItems, onClick: userOptionsClick }} trigger={['click']} placement='bottomRight' className='user-dropdown-list'>
+                {/* <p>User</p> */}
+                <p>{name}</p>
+                {/* user get using local storage */}
+            </Dropdown>
+        </>
     );
 }
 

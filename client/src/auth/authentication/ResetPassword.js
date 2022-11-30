@@ -1,13 +1,22 @@
 import { Button, Form, Input, message, Typography } from 'antd';
 import { useNavigate } from "react-router-dom"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Loader from "../../Loader"
+import logout from './logout';
 
 const ResetPassword = () => {
     const navigate = useNavigate()
 
     const [isLoading, setIsLoading] = useState(false)
     const [emailSent, setEmailSent] = useState(false)
+
+    useEffect(() => {
+        setIsLoading(true)
+
+        logout()
+            .then(() => { setIsLoading(false) })
+            .catch(() => { setIsLoading(false) })
+    }, [])
 
     const resetPassword = async (formValues) => {
         if (!emailSent) {
