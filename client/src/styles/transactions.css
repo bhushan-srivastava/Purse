@@ -18,6 +18,11 @@
     font-weight: bolder;
 }
 
+.transactions-graph-title {
+    display: flex;
+    justify-content: space-between;
+}
+
 @media screen and (max-width: 900px) {
     .ant-table-expand-icon-col {
         width: 35px;

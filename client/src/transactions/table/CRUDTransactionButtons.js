@@ -24,9 +24,7 @@ const transactionViews = [
     }
 ]
 
-function changeView(value) { }
-
-const CRUDTransactionButtons = () => {
+const CRUDTransactionButtons = ({ changeView }) => {
     const [transactionFormOpen, setTransactionFormOpen] = useState(false)
     function newTransactionButtonClick() { setTransactionFormOpen(true) }
     const saveTransaction = () => { setTransactionFormOpen(false) }

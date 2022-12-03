@@ -1,10 +1,25 @@
 import { Layout, Typography } from 'antd';
+import { useState } from 'react';
 import logo from "./static/images/logo.png"
+import Visualization from './transactions/graphs/Visualization';
 import CRUDTransactionButtons from './transactions/table/CRUDTransactionButtons';
 import TransactionsTable from './transactions/table/TransactionsTable';
 import UserOptions from './user/UserOptions';
 
 const Home = () => {
+    const [view, setView] = useState('table')
+
+    // const changeView = (nextView) => { setView(nextView) }
+
+    const renderView = () => {
+        if (view === 'table') {
+            return <TransactionsTable />
+        }
+        else if (view === 'graph') {
+            return <Visualization />
+        }
+    }
+
     return (
         <Layout>
             <Layout.Header className='layout-header'>
@@ -24,12 +39,11 @@ const Home = () => {
                     <Typography.Title>Transactions</Typography.Title>
 
                     <Layout.Header className='layout-header'>
-                        <CRUDTransactionButtons />
+                        <CRUDTransactionButtons changeView={setView} />
                     </Layout.Header>
 
                     <Layout.Content>
-                        <TransactionsTable />
-                        {/* graph */}
+                        {renderView()}
                     </Layout.Content>
                 </Layout>
             </Layout.Content>
