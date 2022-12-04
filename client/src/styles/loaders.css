@@ -15,6 +15,10 @@
     max-height: 50vh;
 }
 
+/* .skeleton-loader {
+    margin: 20px;
+} */
+
 @media screen and (max-width: 900px) {
     .loader {
         max-width: 80vw;
