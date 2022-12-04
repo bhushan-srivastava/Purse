@@ -1,7 +1,7 @@
 import { Button, Form, Input, message, Typography } from 'antd';
 import { Navigate, useNavigate } from "react-router-dom"
 import { useState, useEffect } from 'react';
-import Loader from '../../Loader';
+import Loader from '../../loaders/Loader';
 import getAuth from '../authorization/authorization';
 
 const Login = () => {

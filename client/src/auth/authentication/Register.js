@@ -53,7 +53,7 @@ const Register = () => {
                     >
                         <Input
                             size='large'
-                            placeholder="First name"
+                            placeholder="Name"
                         />
                     </Form.Item>
 

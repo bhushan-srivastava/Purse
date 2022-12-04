@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import Loader from '../../Loader';
+import Loader from '../../loaders/Loader';
 import getAuth from './authorization';
 
 const PrivateRoute = ({ children, redirectTo }) => {

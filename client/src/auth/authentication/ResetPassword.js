@@ -1,7 +1,7 @@
 import { Button, Form, Input, message, Typography } from 'antd';
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from 'react';
-import Loader from "../../Loader"
+import Loader from '../../loaders/Loader';
 import logout from './logout';
 
 const ResetPassword = () => {
@@ -68,7 +68,7 @@ const ResetPassword = () => {
     };
 
     return (
-        < div className="reset-page" >
+        <div className="reset-page">
             {isLoading ? <Loader /> : null}
             <div className="reset-box">
                 <Form

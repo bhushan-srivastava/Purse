@@ -1,4 +1,4 @@
-import loader from "./static/images/loader.gif"
+import loader from "../static/images/loader.gif"
 
 const Loader = () => {
     return (
