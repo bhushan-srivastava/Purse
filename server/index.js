@@ -5,6 +5,7 @@ import express from "express"
 import cookieParser from "cookie-parser"
 import { router as authRoutes } from "./routes/auth.route.js"
 import { router as transactionRoutes } from "./routes/transaction.route.js"
+import { router as userRoutes } from "./routes/user.route.js"
 
 dotenv.config({ path: '../development.env' })
 
@@ -18,6 +19,7 @@ app.use(cookieParser());
 app.use(authRoutes)
 // app.use('/', transactionRoutes)
 app.use(transactionRoutes)
+app.use(userRoutes)
 
 // database connection
 // mongoose.connect(process.env.DB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }) // if error then uncomment this line

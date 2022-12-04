@@ -1,16 +1,42 @@
-import { Dropdown } from 'antd';
+import { Dropdown, message } from 'antd';
 import { EditFilled, LogoutOutlined } from "@ant-design/icons"
 import { useNavigate } from "react-router-dom"
 import logout from '../auth/authentication/logout';
 import { useState } from 'react';
 import EditName from './EditName';
 
-const UserOptions = () => {
+const UserOptions = ({ setIsLoading }) => {
     const navigate = useNavigate()
 
     const [editNameFormOpen, setEditNameFormOpen] = useState(false)
+    const [name, setName] = useState(decodeURI(document.cookie.replace('purseName=', '')))
 
-    const saveName = () => { setEditNameFormOpen(false) }
+    const saveName = async (formValues) => {
+        setIsLoading(true)
+
+        const response = await fetch('/api/user/name', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formValues)
+        })
+
+        const responseData = await response.json()
+
+        if (responseData.message === 'Name updated successfully') {
+            setName(decodeURI(document.cookie.replace('purseName=', '')))
+            setIsLoading(false)
+            message.success('Name saved')
+        }
+        else {
+            setIsLoading(false)
+            message.error(responseData.message)
+        }
+
+        setEditNameFormOpen(false)
+    }
+
     const onEditNameCancel = () => { setEditNameFormOpen(false) }
 
     const userOptionsClick = async (event) => {
@@ -44,8 +70,6 @@ const UserOptions = () => {
             icon: <LogoutOutlined />
         }
     ]
-
-    const name = document.cookie.replace('purseName=', '')
 
     return (
         <>

@@ -28,7 +28,7 @@ const EditName = ({ open, saveName, onCancel }) => {
                 >
                     <Input
                         size='large'
-                        placeholder="First name"
+                        placeholder="Name"
                     />
                 </Form.Item>
 

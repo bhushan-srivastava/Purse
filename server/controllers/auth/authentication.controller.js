@@ -3,53 +3,11 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 import nodemailer from "nodemailer"
+import getErrorMessages from "../errorMessages.js"
 
 dotenv.config({ path: '../development.env' })
 
 // authN
-
-// get error message
-const getErrorMessage = (error) => {
-    // console.log(err.message, err.code);
-    // let errorMessage = ""
-
-    // // incorrect email
-    // if (err.message === 'incorrect email') {
-    //     errors.email = 'That email is not registered';
-    // }
-
-    // // incorrect password
-    // if (err.message === 'incorrect password') {
-    //     errors.password = 'That password is incorrect';
-    // }
-
-    // // duplicate email error
-    // if (err.code === 11000) {
-    //     errorMessage += 'Email is already in use';
-    // }
-
-    // // user validation errors
-    // if (err.message.includes('user validation failed')) {
-    //     Object.values(err.errors).forEach(({ properties }) => {
-    //         errorMessage = properties.message;
-    //     });
-    // }
-
-    let errorMessage = ""
-
-    if (error.code === 11000) {
-        errorMessage += "Email is already registered to a user"
-    }
-
-    // if (error.message.includes('validation failed')) {
-    if (error.name === "ValidationError") {
-        Object.values(error.errors).forEach((errorField) => {
-            errorMessage += errorField.message
-        })
-    }
-
-    return errorMessage;
-}
 
 async function register(req, res) {
     try {
@@ -57,7 +15,7 @@ async function register(req, res) {
         res.status(201).json({ message: 'User registered successfully' })
     }
     catch (error) {
-        let errorMessage = getErrorMessage(error)
+        let errorMessage = getErrorMessages(error)
         res.status(400).json({ message: errorMessage })
     }
     // catch (error) {
@@ -187,17 +145,21 @@ async function reset(req, res) {
     await user.save()
         .catch(
             (error) => {
-                res.status(400).json({ message: getErrorMessage(error) })
+                res.status(400).json({ message: getErrorMessages(error) })
             }
         )
 
     res.status(200).json({ message: 'Password reset successful' })
 }
 
-async function logout(req, res) {
+async function logout(req, res, next) {
     res.clearCookie('purse'); // works
     res.clearCookie('purseName');
+    next()
+}
+
+async function sendLogoutResponse(req, res) {
     res.status(200).json({ message: 'Logout successful' })
 }
 
-export { register, login, sendResetEmail, reset, logout }
+export { register, login, sendResetEmail, reset, logout, sendLogoutResponse }

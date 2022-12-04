@@ -28,8 +28,20 @@ function requireAuth(req, res, next) {
     }
 };
 
+async function getUser(req, res, next) {
+    const user = await Users.findOne({ "email": req.body.email });
+
+    if (!user) {
+        res.status(401).json({ message: 'Incorrect email' })
+        return
+    }
+
+    req.body.user_id = user._id
+    next()
+}
+
 function getAuth(req, res) {
     res.status(200).json({ message: 'Authorized' })
 }
 
-export { requireAuth, getAuth }
+export { requireAuth, getUser, getAuth }
