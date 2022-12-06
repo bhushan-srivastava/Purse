@@ -1,7 +1,7 @@
 import { Router } from "express"
-import { register, login, sendResetEmail, reset, logout, sendLogoutResponse } from "../controllers/auth/authentication.controller.js"
-import { requireAuth, getAuth } from "../controllers/auth/authorization.controller.js"
-import { getUser } from "../controllers/auth/authHelper.js"
+import { register, login, sendResetEmail, reset, logout, sendLogoutResponse } from "../../controllers/auth/authentication.controller.js"
+import { requireAuth, getAuth } from "../../controllers/auth/authorization.controller.js"
+import { getUser } from "../../controllers/auth/authHelper.js"
 
 const router = Router()
 router.route('/api/auth').get(requireAuth, getUser, getAuth)

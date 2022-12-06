@@ -3,9 +3,9 @@ import mongoose from "mongoose"
 import express from "express"
 // import * as cookieParser from "cookie-parser" // if error is there then uncomment this line
 import cookieParser from "cookie-parser"
-import { router as authRoutes } from "./routes/auth.route.js"
-import { router as transactionRoutes } from "./routes/transaction.route.js"
-import { router as userRoutes } from "./routes/user.route.js"
+import { router as authRoutes } from "./routes/auth/auth.route.js"
+import { router as transactionRoutes } from "./routes/transactions/transaction.route.js"
+import { router as userRoutes } from "./routes/user/user.route.js"
 
 dotenv.config({ path: '../development.env' })
 
