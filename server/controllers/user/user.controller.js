@@ -10,8 +10,7 @@ async function editName(req, res) {
         )
 
         if (!user) {
-            res.status(400).json({ message: 'Incorrect user' })
-            return
+            throw new Error('Incorrect user')
         }
 
         if (user.name !== req.body.name) {

@@ -38,6 +38,10 @@ const getErrorMessages = (error) => {
         })
     }
 
+    if (!errorMessage) {
+        errorMessage = error.message
+    }
+
     return errorMessage;
 }
 

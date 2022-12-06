@@ -1,5 +1,6 @@
 import { Router } from "express"
-import { requireAuth, getUser } from "../controllers/auth/authorization.controller.js"
+import { getUser } from "../controllers/auth/authHelper.js"
+import { requireAuth } from "../controllers/auth/authorization.controller.js"
 import editName from "../controllers/user/user.controller.js"
 
 const router = Router()
