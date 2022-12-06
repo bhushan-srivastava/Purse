@@ -1,5 +1,4 @@
-import Users from "../../models/user.model.js"
-import bcrypt from "bcrypt"
+// import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 
@@ -28,20 +27,8 @@ function requireAuth(req, res, next) {
     }
 };
 
-async function getUser(req, res, next) {
-    const user = await Users.findOne({ "email": req.body.email });
-
-    if (!user) {
-        res.status(401).json({ message: 'Incorrect email' })
-        return
-    }
-
-    req.body.user_id = user._id
-    next()
-}
-
 function getAuth(req, res) {
     res.status(200).json({ message: 'Authorized' })
 }
 
-export { requireAuth, getUser, getAuth }
+export { requireAuth, getAuth }
