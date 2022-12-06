@@ -1,4 +1,4 @@
-import Users from "../../models/user.model.js"
+import Users from "../../models/user/user.model.js"
 import getErrorMessages from "../errorMessages.js"
 
 async function editName(req, res) {
