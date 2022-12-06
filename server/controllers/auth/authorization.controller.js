@@ -1,29 +1,28 @@
 // import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
+import getErrorMessages from "../errorMessages.js";
 
 dotenv.config({ path: '../development.env' })
 
 // authZ
 
-function requireAuth(req, res, next) {
-    const token = req.cookies.purse;
+async function requireAuth(req, res, next) {
+    try {
+        const token = req.cookies.purse;
 
-    // check json web token exists & is verified
-    if (token) {
-        jwt.verify(token, process.env.JWT_SECRET,
-            function (err, decodedToken) {
-                if (err) {
-                    res.status(401).json({ message: 'Unauthorized' })
-                }
-                else if (decodedToken) {
-                    req.body.email = decodedToken.email
-                    next();
-                }
-            });
+        if (!token) {
+            throw new Error('Unauthorized')
+        }
+
+        // check json web token exists & is verified
+        const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
+
+        req.body.email = decodedToken.email
+        next();
     }
-    else {
-        res.status(401).json({ message: 'Unauthorized' })
+    catch (error) {
+        res.status(401).json({ message: getErrorMessages(error) })
     }
 };
 
