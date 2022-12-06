@@ -8,6 +8,10 @@
     padding-right: 22px;
 }
 
+.layout-header .ant-skeleton {
+    margin-top: 15px;
+}
+
 .layout-header .title {
     font-size: x-large;
 }
@@ -16,6 +20,7 @@
     max-height: 25px;
     max-width: 25px;
     margin-right: 5px;
+    margin-bottom: 8px;
 }
 
 .layout-content {
@@ -40,6 +45,14 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     margin: 20px;
     padding: 20px;
+}
+
+.skeleton-image-loader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .category-dropdown-list {
