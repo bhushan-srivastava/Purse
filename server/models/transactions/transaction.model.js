@@ -47,11 +47,23 @@ const transactionSchema = new mongoose.Schema(
             trim: true
         },
         recurring: {
-            type: Boolean
+            type: Boolean,
+            set: function (value) {
+                return value && this.remind_after_days ? value : undefined
+            }
         },
         remind_after_days: {
             type: Number,
-            min: [0, 'Days cannot be lesser than 0']
+            min: [0, 'Days cannot be lesser than 0'],
+            required: [
+                function () {
+                    return this.recurring ? true : false
+                },
+                'Email reminder after how many days?'
+            ],
+            set: function (value) {
+                return this.recurring && value ? value : undefined
+            }
         }
     }
 )
