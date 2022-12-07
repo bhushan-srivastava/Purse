@@ -66,19 +66,15 @@ async function sendResetEmail(req, res) {
 
         user.reset_code = randomCode
 
-        const updatedUser = await user.save()
-
-        if (user !== updatedUser) {
-            throw new Error('Unable to send reset code')
-        }
+        await user.save()
 
         // Generate test SMTP service account from ethereal.email
         // Only needed if you don't have a real mail account for testing
         const testAccount = await nodemailer.createTestAccount();
 
-        if (!testAccount) {
-            throw new Error('Unable to send reset code')
-        }
+        // if (!testAccount) {
+        //     throw new Error('Unable to send reset code')
+        // }
 
         // create reusable transporter object using the default SMTP transport
         const transporter = nodemailer.createTransport({
@@ -134,12 +130,7 @@ async function reset(req, res) {
 
         user.reset_code = undefined
 
-        const updatedUser = await user.save()
-
-        if (user !== updatedUser) {
-            res.status(500).json({ message: "Unable to reset password" })
-            return
-        }
+        await user.save()
 
         res.status(200).json({ message: 'Password reset successful' })
     }
