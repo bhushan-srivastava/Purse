@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Welcome from "./static/Welcome"
+import Welcome from "./static/pages/Welcome"
 import Register from "./auth/authentication/Register"
 import Login from "./auth/authentication/Login"
 import ResetPassword from "./auth/authentication/ResetPassword"
