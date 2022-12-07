@@ -38,6 +38,14 @@ const getErrorMessages = (error) => {
         })
     }
 
+    if (error.message === 'data and hash arguments required') {
+        errorMessage += "Please enter all the details"
+    }
+
+    if (error.name === 'CastError') {
+        errorMessage += "Incorrect ID"
+    }
+
     if (!errorMessage) {
         errorMessage = error.message
     }

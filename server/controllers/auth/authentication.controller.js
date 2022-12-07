@@ -23,6 +23,10 @@ async function login(req, res) {
     try {
         const user = req.body.user
 
+        if (!req.body.password) {
+            throw new Error('Password is required to login')
+        }
+
         const auth = await bcrypt.compare(req.body.password, user.password);
         if (!auth) {
             throw new Error('Incorrect password')
@@ -117,6 +121,10 @@ async function sendResetEmail(req, res) {
 async function reset(req, res) {
     try {
         const user = req.body.user
+
+        if (!user.reset_code) {
+            throw new Error('Reset code is not sent yet')
+        }
 
         const match = await bcrypt.compare(req.body.verificationCode, user.reset_code);
         if (!match) {

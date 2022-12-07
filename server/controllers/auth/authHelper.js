@@ -3,6 +3,11 @@ import getErrorMessages from "../errorMessages.js";
 
 async function getUser(req, res, next) {
     try {
+        /******** maybe useless maybe usefull */
+        // if (!req.body.email) {
+        //     throw new Error('Email is required')
+        // }
+
         const user = await Users.findOne({ "email": req.body.email });
 
         if (!user) {
