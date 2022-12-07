@@ -22,7 +22,7 @@ const ResetPassword = () => {
         if (!emailSent) {
             setIsLoading(true)
 
-            const response = await fetch('/api/auth/forgot/send-email', {
+            const response = await fetch('/api/auth/forgot', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -45,7 +45,7 @@ const ResetPassword = () => {
         else {
             setIsLoading(true)
 
-            const response = await fetch('/api/auth/forgot/reset-password', {
+            const response = await fetch('/api/auth/forgot/password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
