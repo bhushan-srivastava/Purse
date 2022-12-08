@@ -74,6 +74,7 @@ const UserOptions = ({ setIsLoading }) => {
     return (
         <>
             <EditName
+                key='edit-name-form'
                 open={editNameFormOpen}
                 initialValues={{ "newName": name }}
                 // initialValues={{ "name": name }}
