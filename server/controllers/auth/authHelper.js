@@ -1,5 +1,6 @@
 import Users from "../../models/user/user.model.js"
 import getErrorMessages from "../errorMessages.js";
+import validator from 'validator'
 
 async function getUser(req, res, next) {
     try {
@@ -7,6 +8,9 @@ async function getUser(req, res, next) {
         // if (!req.body.email) {
         //     throw new Error('Email is required')
         // }
+        if (!validator.isEmail(req.body.email)) {
+            throw new Error('Invalid email')
+        }
 
         const user = await Users.findOne({ "email": req.body.email });
 

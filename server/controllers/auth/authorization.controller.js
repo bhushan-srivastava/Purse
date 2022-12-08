@@ -2,6 +2,7 @@
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 import getErrorMessages from "../errorMessages.js";
+import validator from 'validator'
 
 dotenv.config({ path: '../development.env' })
 
@@ -17,6 +18,10 @@ async function requireAuth(req, res, next) {
 
         // check json web token exists & is verified
         const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
+
+        if (!validator.isEmail(decodedToken.email)) {
+            throw new Error('Invalid email')
+        }
 
         req.body.email = decodedToken.email
         next();
