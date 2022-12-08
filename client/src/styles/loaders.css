@@ -19,6 +19,24 @@
     margin: 20px;
 } */
 
+.skeleton-image-loader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.skeleton-image-loader div {
+    width: 100% !important;
+    height: 50vh !important;
+}
+
+.skeleton-image-loader svg {
+    width: 100% !important;
+    height: 20vh !important;
+}
+
 @media screen and (max-width: 900px) {
     .loader {
         max-width: 80vw;

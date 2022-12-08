@@ -47,14 +47,6 @@
     padding: 20px;
 }
 
-.skeleton-image-loader {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-left: 0;
-    margin-right: 0;
-}
-
 .category-dropdown-list {
     display: inline;
 }
