@@ -1,6 +1,6 @@
 import { Modal, Form, Button, Input, Typography } from 'antd'
 
-const EditName = ({ open, saveName, onCancel }) => {
+const EditName = ({ open, initialValues, saveName, onCancel }) => {
     return (
         <Modal
             open={open}
@@ -11,9 +11,11 @@ const EditName = ({ open, saveName, onCancel }) => {
             <Form
                 name="edit-name-form"
                 onFinish={saveName}
+                initialValues={initialValues}
             >
                 <Form.Item
-                    name="name"
+                    name='newName'
+                    // name="name"
                     rules={[
                         {
                             required: true,

@@ -75,6 +75,8 @@ const UserOptions = ({ setIsLoading }) => {
         <>
             <EditName
                 open={editNameFormOpen}
+                initialValues={{ "newName": name }}
+                // initialValues={{ "name": name }}
                 saveName={saveName}
                 onCancel={onEditNameCancel}
             />

@@ -3,17 +3,21 @@ import getErrorMessages from "../errorMessages.js"
 
 async function editName(req, res) {
     try {
+        if (!req.body.newName) {
+            throw new Error('New first name is required')
+        }
+
         const user = await Users.findByIdAndUpdate(
-            req.body.user_id,
-            { name: req.body.name },
-            { new: true }
+            req.body.user._id,
+            { name: req.body.newName },
+            { new: true, runValidators: true }
         )
 
         if (!user) {
             throw new Error('Incorrect user')
         }
 
-        if (user.name !== req.body.name) {
+        if (user.name !== req.body.newName /* req.body.name */) {
             res.status(500).json({ message: 'Unable to update name' })
             return
         }
