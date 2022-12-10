@@ -1,110 +1,46 @@
-import { Table, Button, Popconfirm /*, message */ } from "antd";
+import { Table, Button, Popconfirm } from "antd";
 import { EditFilled, DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons"
-import AddEditTransaction from "./AddEditTransaction";
-import { useState } from "react";
 
-const TransactionsTable = () => {
-    const dataSource = [
-        {
-            key: 1,
-            date: new Date("Nov 07 2022").toDateString().substring(4),
-            amount: 123,
-            title: "title1",
-            type: "spent",
-            category: "some category",
-            description: "some description",
-            recurring: "yes",
-            remind_after_days: 1
-        },
-        {
-            key: 2,
-            date: new Date("Nov 08 2022").toDateString().substring(4),
-            amount: 456,
-            title: "title2",
-            type: "earned",
-            category: "some category",
-            description: "some description",
-            recurring: "yes",
-            remind_after_days: 2
-        },
-        {
-            key: 3,
-            date: new Date("Nov 09 2022").toDateString().substring(4),
-            amount: 789,
-            title: "title3",
-            type: "spent",
-            category: "some category",
-            description: "some description",
-            recurring: "no",
-            remind_after_days: 3
-        },
-        {
-            key: 4,
-            date: new Date("Nov 10 2022").toDateString().substring(4),
-            amount: 10111,
-            title: "title4",
-            type: "earned",
-            category: "some category",
-            description: "some description",
-            recurring: "no",
-            remind_after_days: 4
-        },
-        {
-            key: 5,
-            date: new Date("Nov 11 2022").toDateString().substring(4),
-            amount: 13141,
-            title: "title5",
-            type: "spent",
-            category: "some category",
-            description: "some description",
-            recurring: "yes",
-            remind_after_days: 5
-        },
-    ]
-
+const TransactionsTable = ({
+    transactions,
+    setSelectedTransaction,
+    setTransactionFormOpen,
+    deleteRecord }) => {
     const columns = [
         {
             title: 'Date',
             dataIndex: 'date',
-            key: 'date',
+            render: (date) => new Date(date).toDateString().substring(4),
             defaultSortOrder: 'descend', // has to be outside of sorter object
             sorter: {
-                compare:
-                    (record1, record2) => {
-                        return (
-                            new Date(record1.date) > new Date(record2.date)
-                                ? true : false
-                        )
-                    },
-                multiple: 2 // priority in the multiple column sorting
+                compare: (record1, record2) => new Date(record1.date) - new Date(record2.date),
             }
         },
         {
             title: 'Amt',
             dataIndex: 'amount',
-            key: 'amount',
             sorter: {
-                compare:
-                    (record1, record2) => {
-                        return (
-                            record1.amount > record2.amount
-                                ? true : false
-                        )
-                    },
-                multiple: 1 // priority in the multiple column sorting
+                compare: (record1, record2) => record1.amount - record2.amount,
             }
         },
         {
             title: 'Type',
             dataIndex: 'type',
-            key: 'type'
         },
         {
             title: 'Action',
-            render: () => {
+            render: (record) => {
                 return (
                     <span className="action-span">
-                        <Button type='text' icon={<EditFilled />} onClick={editTransactionButtonClick} />
+                        <Button
+                            type='text'
+                            icon={<EditFilled />}
+                            onClick={() => {
+                                // see if you want a named function here, like some local editRecord(record) or something
+                                setSelectedTransaction(record)
+                                setTransactionFormOpen(true)
+                            }}
+                        />
 
                         <Popconfirm
                             title={"Delete?"}
@@ -112,40 +48,32 @@ const TransactionsTable = () => {
                             cancelText="No"
                             icon={<QuestionCircleOutlined />}
                             okButtonProps={{ danger: true, type: "default" }}
-                        // onConfirm={() => { message.success("success") }}
+                            onConfirm={() => { deleteRecord(record) }}
                         // onCancel={() => { message.error("error") }}
                         >
                             <Button type='text' danger={true} icon={<DeleteOutlined />} />
                         </Popconfirm>
                     </span>
                 )
-            },
-            key: 'actions',
+            }
         }
     ]
 
-    function editTransactionButtonClick() {
-        setTransactionFormOpen(true)
-    }
+    // const saveTransaction = () => { setTransactionFormOpen(false) }
 
-    const [transactionFormOpen, setTransactionFormOpen] = useState(false)
-
-    const saveTransaction = () => { setTransactionFormOpen(false) }
-    const onCancel = () => { setTransactionFormOpen(false) }
+    // const onCancel = () => {
+    //     setSelectedTransaction({})
+    //     setTransactionFormOpen(false)
+    // }
 
     return (
         <>
-            <AddEditTransaction
-                open={transactionFormOpen}
-                saveTransaction={saveTransaction}
-                onCancel={onCancel}
-            />
-
             <Table
                 className="transactions-table"
                 size="small"
+                rowKey="_id"
                 bordered={true}
-                dataSource={dataSource}
+                dataSource={transactions}
                 columns={columns}
                 pagination={{ pageSize: 5 }}
                 expandedRowRender={
@@ -156,9 +84,9 @@ const TransactionsTable = () => {
                                 <br />
                                 Category: {record.category},
                                 <br />
-                                Recurring: {record.recurring ? "yes" : "no"},
+                                Recurring: {record.recurring ? "Yes" : "No"},
                                 <br />
-                                Remind every: {record.remind_after_days} days,
+                                Remind every: {record.recurring ? record.remind_after_days + " days," : "NA,"}
                                 <br />
                                 Description: {record.description ? record.description : "NA"}
                             </span>
