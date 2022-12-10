@@ -1,34 +1,34 @@
 import { Modal, Form, Button, Input, InputNumber, DatePicker, Radio, Typography, AutoComplete } from 'antd'
 
-const transactionCategories = [
-    {
-        value: "abcd",
-        label: "abcd"
-    },
-    {
-        value: "cdef",
-        label: "cdef"
-    }
-]
+const AddEditTransaction = ({
+    open,
+    categories,
+    initialValues,
+    saveTransaction,
+    onCancel }) => {
 
-const AddEditTransaction = ({ open, editData, saveTransaction, onCancel }) => {
     return (
         <Modal
             open={open}
             title={
-                !editData ?
-                    <Typography.Title level={2}>New Transaction</Typography.Title>
-                    :
-                    <Typography.Title level={2}>Edit Transaction</Typography.Title>
+                <Typography.Title level={2}>
+                    {/* check if there is a title or not, to see if it is a new transaction or an edit transaction */}
+                    {!initialValues.title ? "New Transaction" : "Edit Transaction"}
+                </Typography.Title>
             }
             onCancel={onCancel}
             footer={false}
         >
             <Form
+                // form={form}
                 name="transaction-form"
-                // initialValues={editData || null}
-                initialValues={editData ?? null}
+                // initialValues={selectedTransaction || {}}
+                // initialValues={selectedTransaction ?? {}}
+                // initialValues={selectedTransaction ?? null}
+                initialValues={initialValues}
                 onFinish={saveTransaction}
+                layout='vertical'
+            // onFinish={console.log}
             >
                 <Form.Item
                     name="title"
@@ -67,6 +67,7 @@ const AddEditTransaction = ({ open, editData, saveTransaction, onCancel }) => {
                     name="date"
                     rules={[{ required: true, message: 'Please enter the date!' }]}
                     hasFeedback={true}
+                    valuePropName='date'
                 >
                     <DatePicker format='DD MMM YYYY' size='large' />
                 </Form.Item>
@@ -93,8 +94,8 @@ const AddEditTransaction = ({ open, editData, saveTransaction, onCancel }) => {
                     hasFeedback={true}
                 >
                     <AutoComplete
-                        placeholder='Category'
-                        options={transactionCategories}
+                        placeholder='Category Eg. Food, travel, etc'
+                        options={categories}
                         size='large'
                         showAction="focus"
                         showArrow={true}
@@ -115,7 +116,7 @@ const AddEditTransaction = ({ open, editData, saveTransaction, onCancel }) => {
 
                 <Form.Item
                     name="recurring"
-                    rules={[{ required: true, message: 'Is your transaction recurring?' }]}
+                    // rules={[{ required: true, message: 'Is your transaction recurring?' }]}
                     hasFeedback={true}
                 >
                     <Radio.Group
@@ -126,18 +127,18 @@ const AddEditTransaction = ({ open, editData, saveTransaction, onCancel }) => {
                     >
                         <Radio.Button value={true}>Recurring</Radio.Button>
                         <Radio.Button value={false}>Not Recurring</Radio.Button>
-                        {/* <Radio.Button value='true'>Recurring</Radio.Button>
-                        <Radio.Button value='false'>Not Recurring</Radio.Button> */}
                     </Radio.Group>
                 </Form.Item>
 
                 <Form.Item
                     name="remind_after_days"
+                    label='After how many days should we remind you about your  recurring transaction? For example, remind every 7 days or every 30 days, etc.'
                     hasFeedback={true}
                 >
                     <InputNumber
                         size='large'
-                        placeholder="How many days between recurring emails"
+                        placeholder="Remind every ________ days"
+                        // placeholder="How many days between recurring emails"
                         min={0}
                         className='ant-input-number-full-width'
                     />
@@ -153,7 +154,7 @@ const AddEditTransaction = ({ open, editData, saveTransaction, onCancel }) => {
                     </Button>
                 </Form.Item>
             </Form>
-        </Modal>
+        </Modal >
     )
 }
 
