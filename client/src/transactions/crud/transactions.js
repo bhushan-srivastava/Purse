@@ -197,4 +197,22 @@ async function filterTransactions(formValues, setIsLoading, setTransactions, set
     }
 }
 
-export { getTransactions, saveTransaction, editTransaction, deleteTransaction, editTransactionCategory, isEmpty, filterTransactions }
+async function clearTransactionFilters(setIsLoading, setTransactions, setCategories, currentFilters, setCurrentFilters, setFilterFormOpen) {
+    setIsLoading(true) /******** maybe remove loading state from this function */
+
+    setFilterFormOpen(false)
+
+    if (isEmpty(currentFilters)) {
+        setIsLoading(false) /******** maybe remove loading state from this function */
+        return
+    }
+
+    setCurrentFilters({})
+
+    await getTransactions(setIsLoading, setTransactions, setCategories)
+
+    // if you don't want the function to be async
+    // getTransactions(setIsLoading, setTransactions, setCategories)
+}
+
+export { getTransactions, saveTransaction, editTransaction, deleteTransaction, editTransactionCategory, filterTransactions, clearTransactionFilters, isEmpty }
