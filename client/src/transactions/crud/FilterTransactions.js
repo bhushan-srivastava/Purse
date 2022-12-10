@@ -1,33 +1,6 @@
 import { Modal, Form, Button, InputNumber, DatePicker, Radio, Typography, Select } from 'antd'
 
-const transactionCategories = [
-    {
-        value: "abcd",
-        label: "abcd"
-    },
-    {
-        value: "cdef",
-        label: "cdef"
-    },
-    {
-        value: "efgh",
-        label: "efgh"
-    },
-    {
-        value: "ghij",
-        label: "ghij"
-    },
-    {
-        value: "ijkl",
-        label: "ijkl"
-    },
-    {
-        value: "klmn",
-        label: "klmn"
-    }
-]
-
-const FilterTransactions = ({ open, applyFilters, clearFilters, onCancel }) => {
+const FilterTransactions = ({ open, categories, initialValues, applyFilters, clearFilters, onCancel }) => {
     return (
         <Modal
             open={open}
@@ -37,13 +10,11 @@ const FilterTransactions = ({ open, applyFilters, clearFilters, onCancel }) => {
         >
             <Form
                 name="filter-form"
-                // initialValues={editData || null}
+                initialValues={initialValues}
                 onFinish={applyFilters}
             >
                 <span className='range-filter'>
-                    <Form.Item
-                        name="startDate"
-                    >
+                    <Form.Item name="startDate">
                         <DatePicker
                             size='large'
                             format='DD MMM YYYY'
@@ -51,9 +22,7 @@ const FilterTransactions = ({ open, applyFilters, clearFilters, onCancel }) => {
                         />
                     </Form.Item>
 
-                    <Form.Item
-                        name="endDate"
-                    >
+                    <Form.Item name="endDate">
                         <DatePicker
                             size='large'
                             format='DD MMM YYYY'
@@ -63,9 +32,7 @@ const FilterTransactions = ({ open, applyFilters, clearFilters, onCancel }) => {
                 </span>
 
                 <span className='range-filter'>
-                    <Form.Item
-                        name="startAmount"
-                    >
+                    <Form.Item name="startAmount">
                         <InputNumber
                             size='large'
                             placeholder="From amount"
@@ -74,9 +41,7 @@ const FilterTransactions = ({ open, applyFilters, clearFilters, onCancel }) => {
                         />
                     </Form.Item>
 
-                    <Form.Item
-                        name="endAmount"
-                    >
+                    <Form.Item name="endAmount">
                         <InputNumber
                             size='large'
                             placeholder="To amount"
@@ -86,9 +51,7 @@ const FilterTransactions = ({ open, applyFilters, clearFilters, onCancel }) => {
                     </Form.Item>
                 </span>
 
-                <Form.Item
-                    name="type"
-                >
+                <Form.Item name="type">
                     <Radio.Group
                         size='large'
                         optionType='button'
@@ -100,9 +63,7 @@ const FilterTransactions = ({ open, applyFilters, clearFilters, onCancel }) => {
                     </Radio.Group>
                 </Form.Item>
 
-                <Form.Item
-                    name="category"
-                >
+                <Form.Item name="categories">
                     <Select
                         allowClear={true}
                         showSearch={true}
@@ -110,16 +71,14 @@ const FilterTransactions = ({ open, applyFilters, clearFilters, onCancel }) => {
                         mode="multiple"
                         maxTagCount={2}
                         // maxTagTextLength={2}
-                        options={transactionCategories}
+                        options={categories}
                         size='large'
                         // allowClear={true}
                         filterOption={true}
                     />
                 </Form.Item>
 
-                <Form.Item
-                    name="recurring"
-                >
+                <Form.Item name="recurring">
                     <Radio.Group
                         size='large'
                         optionType='button'
