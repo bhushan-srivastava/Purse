@@ -1,17 +1,6 @@
 import { Modal, Form, Button, Input, Typography, Select } from 'antd'
 
-const transactionCategories = [
-    {
-        value: "abcd",
-        label: "abcd"
-    },
-    {
-        value: "cdef",
-        label: "cdef"
-    }
-]
-
-const EditCategory = ({ open, saveCategory, onCancel }) => {
+const EditCategory = ({ open, categories, saveCategory, onCancel }) => {
     return (
         <Modal
             open={open}
@@ -36,7 +25,7 @@ const EditCategory = ({ open, saveCategory, onCancel }) => {
                     <Select
                         showSearch={true}
                         placeholder='Category'
-                        options={transactionCategories}
+                        options={categories}
                         size='large'
                         // allowClear={true}
                         filterOption={true}
