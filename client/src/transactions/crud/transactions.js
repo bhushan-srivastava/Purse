@@ -156,4 +156,45 @@ async function editTransactionCategory(formValues, setIsLoading, setEditCategory
     }
 }
 
-export { getTransactions, saveTransaction, editTransaction, deleteTransaction, editTransactionCategory }
+const isEmpty = (ob) => {
+    for (const key in ob) {
+        return false
+    }
+    return true
+}
+
+async function filterTransactions(formValues, setIsLoading, setTransactions, setFilterFormOpen, setCurrentFilters) {
+    setIsLoading(true) /******** maybe move loading to after if check */
+
+    if (isEmpty(formValues)) {
+        setIsLoading(false) /******** maybe move loading to after if check */
+        return
+    }
+
+    const response = await fetch('/api/transaction/filter', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formValues)
+    })
+
+    const responseData = await response.json()
+
+    if (responseData.message === 'Filter transactions successful') {
+        setTransactions(responseData.transactions)
+
+        setFilterFormOpen(false)
+        setCurrentFilters(formValues)
+
+        setIsLoading(false)
+
+        message.success('Filters applied')
+    }
+    else {
+        setIsLoading(false)
+        message.error(responseData.message)
+    }
+}
+
+export { getTransactions, saveTransaction, editTransaction, deleteTransaction, editTransactionCategory, isEmpty, filterTransactions }
