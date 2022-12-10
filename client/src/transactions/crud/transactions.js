@@ -64,4 +64,40 @@ async function saveTransaction(formValues, setIsLoading, setSelectedTransaction,
     }
 }
 
-export { getTransactions, saveTransaction }
+async function editTransaction(formValues, transactionId, setIsLoading, setSelectedTransaction, setTransactionFormOpen, setTransactions, setCategories) {
+    setIsLoading(true)
+
+    if (!formValues.recurring && formValues.remind_after_days) {
+        formValues.remind_after_days = undefined
+    }
+
+    const response = await fetch('/api/transaction/' + transactionId, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formValues)
+    })
+
+    const responseData = await response.json()
+
+    if (responseData.message === 'Transaction added successfully'
+        || responseData.message === 'Transaction updated successfully') {
+        setTransactions(responseData.transactions)
+
+        setCategories(makeCategoriesArray(responseData.categories))
+
+        setTransactionFormOpen(false)
+        setSelectedTransaction({})
+
+        setIsLoading(false)
+
+        message.success(responseData.message.replace('successfully', ''))
+    }
+    else {
+        setIsLoading(false)
+        message.error(responseData.message)
+    }
+}
+
+export { getTransactions, saveTransaction, editTransaction }
