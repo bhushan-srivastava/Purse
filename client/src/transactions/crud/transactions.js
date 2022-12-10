@@ -126,4 +126,34 @@ async function deleteTransaction(record, setIsLoading, setSelectedTransaction, s
     }
 }
 
-export { getTransactions, saveTransaction, editTransaction, deleteTransaction }
+async function editTransactionCategory(formValues, setIsLoading, setEditCategoryFormOpen, setTransactions, setCategories) {
+    setIsLoading(true)
+
+    const response = await fetch('/api/transaction/category', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formValues)
+    })
+
+    const responseData = await response.json()
+
+    if (responseData.message === 'Category updated successfully') {
+        setTransactions(responseData.transactions)
+
+        setCategories(makeCategoriesArray(responseData.categories))
+
+        setEditCategoryFormOpen(false)
+
+        setIsLoading(false)
+
+        message.success('Category updated')
+    }
+    else {
+        setIsLoading(false)
+        message.error(responseData.message)
+    }
+}
+
+export { getTransactions, saveTransaction, editTransaction, deleteTransaction, editTransactionCategory }
