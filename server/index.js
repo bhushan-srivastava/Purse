@@ -16,10 +16,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 // app.use('/', authRoutes)
-app.use(authRoutes)
+app.use('/api/auth', authRoutes)
 // app.use('/', transactionRoutes)
-app.use(transactionRoutes)
-app.use(userRoutes)
+app.use('/api/transaction', transactionRoutes)
+app.use('/api/user', userRoutes)
 
 // database connection
 // mongoose.connect(process.env.DB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }) // if error then uncomment this line

@@ -10,15 +10,15 @@ import { deleteTransaction } from "../../controllers/transactions/deleteTransact
 
 const router = Router()
 
-router.route('/api/transaction')
+router.route('/')
     .get(requireAuth, getUser, readTransactions, getAllTransactions)
     .post(requireAuth, getUser, createTransaction, getAllTransactions)
-router.route('/api/transaction/:transactionId')
+router.route('/:transactionId')
     .put(requireAuth, getUser, updateTransaction, getAllTransactions)
     .delete(requireAuth, getUser, deleteTransaction, getAllTransactions)
-router.route('/api/transaction/filter')
+router.route('/filter')
     .post(requireAuth, getUser, filterTransactions) /**** no getAllTransactions here */
-router.route('/api/transaction/category')
+router.route('/category')
     .post(requireAuth, getUser, updateCategory, getAllTransactions)
 
 export { router }
