@@ -100,4 +100,30 @@ async function editTransaction(formValues, transactionId, setIsLoading, setSelec
     }
 }
 
-export { getTransactions, saveTransaction, editTransaction }
+async function deleteTransaction(record, setIsLoading, setSelectedTransaction, setTransactions, setCategories) {
+    setIsLoading(true)
+
+    const response = await fetch('/api/transaction/' + record._id, {
+        method: 'DELETE'
+    })
+
+    const responseData = await response.json()
+
+    if (responseData.message === 'Transaction deleted successfully') {
+        setSelectedTransaction({})
+
+        setTransactions(responseData.transactions)
+
+        setCategories(makeCategoriesArray(responseData.categories))
+
+        setIsLoading(false)
+
+        message.success('Transaction deleted')
+    }
+    else {
+        setIsLoading(false)
+        message.error(responseData.message)
+    }
+}
+
+export { getTransactions, saveTransaction, editTransaction, deleteTransaction }
