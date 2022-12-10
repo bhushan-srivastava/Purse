@@ -18,9 +18,17 @@
     font-weight: bolder;
 }
 
+.ant-form-item-label>label {
+    align-items: flex-end;
+}
+
 .transactions-graph-title {
     display: flex;
     justify-content: space-between;
+}
+
+li.ant-list-item {
+    padding: 0 !important;
 }
 
 @media screen and (max-width: 900px) {
