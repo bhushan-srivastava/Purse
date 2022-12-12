@@ -51,8 +51,31 @@ li.ant-list-item {
     color: rgb(245, 110, 83);
 }
 
+.rotate-device {
+    display: none;
+}
+
 @media screen and (max-width: 900px) {
     .ant-table-expand-icon-col {
         width: 35px;
+    }
+}
+
+@media screen and (orientation: portrait) {
+    .bar-chart {
+        display: none;
+    }
+
+    .rotate-device {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 80vw;
+    }
+
+    .rotate-device .icon {
+        font-size: xx-large;
+        margin: 20px;
     }
 }
