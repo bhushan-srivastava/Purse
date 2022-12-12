@@ -4,7 +4,7 @@ import Register from "./auth/authentication/Register"
 import Login from "./auth/authentication/Login"
 import ResetPassword from "./auth/authentication/ResetPassword"
 import PrivateRoute from "./auth/authorization/PrivateRoute";
-import Home from "./Home"
+import Home from "./transactions/Home"
 // import Visualization from "./graphs/Visualization"
 import ErrorPage from "./ErrorPage"
 
