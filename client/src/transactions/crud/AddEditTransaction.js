@@ -132,7 +132,8 @@ const AddEditTransaction = ({
 
                 <Form.Item
                     name="remind_after_days"
-                    label='After how many days should we remind you about your  recurring transaction? For example, remind every 7 days or every 30 days, etc.'
+                    tooltip='If you have a recurring transaction, you can choose to get reminder emails about it. You need to set email reminder only the first time a recurring transaction happens. After that, you do not need to set a reminder every time that transaction happens. After how many days should we remind you about your recurring transaction? For example, remind every 7 days or every 30 days, etc.'
+                    label='Email reminder'
                     hasFeedback={true}
                 >
                     <InputNumber
