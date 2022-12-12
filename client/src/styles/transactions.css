@@ -43,6 +43,14 @@ li.ant-list-item {
     /* max-height: inherit; */
 }
 
+.green-color {
+    color: rgb(59, 194, 127);
+}
+
+.red-color {
+    color: rgb(245, 110, 83);
+}
+
 @media screen and (max-width: 900px) {
     .ant-table-expand-icon-col {
         width: 35px;
