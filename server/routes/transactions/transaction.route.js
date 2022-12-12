@@ -7,6 +7,7 @@ import { createTransaction } from "../../controllers/transactions/createTransact
 import { updateTransaction } from "../../controllers/transactions/updateTransaction.controller.js"
 import { updateCategory } from "../../controllers/transactions/updateCategory.controller.js"
 import { deleteTransaction } from "../../controllers/transactions/deleteTransaction.controller.js"
+import { getAnalysis } from "../../controllers/transactions/analysis.controller.js"
 
 const router = Router()
 
@@ -20,5 +21,7 @@ router.route('/filter')
     .post(requireAuth, getUser, filterTransactions) /**** no getAllTransactions here */
 router.route('/category')
     .post(requireAuth, getUser, updateCategory, getAllTransactions)
+router.route('/analysis')
+    .post(requireAuth, getUser, getAnalysis)
 
 export { router }
