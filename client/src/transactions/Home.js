@@ -1,10 +1,10 @@
 import { Layout, Skeleton, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import logo from "../static/images/logo.png"
-import { getTransactions, deleteTransaction, editTransaction, saveTransaction, editTransactionCategory, clearTransactionFilters, filterTransactions } from "./crud/transactions"
-import Visualization from './graphs/Visualization';
+import { getTransactions, deleteTransaction, editTransaction, saveTransaction, editTransactionCategory, clearTransactionFilters, filterTransactions, makeCategoriesArray } from "./crud/transactions"
+import Analysis from './Analysis';
 import CRUDTransactionButtons from './crud/CRUDTransactionButtons';
-import TransactionsTable from './table/TransactionsTable';
+import TransactionsTable from './tables/TransactionsTable';
 import UserOptions from '../user/UserOptions';
 
 const Home = () => {
@@ -25,7 +25,21 @@ const Home = () => {
     const [filterFormOpen, setFilterFormOpen] = useState(false)
 
     /** CRUD CALLER FUNCTIONS */
-    useEffect(() => { getTransactions(setIsLoading, setTransactions, setCategories) }, [])
+    useEffect(() => {
+        setIsLoading(true)
+
+        getTransactions()
+            .then((responseData) => {
+                setTransactions(responseData.transactions)
+
+                setCategories(makeCategoriesArray(responseData.categories))
+
+                setIsLoading(false)
+            })
+            .catch(() => {
+                setIsLoading(false)
+            })
+    }, [])
 
     function addRecord(record) {
         saveTransaction(record, setIsLoading, setSelectedTransaction, setTransactionFormOpen, setTransactions, setCategories)
@@ -82,15 +96,15 @@ const Home = () => {
                 deleteRecord={deleteRecord}
             />)
         }
-        else if (view === 'graph' && isLoading) {
+        else if (view === 'analysis' && isLoading) {
             return (
                 <div className='skeleton-image-loader'>
                     <Skeleton.Image active={true} />
                 </div>
             )
         }
-        else if (view === 'graph' && !isLoading) {
-            return <Visualization transactions={transactions} />
+        else if (view === 'analysis' && !isLoading) {
+            return <Analysis filters={currentFilters} />
         }
     }
 

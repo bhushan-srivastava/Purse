@@ -13,20 +13,14 @@ function makeCategoriesArray(rawCategories) {
     return arr
 }
 
-async function getTransactions(setIsLoading, setTransactions, setCategories) {
-    setIsLoading(true)
-
+async function getTransactions() {
     const response = await fetch('/api/transaction', {
         method: 'GET'
     })
 
     const responseData = await response.json()
 
-    setTransactions(responseData.transactions)
-
-    setCategories(makeCategoriesArray(responseData.categories))
-
-    setIsLoading(false)
+    return responseData
 }
 
 async function saveTransaction(formValues, setIsLoading, setSelectedTransaction, setTransactionFormOpen, setTransactions, setCategories) {
@@ -171,6 +165,10 @@ async function filterTransactions(formValues, setIsLoading, setTransactions, set
         return
     }
 
+    if (formValues.categories?.length === 0) {
+        formValues.categories = undefined
+    }
+
     const response = await fetch('/api/transaction/filter', {
         method: 'POST',
         headers: {
@@ -209,10 +207,13 @@ async function clearTransactionFilters(setIsLoading, setTransactions, setCategor
 
     setCurrentFilters({})
 
-    await getTransactions(setIsLoading, setTransactions, setCategories)
+    const responseData = await getTransactions()
 
-    // if you don't want the function to be async
-    // getTransactions(setIsLoading, setTransactions, setCategories)
+    setTransactions(responseData.transactions)
+
+    setCategories(makeCategoriesArray(responseData.categories))
+
+    setIsLoading(false)
 }
 
-export { getTransactions, saveTransaction, editTransaction, deleteTransaction, editTransactionCategory, filterTransactions, clearTransactionFilters, isEmpty }
+export { getTransactions, saveTransaction, editTransaction, deleteTransaction, editTransactionCategory, filterTransactions, clearTransactionFilters, isEmpty, makeCategoriesArray }

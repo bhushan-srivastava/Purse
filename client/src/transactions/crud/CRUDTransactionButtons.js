@@ -11,7 +11,7 @@ const transactionViews = [
         icon: <TableOutlined />,
     },
     {
-        value: 'graph',
+        value: 'analysis',
         icon: <AreaChartOutlined />,
     }
 ]
