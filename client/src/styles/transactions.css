@@ -18,9 +18,9 @@
     font-weight: bolder;
 }
 
-.ant-form-item-label>label {
+/* .ant-form-item-label>label {
     align-items: flex-end;
-}
+} */
 
 .transactions-graph-title {
     display: flex;
@@ -29,6 +29,18 @@
 
 li.ant-list-item {
     padding: 0 !important;
+    display: block;
+    /* max-height: 50vh; */
+}
+
+.ant-list-item:last-child {
+    border-bottom: none !important;
+}
+
+.analysis-container {
+    max-height: 60vh;
+    /* max-height: 80vh; */
+    /* max-height: inherit; */
 }
 
 @media screen and (max-width: 900px) {
