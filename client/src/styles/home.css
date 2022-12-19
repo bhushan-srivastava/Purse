@@ -37,7 +37,8 @@
     /* maybe temporary */
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content: flex-start
 }
 
 .main-content-layout {
@@ -76,5 +77,9 @@
     .main-content-layout {
         margin: auto 20px;
         box-shadow: none;
+    }
+
+    .main-content-layout .layout-header {
+        justify-content: space-between;
     }
 }
