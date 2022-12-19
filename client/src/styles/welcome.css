@@ -1,0 +1,48 @@
+.welcome.layout-header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.landing-content {
+    padding-left: 20px;
+    padding-right: 22px;
+}
+
+img {
+    max-height: 80vh;
+    max-width: 70vw;
+}
+
+.landing-content li.ant-list-item {
+    margin-top: 15vh;
+    display: flex;
+    flex-direction: row;
+    /* flex-wrap: wrap; */
+    align-content: center;
+    justify-content: center;
+    min-height: fit-content;
+    /* min-height: 100vh; */
+    border-bottom: none !important;
+    align-items: center;
+    /* text-align: center; */
+}
+
+.landing-content li.ant-list-item .call-to-action {
+    margin: 20px auto;
+}
+
+.login-button {
+    padding-left: 0;
+}
+
+.purse-benefits-container {
+    display: block !important;
+}
+
+@media screen and (max-width: 900px) {
+    .landing-content li.ant-list-item {
+        flex-wrap: wrap;
+        min-height: fit-content;
+    }
+}

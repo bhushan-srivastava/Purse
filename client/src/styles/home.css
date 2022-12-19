@@ -12,11 +12,13 @@
     margin-top: 15px;
 }
 
-.layout-header .title {
+.layout-header .title,
+.layout-footer .title {
     font-size: x-large;
 }
 
-.layout-header .logo {
+.layout-header .logo,
+.layout-footer .logo {
     max-height: 25px;
     max-width: 25px;
     margin-right: 5px;
@@ -25,6 +27,13 @@
 
 .layout-content {
     background-color: white;
+}
+
+.layout-footer {
+    background-color: white;
+    /* padding-left: 20px;
+    padding-right: 22px; */
+    padding: 20px 22px 0 20px;
 }
 
 .main-content-layout .layout-header {
