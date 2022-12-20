@@ -28,7 +28,9 @@ const Welcome = () => {
                 <List size='large'>
                     <List.Item>
                         <span>
-                            <Typography.Title>Manage your cash money on the go and get your finances in order.</Typography.Title>
+                            <Typography.Title className='welcome-title'>Purse</Typography.Title>
+
+                            <Typography.Title level={2}>Manage your cash money on the go and get your finances in order</Typography.Title>
 
                             <CallToAction />
                         </span>
