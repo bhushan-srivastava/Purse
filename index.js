@@ -9,7 +9,13 @@ import { router as authRoutes } from "./routes/auth/auth.route.js"
 import { router as transactionRoutes } from "./routes/transactions/transaction.route.js"
 import { router as userRoutes } from "./routes/user/user.route.js"
 
-dotenv.config({ path: '../development.env' })
+/* production environment */
+if (process.env.NODE_ENV !== 'production') {
+    dotenv.config({ path: '../development.env' })
+}
+else {
+    dotenv.config()
+}
 
 const app = express();
 
@@ -40,8 +46,8 @@ const port = process.env.PORT || 8080
 
 // database connection
 mongoose.set('strictQuery', true);
-// mongoose.connect(process.env.DB_CONNECTION_STRING)
-mongoose.connect(process.env.DB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }) // if error then uncomment this line
+// mongoose.connect(process.env.DB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }) // if error then uncomment this line
+mongoose.connect(process.env.DB_CONNECTION_STRING)
     .then((result) => {
         app.listen(port)
         console.info(`listneing on port ${port}`)
