@@ -1,5 +1,6 @@
 import { Table, Button, Popconfirm } from "antd";
 import { EditFilled, DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons"
+import moment from 'moment'
 
 const TransactionsTable = ({
     transactions,
@@ -37,7 +38,13 @@ const TransactionsTable = ({
                             icon={<EditFilled />}
                             onClick={() => {
                                 // see if you want a named function here, like some local editRecord(record) or something
-                                setSelectedTransaction(record)
+                                const tempRecord = record
+                                tempRecord.date = moment(record.date)
+                                if (tempRecord.remind_on) {
+                                    tempRecord.remind_on = moment(record.remind_on)
+                                }
+                                setSelectedTransaction(tempRecord)
+                                // setSelectedTransaction(record)
                                 setTransactionFormOpen(true)
                             }}
                         />
@@ -87,7 +94,7 @@ const TransactionsTable = ({
                                 <br />
                                 Recurring: {record.recurring ? "Yes" : "No"},
                                 <br />
-                                Remind every: {record.recurring && record.remind_after_days ? record.remind_after_days + " days" : "NA"},
+                                Remind on: {record.recurring && record.remind_on ? new Date(record.remind_on).toDateString()/*.substring(4)*/ : "NA"},
                                 <br />
                                 Description: {record.description ? record.description : "NA"}
                             </span>

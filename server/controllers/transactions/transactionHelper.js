@@ -16,8 +16,8 @@ const constructFilter = async ({ email, user, ...filters }) => {
     if (startDate && endDate && (startDate > endDate)) {
         throw new Error('Start date cannot be greater than end date')
     }
-    startDate && (filter.date.$gte = new Date(startDate));
-    endDate && (filter.date.$lte = new Date(endDate));
+    startDate && (filter.date.$gte = new Date(new Date(startDate).setHours(0, 0, 0, 0)));
+    endDate && (filter.date.$lte = new Date(new Date(endDate).setHours(0, 0, 0, 0)));
 
     (startAmount || endAmount) && (filter.amount = {});
     if (startAmount && endAmount && (startAmount > endAmount)) {

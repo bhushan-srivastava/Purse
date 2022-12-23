@@ -25,6 +25,9 @@ const transactionSchema = new mongoose.Schema(
             validate: {
                 validator: validator.isDate,
                 message: 'Date is invalid'
+            },
+            set: function (value) {
+                return new Date(new Date(value).setHours(0, 0, 0, 0))
             }
         },
         type: {
@@ -49,17 +52,26 @@ const transactionSchema = new mongoose.Schema(
         recurring: {
             type: Boolean,
         },
-        remind_after_days: {
-            type: Number,
-            min: [0, 'Days cannot be lesser than 0'],
+        remind_on: {
+            type: Date,
             // required: [
             //     function () {
             //         return this.recurring ? true : false
             //     },
-            //     'Email reminder after how many days?'
+            //     'When do you want an email reminder?'
             // ],
+            validate: {
+                validator: function (value) {
+                    return value > this.date
+                },
+                message: 'Reminder date cannot be earlier than the transaction date'
+            },
             set: function (value) {
-                return this.recurring && value ? value : undefined
+                if (this.recurring && value) {
+                    return new Date(new Date(value).setHours(0, 0, 0, 0))
+                }
+
+                return undefined
             }
         }
     }

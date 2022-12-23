@@ -26,8 +26,8 @@ async function getTransactions() {
 async function saveTransaction(formValues, setIsLoading, setSelectedTransaction, setTransactionFormOpen, setTransactions, setCategories) {
     setIsLoading(true)
 
-    if (!formValues.recurring && formValues.remind_after_days) {
-        formValues.remind_after_days = undefined
+    if (!formValues.recurring && formValues.remind_on) {
+        formValues.remind_on = undefined
     }
 
     const response = await fetch('/api/transaction', {
@@ -61,8 +61,8 @@ async function saveTransaction(formValues, setIsLoading, setSelectedTransaction,
 async function editTransaction(formValues, transactionId, setIsLoading, setSelectedTransaction, setTransactionFormOpen, setTransactions, setCategories) {
     setIsLoading(true)
 
-    if (!formValues.recurring && formValues.remind_after_days) {
-        formValues.remind_after_days = undefined
+    if (!formValues.recurring && formValues.remind_on) {
+        formValues.remind_on = undefined
     }
 
     const response = await fetch('/api/transaction/' + transactionId, {

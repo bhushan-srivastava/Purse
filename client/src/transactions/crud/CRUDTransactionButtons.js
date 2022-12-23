@@ -4,6 +4,7 @@ import AddEditTransaction from "./AddEditTransaction";
 import EditCategory from "./EditCategory";
 import FilterTransactions from "./FilterTransactions";
 import { isEmpty } from "./transactions";
+import moment from 'moment'
 
 const transactionViews = [
     {
@@ -27,12 +28,12 @@ const transactionCategoryOptions = [
 const defaultTransactionFormValues = {
     "title": null,
     "amount": null,
-    "date": null,
+    "date": moment(),
     "type": null,
     "category": null,
     "description": null,
     "recurring": null,
-    "remind_after_days": null
+    "remind_on": moment()
 }
 
 const defaultFilterFormValues = {

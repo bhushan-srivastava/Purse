@@ -67,9 +67,14 @@ const AddEditTransaction = ({
                     name="date"
                     rules={[{ required: true, message: 'Please enter the date!' }]}
                     hasFeedback={true}
-                    valuePropName='date'
+                // valuePropName='date'
                 >
-                    <DatePicker format='DD MMM YYYY' size='large' />
+                    <DatePicker
+                        format='DD MMM YYYY'
+                        // format='MMM DD YYYY'
+                        size='large'
+                        placeholder='Date'
+                    />
                 </Form.Item>
 
                 <Form.Item
@@ -131,17 +136,17 @@ const AddEditTransaction = ({
                 </Form.Item>
 
                 <Form.Item
-                    name="remind_after_days"
-                    tooltip='If you have a recurring transaction, you can choose to get reminder emails about it. You need to set email reminder only the first time a recurring transaction happens. After that, you do not need to set a reminder every time that transaction happens. After how many days should we remind you about your recurring transaction? For example, remind every 7 days or every 30 days, etc.'
+                    name="remind_on"
+                    tooltip='If you have a recurring transaction, you can choose to get an email reminder about it.'
                     label='Email reminder'
+                    // valuePropName='date'
                     hasFeedback={true}
                 >
-                    <InputNumber
+                    <DatePicker
+                        format='DD MMM YYYY'
+                        // format='MMM DD YYYY'
                         size='large'
-                        placeholder="Remind every ________ days"
-                        // placeholder="How many days between recurring emails"
-                        min={0}
-                        className='ant-input-number-full-width'
+                        placeholder='Remind on'
                     />
                 </Form.Item>
 
