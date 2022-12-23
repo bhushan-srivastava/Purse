@@ -1,5 +1,5 @@
 # purse
-Track your cash using Purse. Access it here: [https://github.com/bhushan-srivastava/purse](https://github.com/bhushan-srivastava/purse)
+Track your cash money using Purse. Access it here: [https://github.com/bhushan-srivastava/purse](https://github.com/bhushan-srivastava/purse)
 
 ## CRUD Transactions  
 
