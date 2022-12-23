@@ -1,2 +1,16 @@
 # purse
-Purse is website where users keep track of the money that comes into their purse and goes out of their purse.
+Track your cash using Purse. Access it here: [https://github.com/bhushan-srivastava/purse](https://github.com/bhushan-srivastava/purse)
+
+## CRUD Transactions  
+
+![New transaction](./client/src/static/images/new.png)  
+
+## Filter and Sort Transactions  
+
+![Filter transactions](./client/src/static/images/filter.png)  
+
+## Analyze Transactions  
+
+![Analyze transaction](./client/src/static/images/analysis_summary.png)  
+
+And much more........ Access it here: [https://github.com/bhushan-srivastava/purse](https://github.com/bhushan-srivastava/purse)  
