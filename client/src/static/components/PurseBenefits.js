@@ -32,7 +32,7 @@ const PurseBenefits = () => {
 
                 <Collapse.Panel header="Employers of household maids, nannies and cooks" key="3">
                     <Typography.Paragraph>
-                        People employ maids, cooks and nannies at their homes. They pay their salary in cash. So they can choose to get an email reminder for recurring expenses such as their maid, nanny or cook's salary, etc.
+                        People employ maids, cooks and nannies at their homes. They pay their salary in cash. So they can choose to get email reminders for recurring expenses such as their maid, nanny or cook's salary, etc.
                     </Typography.Paragraph>
                 </Collapse.Panel>
 
