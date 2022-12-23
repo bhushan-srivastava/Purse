@@ -34,7 +34,12 @@ const getErrorMessages = (error) => {
     // if (error.message.includes('validation failed')) {
     if (error.name === "ValidationError") {
         Object.values(error.errors).forEach((errorField) => {
-            errorMessage += errorField.message + " "
+            if (errorField.name === 'CastError') {
+                errorMessage += 'Invalid value for ' + errorField.path
+            }
+            else {
+                errorMessage += errorField.message + " "
+            }
         })
     }
 

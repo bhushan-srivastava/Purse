@@ -8,6 +8,7 @@ import { updateTransaction } from "../../controllers/transactions/updateTransact
 import { updateCategory } from "../../controllers/transactions/updateCategory.controller.js"
 import { deleteTransaction } from "../../controllers/transactions/deleteTransaction.controller.js"
 import { getAnalysis } from "../../controllers/transactions/analysis.controller.js"
+import { sendReminder } from "../../controllers/transactions/reminder.controller.js"
 
 const router = Router()
 
@@ -23,5 +24,7 @@ router.route('/category')
     .post(requireAuth, getUser, updateCategory, getAllTransactions)
 router.route('/analysis')
     .post(requireAuth, getUser, getAnalysis)
+router.route('/reminder')
+    .get(sendReminder)
 
 export { router }
