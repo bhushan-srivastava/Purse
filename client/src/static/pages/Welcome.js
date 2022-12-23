@@ -112,7 +112,7 @@ const Welcome = () => {
 
                             <Typography.Paragraph>
                                 You can choose to get email reminders for recurring earnings such as salary, etc.
-                                You can choose to get email reminders for recurring expenses such as cable/dish TV bill electricity bill, phone bill/recharge, Wi-Fi/broadband internet bill and the your household maid, nanny or cook's salary, etc.
+                                You can choose to get email reminders for recurring expenses such as cable/dish TV bill electricity bill, phone bill/recharge, Wi-Fi/broadband internet bill and your household maid, nanny or cook's salary, etc.
                             </Typography.Paragraph>
 
                             <CallToAction />
@@ -133,6 +133,10 @@ const Welcome = () => {
                         <img src={logo} className="logo" alt="Purse-logo" />
                         Purse
                     </a>
+                </p>
+
+                <p>
+                    <a href="https://github.com/bhushan-srivastava/">Made by Bhushan Srivastava</a>
                 </p>
             </Layout.Footer>
         </Layout >

@@ -1,4 +1,5 @@
-.layout-header {
+.layout-header,
+.layout-footer {
     background-color: white;
     display: flex;
     flex-direction: row;
