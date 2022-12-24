@@ -47,6 +47,7 @@ async function sendReminder(req, res) {
         const transactions = await Transactions.find({ remind_on: { $gte: tomorrow, $lt: dayAfterTomorrow } })
 
         if (transactions.length === 0) {
+            res.status(200).json({ message: 'Reminders sent' })
             return
         }
 
