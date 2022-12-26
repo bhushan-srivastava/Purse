@@ -11,7 +11,7 @@ import { router as userRoutes } from "./routes/user/user.route.js"
 
 /* production environment */
 if (process.env.NODE_ENV !== 'production') {
-    dotenv.config({ path: '../development.env' })
+    dotenv.config({ path: './development.env' })
 }
 else {
     dotenv.config()
