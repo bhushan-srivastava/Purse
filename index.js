@@ -17,17 +17,17 @@ else {
     dotenv.config()
 }
 
-const app = express();
+const server = express();
 
 // middleware
-app.use(express.json());
-app.use(cookieParser());
+server.use(express.json());
+server.use(cookieParser());
 
-// app.use('/', authRoutes)
-app.use('/api/auth', authRoutes)
-// app.use('/', transactionRoutes)
-app.use('/api/transaction', transactionRoutes)
-app.use('/api/user', userRoutes)
+// server.use('/', authRoutes)
+server.use('/api/auth', authRoutes)
+// server.use('/', transactionRoutes)
+server.use('/api/transaction', transactionRoutes)
+server.use('/api/user', userRoutes)
 
 /* production client build folder */
 if (process.env.NODE_ENV === 'production') {
@@ -35,9 +35,9 @@ if (process.env.NODE_ENV === 'production') {
 
     const __dirname = path.dirname(__filename);
 
-    app.use(express.static(path.join(__dirname, './client/build')))
+    server.use(express.static(path.join(__dirname, './client/build')))
 
-    app.get('/*', function (req, res) {
+    server.get('/*', function (req, res) {
         res.sendFile(path.join(__dirname, './client/build/index.html'));
     });
 }
@@ -49,7 +49,7 @@ mongoose.set('strictQuery', true);
 // mongoose.connect(process.env.DB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }) // if error then uncomment this line
 mongoose.connect(process.env.DB_CONNECTION_STRING)
     .then((result) => {
-        app.listen(port)
+        server.listen(port)
         console.info(`listneing on port ${port}`)
     })
     .catch((error) => {
