@@ -62,7 +62,7 @@ const transactionSchema = new mongoose.Schema(
             // ],
             validate: {
                 validator: function (value) {
-                    return value > this.date
+                    return validator.isDate(value) && (value > this.date)
                 },
                 message: 'Reminder date cannot be earlier than the transaction date'
             },
