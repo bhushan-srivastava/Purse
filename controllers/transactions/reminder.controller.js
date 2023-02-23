@@ -41,10 +41,10 @@ async function sendReminder(req, res) {
     try {
         const today = new Date(new Date().setHours(0, 0, 0, 0))
         const tomorrow = new Date(moment(today).add(1, 'days'))
-        const dayAfterTomorrow = new Date(moment(tomorrow).add(1, 'days'))
+        // const dayAfterTomorrow = new Date(moment(tomorrow).add(1, 'days'))
         // const dayAfterTomorrow = new Date(moment(today).add(2, 'days'))
 
-        const transactions = await Transactions.find({ remind_on: { $gte: tomorrow, $lt: dayAfterTomorrow } })
+        const transactions = await Transactions.find({ remind_on: { $gte: today, $lt: tomorrow } })
 
         if (transactions.length === 0) {
             res.status(200).json({ message: 'Reminders sent' })

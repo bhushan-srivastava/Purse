@@ -50,7 +50,7 @@ mongoose.set('strictQuery', true);
 mongoose.connect(process.env.DB_CONNECTION_STRING)
     .then((result) => {
         server.listen(port)
-        console.info(`listneing on port ${port}`)
+        console.info(`listening on port ${port}`)
     })
     .catch((error) => {
         console.error(error)
