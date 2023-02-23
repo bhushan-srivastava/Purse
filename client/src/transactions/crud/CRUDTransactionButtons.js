@@ -19,7 +19,7 @@ const transactionViews = [
 
 const transactionCategoryOptions = [
     {
-        label: "Edit an existing category",
+        label: "Edit an existing category's name",
         key: 'edit-category',
         icon: <EditFilled />
     }
@@ -125,7 +125,7 @@ const CRUDTransactionButtons = ({
                     onClick={filterButtonClick}
                 />
 
-                <Dropdown menu={{ items: transactionCategoryOptions, onClick: categoryOptionsClick }} trigger={['click']} placement='bottomRight' className='category-dropdown-list' >
+                <Dropdown menu={{ items: transactionCategoryOptions, onClick: categoryOptionsClick }} trigger={['click']} placement='bottom' className='category-dropdown-list' >
                     <Button size="large" type='text' icon={<MoreOutlined rotate={90} />} />
                 </Dropdown>
             </span>
