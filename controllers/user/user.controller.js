@@ -22,8 +22,8 @@ async function editName(req, res) {
             return
         }
 
-        const maxAge = 3 * 24 * 60 * 60;
-        res.cookie('purseName', user.name, { maxAge: maxAge * 1000 })
+        const threeDays = 3 * 24 * 60 * 60 * 1000; // 3 days in milliseconds
+        res.cookie('purseName', user.name, { maxAge: threeDays })
         res.status(200).json({ message: 'Name updated successfully' })
     }
     catch (error) {

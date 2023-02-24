@@ -38,9 +38,9 @@ async function login(req, res) {
 
         const token = createToken(user.email);
         // for production if website is deployed on https server
-        // res.cookie('purse', token, { httpOnly: true, secure: true, maxAge: maxAge * 1000 });
-        res.cookie('purse', token, { httpOnly: true, maxAge: maxAge * 1000 });
-        res.cookie('purseName', user.name, { maxAge: maxAge * 1000 });
+        // res.cookie('purse', token, { httpOnly: true, secure: true, maxAge: threeDays });
+        res.cookie('purse', token, { httpOnly: true, maxAge: threeDays });
+        res.cookie('purseName', user.name, { maxAge: threeDays });
         res.status(200).json({ message: 'Login successful', name: user.name });
     }
     catch (error) {
@@ -49,7 +49,7 @@ async function login(req, res) {
 }
 
 // create json web token
-const maxAge = 3 * 24 * 60 * 60;
+const threeDays = 3 * 24 * 60 * 60 * 1000; // 3 days in milliseconds
 function createToken(email) {
     return jwt.sign(
         { email },
