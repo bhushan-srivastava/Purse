@@ -1,6 +1,7 @@
 import Users from "../../models/user/user.model.js"
 import Transactions from "../../models/transactions/transaction.model.js"
 import getErrorMessages from "../errorMessages.js"
+import dotenv from "dotenv"
 import nodemailer from "nodemailer"
 import moment from 'moment'
 
@@ -20,7 +21,14 @@ async function sendEmail(transporter, transaction) {
         from: '"Purse" <noreply@purse.com>', // sender address
         to: user.email, // list of receivers
         subject: "Transaction reminder", // Subject line
-        html: "Hello,<br>"
+        text: "Hello,\n" // plain text body
+            + "We wanted to remind you about your recurring transaction\n"
+            + "Title: " + title + ",\n"
+            + "Amount: " + amount + ",\n"
+            + "Type: " + type + ",\n"
+            + "Category: " + category + ",\n"
+            + "Description: " + description + "\n",
+        html: "Hello,<br>" // html body
             + "We wanted to remind you about your recurring transaction<br>"
             + "Title: " + title + ",<br>"
             + "Amount: " + amount + ",<br>"
@@ -53,7 +61,7 @@ async function sendReminder(req, res) {
 
         // Generate test SMTP service account from ethereal.email
         // Only needed if you don't have a real mail account for testing
-        const testAccount = await nodemailer.createTestAccount();
+        // const testAccount = await nodemailer.createTestAccount();
 
         // if (!testAccount) {
         //     throw new Error('Unable to send reminder')
@@ -65,8 +73,8 @@ async function sendReminder(req, res) {
             port: 587,
             secure: false, // true for 465, false for other ports
             auth: {
-                user: testAccount.user, // generated ethereal user
-                pass: testAccount.pass, // generated ethereal password
+                user: process.env.ETHEREAL_USER, // generated ethereal user
+                pass: process.env.ETHEREAL_PASSWORD, // generated ethereal password
             },
         });
 
