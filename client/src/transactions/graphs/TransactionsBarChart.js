@@ -1,10 +1,11 @@
 import { Empty, Typography } from "antd";
 import { RotateLeftOutlined } from "@ant-design/icons"
-import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend /*,  Colors */ } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 // Chart.defaults.font.size = 16
+// Chart.register(Colors);
 
 const TransactionsBarChart = ({ data }) => {
     if (data.categories.length === 0) {

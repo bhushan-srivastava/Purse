@@ -1,11 +1,12 @@
 import { Empty, Typography } from "antd";
-import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Chart, ArcElement, Tooltip, Legend /*,  Colors */ } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import { getRandomBackgroundColors } from "./graphHelper";
 
 Chart.register(ArcElement, Tooltip, Legend);
 Chart.defaults.font.size = 16
 Chart.defaults.plugins.legend.align = 'start'
+// Chart.register(Colors);
 
 const SpendingsPieChart = ({ data }) => {
     if (data.categories.length === 0) {
