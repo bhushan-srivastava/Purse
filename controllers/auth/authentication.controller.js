@@ -38,8 +38,14 @@ async function login(req, res) {
 
         const token = createToken(user.email);
         // for production if website is deployed on https server
-        // res.cookie('purse', token, { httpOnly: true, secure: true, maxAge: threeDays });
-        res.cookie('purse', token, { httpOnly: true, maxAge: threeDays });
+        /* production environment */
+        if (process.env.NODE_ENV === 'production') {
+            res.cookie('purse', token, { httpOnly: true, secure: true, maxAge: threeDays });
+        }
+        else {
+            res.cookie('purse', token, { httpOnly: true, maxAge: threeDays });
+        }
+
         res.cookie('purseName', user.name, { maxAge: threeDays });
         res.status(200).json({ message: 'Login successful', name: user.name });
     }
