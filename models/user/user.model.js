@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 import validator from "validator"
 import bcrypt from "bcrypt"
+import dotenv from "dotenv"
 
 const userSchema = new mongoose.Schema(
     {
@@ -34,7 +35,7 @@ const userSchema = new mongoose.Schema(
 
 // fire a function before doc saved to db
 userSchema.pre('save', async function (next) {
-    const saltRounds = 10 // can also be a salt string
+    const saltRounds = parseInt(pr.env.BCRYPT_SALT_ROUNDS) // can also be a salt string
 
     // generate a salt and hash on separate function calls
     // const salt = await bcrypt.genSalt(saltRounds);
