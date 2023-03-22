@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema(
 
 // fire a function before doc saved to db
 userSchema.pre('save', async function (next) {
-    const saltRounds = parseInt(pr.env.BCRYPT_SALT_ROUNDS) // can also be a salt string
+    const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS) // can also be a salt string
 
     // generate a salt and hash on separate function calls
     // const salt = await bcrypt.genSalt(saltRounds);
