@@ -1,5 +1,5 @@
 # purse
-Track your cash money using Purse. Access it here: [https://purse.cyclic.app](https://purse.cyclic.app)
+Track your cash money using Purse.  
 
 ## CRUD Transactions  
 
@@ -13,4 +13,4 @@ Track your cash money using Purse. Access it here: [https://purse.cyclic.app](ht
 
 ![Analyze transaction](./client/src/static/images/analysis_summary.png)  
 
-And much more........ Access it here: [https://purse.cyclic.app](https://purse.cyclic.app)  
+And much more........  
