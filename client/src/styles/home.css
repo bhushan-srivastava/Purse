@@ -1,0 +1,95 @@
+.layout-header,
+.layout-footer {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-left: 20px;
+    padding-right: 22px;
+}
+
+.layout-header .ant-skeleton {
+    margin-top: 15px;
+}
+
+.layout-header .title,
+.layout-footer .title {
+    font-size: x-large;
+}
+
+.layout-header .logo,
+.layout-footer .logo {
+    max-height: 25px;
+    max-width: 25px;
+    margin-right: 5px;
+    margin-bottom: 8px;
+}
+
+.layout-content {
+    background-color: white;
+}
+
+.layout-footer {
+    background-color: white;
+    /* padding-left: 20px;
+    padding-right: 22px; */
+    padding: 20px 22px 0 20px;
+}
+
+.main-content-layout .layout-header {
+    padding-left: 0;
+    padding-right: 0;
+    height: auto;
+    /* margin-top: 20px;
+    margin-bottom: 25px; */
+
+    /* maybe temporary */
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    justify-content: flex-start
+}
+
+.main-content-layout {
+    background-color: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    margin: 20px;
+    padding: 20px;
+}
+
+.category-dropdown-list {
+    display: inline;
+}
+
+.ant-modal {
+    top: 60px;
+}
+
+.ant-input-number-full-width {
+    width: 100%;
+}
+
+.range-filter {
+    display: flex;
+}
+
+.modal-submit-button {
+    display: flex;
+    justify-content: right;
+}
+
+.modal-submit-button button:nth-last-child(2) {
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 900px) {
+    .main-content-layout {
+        margin: auto 20px;
+        box-shadow: none;
+    }
+
+    .main-content-layout .layout-header {
+        justify-content: space-between;
+    }
+}

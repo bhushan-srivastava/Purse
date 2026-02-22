@@ -1,0 +1,45 @@
+.loader-div {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.767);
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+}
+
+.loader {
+    max-width: 50vw;
+    max-height: 50vh;
+}
+
+/* .skeleton-loader {
+    margin: 20px;
+} */
+
+.skeleton-image-loader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.skeleton-image-loader div {
+    width: 100% !important;
+    height: 50vh !important;
+}
+
+.skeleton-image-loader svg {
+    width: 100% !important;
+    height: 20vh !important;
+}
+
+@media screen and (max-width: 900px) {
+    .loader {
+        max-width: 80vw;
+        max-height: 80vh;
+    }
+}

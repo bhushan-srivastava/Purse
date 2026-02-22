@@ -1,0 +1,38 @@
+* {
+  font-family: 'Roboto';
+}
+
+html {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "Roboto";
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #1890ff;
+}
+
+.ant-typography h1,
+h1.ant-typography {
+  margin-bottom: 5px;
+}
+
+.ant-btn {
+  letter-spacing: 1px;
+}
+
+@media screen and (max-width: 900px) {
+  .ant-message {
+    top: auto;
+    bottom: 20px;
+  }
+}
