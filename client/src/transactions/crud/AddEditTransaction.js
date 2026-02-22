@@ -10,6 +10,7 @@ const AddEditTransaction = ({
     return (
         <Modal
             open={open}
+            destroyOnClose={true}
             title={
                 <Typography.Title level={2}>
                     {/* check if there is a title or not, to see if it is a new transaction or an edit transaction */}
@@ -28,6 +29,7 @@ const AddEditTransaction = ({
                 initialValues={initialValues}
                 onFinish={saveTransaction}
                 layout='vertical'
+                preserve={false}
             // onFinish={console.log}
             >
                 <Form.Item

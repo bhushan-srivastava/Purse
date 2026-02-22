@@ -37,14 +37,12 @@ const TransactionsTable = ({
                             type='text'
                             icon={<EditFilled />}
                             onClick={() => {
-                                // see if you want a named function here, like some local editRecord(record) or something
-                                const tempRecord = record
+                                const tempRecord = { ...record }
                                 tempRecord.date = moment(record.date)
                                 if (tempRecord.remind_on) {
                                     tempRecord.remind_on = moment(record.remind_on)
                                 }
                                 setSelectedTransaction(tempRecord)
-                                // setSelectedTransaction(record)
                                 setTransactionFormOpen(true)
                             }}
                         />
@@ -82,13 +80,14 @@ const TransactionsTable = ({
                 bordered={true}
                 dataSource={transactions}
                 columns={columns}
-                pagination={{ pageSize: 5 }}
+                // pagination={{ pageSize: 5 }}
+                pagination={false}
                 showSorterTooltip={false}
                 expandedRowRender={
                     (record) => {
                         return (
                             <span>
-                                Title: {record.title},
+                                Title: {record.title[0].toUpperCase()+ record.title.substring(1)},
                                 <br />
                                 Category: {record.category[0].toUpperCase() + record.category.substring(1)},
                                 <br />

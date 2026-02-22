@@ -4,6 +4,7 @@ const FilterTransactions = ({ open, categories, initialValues, applyFilters, cle
     return (
         <Modal
             open={open}
+            destroyOnClose={true}
             title={<Typography.Title level={2}>Filter Transactions</Typography.Title>}
             onCancel={onCancel}
             footer={false}
@@ -12,6 +13,7 @@ const FilterTransactions = ({ open, categories, initialValues, applyFilters, cle
                 name="filter-form"
                 initialValues={initialValues}
                 onFinish={applyFilters}
+                preserve={false}
             >
                 <span className='range-filter'>
                     <Form.Item name="startDate">

@@ -1,40 +1,52 @@
 import { Dropdown, message } from 'antd';
 import { EditFilled, LogoutOutlined } from "@ant-design/icons"
 import { useNavigate } from "react-router-dom"
-import logout from '../auth/authentication/logout';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EditName from './EditName';
+import { useAuth } from '../auth/AuthContext';
+
+const getNameFromCookie = () => {
+    const purseCookie = document.cookie
+        .split('; ')
+        .find((cookie) => cookie.startsWith('purseName='));
+
+    return purseCookie ? decodeURIComponent(purseCookie.replace('purseName=', '')) : '';
+};
 
 const UserOptions = ({ setIsLoading }) => {
     const navigate = useNavigate()
+    const { user, logout } = useAuth();
 
     const [editNameFormOpen, setEditNameFormOpen] = useState(false)
-    const [name, setName] = useState(decodeURI(document.cookie.replace('purseName=', '')))
+    const [name, setName] = useState(user?.name || getNameFromCookie())
+
+    useEffect(() => {
+        setName(user?.name || getNameFromCookie());
+    }, [user]);
 
     const saveName = async (formValues) => {
         setIsLoading(true)
-
-        const response = await fetch('/api/user/name', {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formValues)
-        })
-
-        const responseData = await response.json()
-
-        if (responseData.message === 'Name updated successfully') {
-            setName(decodeURI(document.cookie.replace('purseName=', '')))
+        try {
+            const response = await fetch('/api/user/name', {
+                method: 'PATCH',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formValues)
+            });
+            const responseData = await response.json();
+            if (!response.ok) {
+                throw new Error(responseData.message || 'Failed to update name');
+            }
+            setName(getNameFromCookie())
+            message.success(responseData.message || 'Name saved')
+        } catch (error) {
+            message.error(error.message || 'Failed to update name');
+        } finally {
             setIsLoading(false)
-            message.success('Name saved')
+            setEditNameFormOpen(false)
         }
-        else {
-            setIsLoading(false)
-            message.error(responseData.message)
-        }
-
-        setEditNameFormOpen(false)
     }
 
     const onEditNameCancel = () => { setEditNameFormOpen(false) }

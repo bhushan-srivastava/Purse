@@ -5,22 +5,24 @@ const Register = () => {
     const navigate = useNavigate()
 
     const register = async (formValues) => {
-        const response = await fetch('/api/auth/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formValues)
-        })
+        try {
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formValues)
+            });
+            const responseData = await response.json();
+            if (responseData.message === 'User registered successfully') {
+                message.success("Registration successful")
+                navigate("/login")
+                return;
+            }
 
-        const responseData = await response.json()
-
-        if (responseData.message === 'User registered successfully') {
-            message.success("Registration successful")
-            navigate("/login")
-        }
-        else {
             message.error(responseData.message)
+        } catch (error) {
+            message.error(error.message || 'Registration failed');
         }
     }
 

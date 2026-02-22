@@ -2,10 +2,11 @@ import { Button, Form, Input, message, Typography } from 'antd';
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from 'react';
 import Loader from '../../loaders/Loader';
-import logout from './logout';
+import { useAuth } from '../AuthContext';
 
 const ResetPassword = () => {
     const navigate = useNavigate()
+    const { logout } = useAuth();
 
     const [isLoading, setIsLoading] = useState(false)
     const [emailSent, setEmailSent] = useState(false)
@@ -16,53 +17,53 @@ const ResetPassword = () => {
         logout()
             .then(() => { setIsLoading(false) })
             .catch(() => { setIsLoading(false) })
-    }, [])
+    }, [logout])
 
     const resetPassword = async (formValues) => {
         if (!emailSent) {
             setIsLoading(true)
-
-            const response = await fetch('/api/auth/forgot', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formValues)
-            })
-
-            const responseData = await response.json()
-
-            if (responseData.message === 'Reset code sent') {
-                setEmailSent(true)
+            try {
+                const response = await fetch('/api/auth/forgot', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formValues)
+                });
+                const responseData = await response.json();
+                if (responseData.message === 'Reset code sent') {
+                    setEmailSent(true)
+                    message.success(responseData.message)
+                } else {
+                    message.error(responseData.message)
+                }
+            } catch (error) {
+                message.error(error.message || 'Failed to send reset code');
+            } finally {
                 setIsLoading(false)
-                message.success(responseData.message)
-            }
-            else {
-                setIsLoading(false)
-                message.error(responseData.message)
             }
         }
         else {
             setIsLoading(true)
-
-            const response = await fetch('/api/auth/forgot/password', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formValues)
-            })
-
-            const responseData = await response.json()
-
-            if (responseData.message === 'Password reset successful') {
+            try {
+                const response = await fetch('/api/auth/forgot/password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formValues)
+                });
+                const responseData = await response.json();
+                if (responseData.message === 'Password reset successful') {
+                    message.success(responseData.message)
+                    navigate("/login")
+                } else {
+                    message.error(responseData.message)
+                }
+            } catch (error) {
+                message.error(error.message || 'Failed to reset password');
+            } finally {
                 setIsLoading(false)
-                message.success(responseData.message)
-                navigate("/login")
-            }
-            else {
-                setIsLoading(false)
-                message.error(responseData.message)
             }
         }
     };

@@ -4,6 +4,7 @@ const EditCategory = ({ open, categories, saveCategory, onCancel }) => {
     return (
         <Modal
             open={open}
+            destroyOnClose={true}
             title={<Typography.Title level={2}>Edit category</Typography.Title>}
             onCancel={onCancel}
             footer={false}
@@ -11,6 +12,7 @@ const EditCategory = ({ open, categories, saveCategory, onCancel }) => {
             <Form
                 name="edit-category-form"
                 onFinish={saveCategory}
+                preserve={false}
             >
                 <Form.Item
                     name="selectedCategory"

@@ -82,7 +82,7 @@ const CRUDTransactionButtons = ({
                 key={selectedTransaction._id ?? 'new-transaction'} /* very important, the feature works because of this */
                 open={transactionFormOpen}
                 categories={categories}
-                initialValues={selectedTransaction ?? defaultTransactionFormValues}
+                initialValues={selectedTransaction?._id ? selectedTransaction : defaultTransactionFormValues}
                 saveTransaction={!selectedTransaction._id ? addRecord : editRecord}
                 onCancel={onTransactionCancel}
             />
@@ -99,7 +99,7 @@ const CRUDTransactionButtons = ({
                 key='filter-form'
                 open={filterFormOpen}
                 categories={categories}
-                initialValues={currentFilters ?? defaultFilterFormValues}
+                initialValues={!isEmpty(currentFilters) ? currentFilters : defaultFilterFormValues}
                 applyFilters={filterRecords}
                 clearFilters={clearFilters}
                 onCancel={onFilterCancel}
