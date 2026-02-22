@@ -41,6 +41,8 @@ const defaultFilterFormValues = {
     "endAmount": null,
     "endDate": null,
     "recurring": null,
+    "sortBy": "date",
+    "sortOrder": "descend",
     "startAmount": null,
     "startDate": null,
     "type": null

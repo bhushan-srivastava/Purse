@@ -21,7 +21,9 @@ export const AuthProvider = ({ children }) => {
                 if (!response.ok) {
                     throw new Error();
                 }
+                const responseData = await response.json();
                 setIsAuthenticated(true);
+                setUser(responseData.user || null);
             } catch {
                 clearAuthState();
             } finally {

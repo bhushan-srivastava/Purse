@@ -83,16 +83,7 @@ const globalErrorHandler = (err, req, res, next) => {
         return;
     }
 
-    // prod, hiding errors
-    if (!formattedError.isOperational) {
-        console.error('ERROR', formattedError);
-        res.status(500).json({
-            status: 'error',
-            message: 'Something went wrong'
-        });
-        return;
-    }
-
+    // prod
     res.status(statusCode).json({ status, message });
 };
 

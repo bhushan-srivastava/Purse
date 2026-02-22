@@ -12,17 +12,10 @@ const TransactionsTable = ({
             title: 'Date',
             dataIndex: 'date',
             render: (date) => new Date(date).toDateString().substring(4),
-            defaultSortOrder: 'descend', // has to be outside of sorter object
-            sorter: {
-                compare: (record1, record2) => new Date(record1.date) - new Date(record2.date),
-            }
         },
         {
             title: 'Amt',
             dataIndex: 'amount',
-            sorter: {
-                compare: (record1, record2) => record1.amount - record2.amount,
-            }
         },
         {
             title: 'Type',

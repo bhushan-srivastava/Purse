@@ -5,6 +5,7 @@ import Analysis from './Analysis';
 import CRUDTransactionButtons from './crud/CRUDTransactionButtons';
 import TransactionsTable from './tables/TransactionsTable';
 import UserOptions from '../user/UserOptions';
+import { isEmpty } from './crud/transactions';
 
 const parseJson = async (response) => {
     const contentType = response.headers.get('content-type') || '';
@@ -33,7 +34,8 @@ const Home = () => {
         setIsLoading(true);
         setError(null);
         try {
-            const response = await fetch(`/api/transaction?page=${page}&limit=${pageSize}`, {
+            const query = new URLSearchParams({ page: String(page), limit: String(pageSize) });
+            const response = await fetch(`/api/transaction?${query.toString()}`, {
                 credentials: 'include'
             });
             const responseData = await parseJson(response);
@@ -73,7 +75,7 @@ const Home = () => {
             }
             message.success('Transaction added successfully');
             setCurrentFilters({});
-            fetchData(1, pagination.pageSize); 
+            fetchData(1, pagination.pageSize);
         } catch (error) {
             setError(error.message || 'Failed to add transaction.');
             setIsLoading(false);
@@ -105,6 +107,7 @@ const Home = () => {
                 throw new Error(responseData.message || 'Failed to update transaction.');
             }
             message.success('Transaction updated');
+            refreshCurrentView();
         } catch (error) {
             message.error(error.message || 'Failed to update transaction.');
             setTransactions(originalTransactions);
@@ -125,7 +128,7 @@ const Home = () => {
                 throw new Error(responseData.message || 'Failed to delete transaction.');
             }
             message.success('Transaction deleted');
-            fetchData(pagination.current, pagination.pageSize);
+            refreshCurrentView();
         } catch (error) {
             message.error(error.message || 'Failed to delete transaction.');
             setTransactions(originalTransactions);
@@ -164,27 +167,38 @@ const Home = () => {
         setEditCategoryFormOpen(false)
     }
     async function filterRecords(formValues) {
+        await fetchFilteredData(formValues, 1, pagination.pageSize, true);
+    }
+
+    async function fetchFilteredData(formValues, page, pageSize, closeFilterModal) {
         setIsLoading(true);
         setError(null);
         try {
+            const payload = { ...formValues, page, limit: pageSize };
             const response = await fetch('/api/transaction/filter', {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formValues)
+                body: JSON.stringify(payload)
             });
             const responseData = await parseJson(response);
             if (!response.ok) {
                 throw new Error(responseData.message || 'Failed to filter transactions.');
             }
             const filteredTransactions = responseData.transactions || [];
-            setCurrentFilters(formValues);
+            setCurrentFilters(formValues || {});
             setTransactions(filteredTransactions);
-            setPagination((prev) => ({ ...prev, current: 1, total: filteredTransactions.length }));
-            setFilterFormOpen(false);
-            setIsLoading(false);
+            setPagination({
+                current: responseData.page || page,
+                pageSize: responseData.limit || pageSize,
+                total: responseData.total || 0
+            });
+            if (closeFilterModal) {
+                setFilterFormOpen(false);
+            }
         } catch (error) {
             setError(error.message || 'Failed to filter transactions.');
+        } finally {
             setIsLoading(false);
         }
     }
@@ -198,8 +212,20 @@ const Home = () => {
         setFilterFormOpen(false)
     }
 
+    function refreshCurrentView() {
+        if (isEmpty(currentFilters)) {
+            fetchData(pagination.current, pagination.pageSize);
+            return;
+        }
+        fetchFilteredData(currentFilters, pagination.current, pagination.pageSize, false);
+    }
+
     const handlePageChange = (page, pageSize) => {
-        fetchData(page, pageSize);
+        if (isEmpty(currentFilters)) {
+            fetchData(page, pageSize);
+            return;
+        }
+        fetchFilteredData(currentFilters, page, pageSize, false);
     };
 
     const renderView = () => {

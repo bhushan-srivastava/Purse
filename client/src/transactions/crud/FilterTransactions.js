@@ -94,6 +94,28 @@ const FilterTransactions = ({ open, categories, initialValues, applyFilters, cle
                     </Radio.Group>
                 </Form.Item>
 
+                <span className='range-filter'>
+                    <Form.Item name="sortBy">
+                        <Select
+                            size='large'
+                            options={[
+                                { label: 'Sort by date', value: 'date' },
+                                { label: 'Sort by amount', value: 'amount' }
+                            ]}
+                        />
+                    </Form.Item>
+
+                    <Form.Item name="sortOrder">
+                        <Select
+                            size='large'
+                            options={[
+                                { label: 'Newest/Highest first', value: 'descend' },
+                                { label: 'Oldest/Lowest first', value: 'ascend' }
+                            ]}
+                        />
+                    </Form.Item>
+                </span>
+
                 <Form.Item className='modal-submit-button'>
                     <Button htmlType="reset" size='large' onClick={clearFilters}>
                         Clear Filters

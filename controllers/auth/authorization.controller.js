@@ -32,7 +32,13 @@ async function requireAuth(req, res, next) {
 };
 
 function getAuth(req, res) {
-    res.status(200).json({ message: 'Authorized' })
+    res.status(200).json({
+        message: 'Authorized',
+        user: {
+            name: req.user.name,
+            email: req.user.email
+        }
+    })
 }
 
 export { requireAuth, getAuth }
