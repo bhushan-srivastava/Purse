@@ -1,39 +1,20 @@
 import Transactions from "../../models/transactions/transaction.model.js"
-import getErrorMessages from "../errorMessages.js"
 import { constructFilter } from "./transactionHelper.js"
 
-
-async function readTransactions(req, res, next) {
+async function filterTransactions(req, res, next) {
     try {
-        req.body.okMessage = 'Get transactions successful'
-        next()
-    }
-    catch (error) {
-        res.status(500).json({ message: 'Unable to get transactions' })
-    }
-}
-
-async function filterTransactions(req, res) {
-    try {
-        // console.log(constructFilter(req.body));
-        // res.send('check log')
-
-        // const filter = await constructFilter(req.query)
-
-        const filter = await constructFilter(req.body)
+        const filter = await constructFilter({ ...req.body, user: req.user })
 
         const transactions = await Transactions.find(filter)
 
-        req.body.okMessage = 'Filter transactions successful'
-
         res.status(200).json({
-            message: req.body.okMessage,
+            message: 'Filter transactions successful',
             transactions: transactions,
         })
     }
     catch (error) {
-        res.status(400).json({ message: getErrorMessages(error) })
+        next(error)
     }
 }
 
-export { readTransactions, filterTransactions }
+export { filterTransactions }

@@ -1,19 +1,21 @@
 import Transactions from "../../models/transactions/transaction.model.js"
-import getErrorMessages from "../errorMessages.js"
+import AppError from "../appError.js";
 
 async function deleteTransaction(req, res, next) {
     try {
-        const transaction = await Transactions.findByIdAndDelete(req.params.transactionId)
+        const transaction = await Transactions.findOneAndDelete({
+            _id: req.params.transactionId,
+            user_id: req.user._id
+        });
 
         if (!transaction) {
-            throw new Error('Incorrect transaction ID')
+            throw new AppError('Transaction not found', 404);
         }
 
-        req.body.okMessage = 'Transaction deleted successfully'
-        next()
+        res.status(200).json({ message: 'Transaction deleted successfully' });
     }
     catch (error) {
-        res.status(400).json({ message: getErrorMessages(error) })
+        next(error);
     }
 }
 

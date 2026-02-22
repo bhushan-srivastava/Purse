@@ -1,57 +1,43 @@
 import Transactions from "../../models/transactions/transaction.model.js"
-import getErrorMessages from "../errorMessages.js"
 
 async function updateCategory(req, res, next) {
     try {
-        // code works without this !selectedCategory check because no document would match the query filter where the category is undefined because category is required
-        if (!req.body.selectedCategory) {
-            throw new Error("No category selected")
+        const { selectedCategory, newName } = req.body;
+
+        if (!selectedCategory) {
+            const error = new Error("No category selected");
+            error.statusCode = 400;
+            throw error;
         }
 
-        if (!req.body.newName) {
-            throw new Error("Category's new name is required")
+        if (!newName) {
+            const error = new Error("Category's new name is required");
+            error.statusCode = 400;
+            throw error;
         }
 
         const result = await Transactions.updateMany(
             {
-                user_id: req.body.user._id,
-                category: req.body.selectedCategory
+                user_id: req.user._id,
+                category: selectedCategory
             },
-            { category: req.body.newName },
+            { category: newName },
             { runValidators: true }
-        )
+        );
 
-        // if (result.matchedCount < 1) {
-        if (!result.matchedCount) {
-            throw new Error("Category not found")
+        if (result.matchedCount === 0) {
+            const error = new Error("Category not found");
+            error.statusCode = 404;
+            throw error;
         }
 
-        if (!result.acknowledged) {
-            res.status(500).json({ message: 'Unable to update category' })
-            return
-        }
-
-        // not using because of free server limit fears
-        // const updateFilter = {
-        //     user_id: req.body.user._id,
-        //     category: req.body.selectedCategory
-        // }
-
-        // const updateToMake = { category: newName }
-        // const write = await Transactions.bulkWrite([
-        //     {
-        //         updateMany: {
-        //             filter: updateFilter,
-        //             update: updateToMake
-        //         }
-        //     }
-        // ])
-
-        req.body.okMessage = 'Category updated successfully'
-        next()
+        res.status(200).json({ 
+            message: 'Category updated successfully',
+            data: result 
+        });
     }
     catch (error) {
-        res.status(400).json({ message: getErrorMessages(error) })
+        next(error);
     }
 }
 

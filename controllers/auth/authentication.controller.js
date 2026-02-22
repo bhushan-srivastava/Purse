@@ -1,88 +1,104 @@
 import Users from "../../models/user/user.model.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import dotenv from "dotenv"
 import nodemailer from "nodemailer"
-import getErrorMessages from "../errorMessages.js"
+import { v4 as uuidv4 } from "uuid";
+import AppError from "../appError.js";
 
-// dotenv.config({ path: '../development.env' })
 
-// authN
+const cookieName = process.env.AUTH_COOKIE_NAME || "purseToken";
 
-async function register(req, res) {
+
+
+const getAuthCookieOptions = () => {
+    const secure = process.env.COOKIE_SECURE=='true'? true : false; //.env vars are not primitive boolean, they're strings
+    
+    // const sameSite = process.env.COOKIE_SAMESITE || (secure ? "none process.env.NODE_ENV === "production");
+    // const sameSite = process.env.COOKIE_SAMESITE || "lax"; // allows same domain server to clear client cookies (used during logout)
+    // const parsedMaxAge = parseInt(process.env.COOKIE_MAX_AGE_MS);
+    
+    const maxAge = 3 * 24 * 60 * 60 * 1000; // 3 days in milliseconds
+
+    return {
+        httpOnly: true,
+        secure,
+        // sameSite,
+        maxAge,
+        path: "/"
+    };
+};
+
+const getAuthCookieClearOptions = () => {
+    const { httpOnly, secure, path } = getAuthCookieOptions();
+    return { httpOnly, secure, path };
+};
+
+async function register(req, res, next) {
     try {
         await Users.create(req.body)
         res.status(201).json({ message: 'User registered successfully' })
     }
     catch (error) {
-        res.status(400).json({ message: getErrorMessages(error) })
+        next(error);
     }
 }
 
-async function login(req, res) {
+async function login(req, res, next) {
     try {
-        const user = req.body.user
+        const user = await Users.findOne({ "email": req.body.email });
+
+        if (!user) {
+            throw new AppError('Incorrect email', 401)
+        }
 
         if (!req.body.password) {
-            throw new Error('Password is required to login')
+            throw new AppError('Password is required to login', 400)
         }
 
         const auth = await bcrypt.compare(req.body.password, user.password);
         if (!auth) {
-            throw new Error('Incorrect password')
+            throw new AppError('Incorrect password', 401)
         }
 
         if (user.reset_code) {
-            throw new Error('Password to be reset')
+            throw new AppError('Password to be reset', 401)
         }
 
         const token = createToken(user.email);
-        // for production if website is deployed on https server
-        /* production environment */
-        if (process.env.NODE_ENV === 'production') {
-            res.cookie('purse', token, { httpOnly: true, secure: true, maxAge: threeDays });
-        }
-        else {
-            res.cookie('purse', token, { httpOnly: true, maxAge: threeDays });
-        }
+        const decodedToken = jwt.decode(token);
+        user.activeSessions = user.activeSessions.concat(decodedToken.jti);
+        await user.save();
 
-        res.cookie('purseName', user.name, { maxAge: threeDays });
+        res.cookie(cookieName, token, getAuthCookieOptions());
         res.status(200).json({ message: 'Login successful', name: user.name });
     }
     catch (error) {
-        res.status(401).json({ message: getErrorMessages(error) })
+        next(error);
     }
 }
 
-// create json web token
-const threeDays = 3 * 24 * 60 * 60 * 1000; // 3 days in milliseconds
 function createToken(email) {
+    /**uuidv4() uses cryptographically secure random bytes from the runtime/OS
+    then it formats those bytes into UUID format
+    xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx */
+    const jti = uuidv4();
     return jwt.sign(
-        { email },
+        { email, jti },
         process.env.JWT_SECRET,
         { expiresIn: 3 * 24 * 60 * 60 /* 3 days in seconds */ }
     );
 };
 
-async function sendResetEmail(req, res) {
+async function sendResetEmail(req, res, next) {
     try {
         const randomCode = Math.floor((Math.random() * 100000) + 10000)
 
-        let user = req.body.user
+        let user = req.user
 
         user.reset_code = randomCode
 
         await user.save()
 
-        // Generate test SMTP service account from ethereal.email
-        // Only needed if you don't have a real mail account for testing
-        // const testAccount = await nodemailer.createTestAccount();
-
-        // if (!testAccount) {
-        //     throw new Error('Unable to send reset code')
-        // }
-
-        // create reusable transporter object using the default SMTP transport
         const transporter = nodemailer.createTransport({
             host: "smtp.ethereal.email",
             port: 587,
@@ -93,7 +109,6 @@ async function sendResetEmail(req, res) {
             },
         });
 
-        // send mail with defined transport object
         const info = await transporter.sendMail({
             from: '"Purse" <noreply@purse.com>', // sender address
             to: user.email, // list of receivers
@@ -106,64 +121,54 @@ async function sendResetEmail(req, res) {
                 + " as a verification code to change your password." // html body
         });
 
-        if (!info) {
-            throw new Error('Unable to send reset code')
-        }
-
-        // Preview only available when sending through an Ethereal account
         console.log("Preview URL: ", nodemailer.getTestMessageUrl(info));
         res.status(200).json({ message: 'Reset code sent' })
     }
     catch (error) {
-        res.status(500).json({ message: getErrorMessages(error) })
+        next(error)
     }
 }
 
-async function reset(req, res) {
+async function reset(req, res, next) {
     try {
-        const user = req.body.user
+        const user = req.user
 
         if (!user.reset_code) {
-            throw new Error('Reset code is not sent yet')
+            throw new AppError('Reset code is not sent yet', 400)
         }
 
         const match = await bcrypt.compare(req.body.verificationCode, user.reset_code);
         if (!match) {
-            throw new Error('Incorrect verification code')
+            throw new AppError('Incorrect verification code', 400)
         }
 
         user.password = req.body.newPassword
 
         user.reset_code = undefined
+        user.activeSessions = []; // flush all active sessions
+        // after reset on any 1 device, all deviced logged out
 
         await user.save()
+        res.clearCookie(cookieName, getAuthCookieClearOptions());
 
         res.status(200).json({ message: 'Password reset successful' })
     }
     catch (error) {
-        res.status(400).json({ message: getErrorMessages(error) })
+        next(error)
     }
 }
 
 async function logout(req, res, next) {
     try {
-        res.clearCookie('purse'); // works
-        res.clearCookie('purseName');
-        next()
-    }
-    catch (error) {
-        res.status(500).json({ message: 'Logout unsuccessful' })
-    }
-}
-
-async function sendLogoutResponse(req, res) {
-    /********* maybe useless try catch block or bad code */
-    try {
+        req.user.activeSessions = req.user.activeSessions.filter((jti) => jti !== req.jti);
+        await req.user.save();
+        res.clearCookie(cookieName, getAuthCookieClearOptions()); // maxage will be 0 automatically
+        
         res.status(200).json({ message: 'Logout successful' })
     }
     catch (error) {
-        res.status(500).json({ message: 'Logout unsuccessful' })
+        next(error)
     }
 }
 
-export { register, login, sendResetEmail, reset, logout, sendLogoutResponse }
+export { register, login, sendResetEmail, reset, logout }

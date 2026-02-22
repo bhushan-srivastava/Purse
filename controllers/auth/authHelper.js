@@ -1,28 +1,25 @@
 import Users from "../../models/user/user.model.js"
-import getErrorMessages from "../errorMessages.js";
 import validator from 'validator'
+import AppError from "../appError.js";
 
 async function getUser(req, res, next) {
     try {
-        /******** maybe useless maybe usefull */
-        // if (!req.body.email) {
-        //     throw new Error('Email is required')
-        // }
-        if (!validator.isEmail(req.body.email)) {
-            throw new Error('Invalid email')
+        // if email is undef then pass empty string to isEmail() to avaoid error
+        if (!validator.isEmail(req.body.email || '')) {
+            throw new AppError('Invalid email', 400)
         }
 
         const user = await Users.findOne({ "email": req.body.email });
 
         if (!user) {
-            throw new Error('Incorrect email')
+            throw new AppError('Incorrect email', 401)
         }
 
-        req.body.user = user
+        req.user = user
         next()
     }
     catch (error) {
-        res.status(401).json({ message: getErrorMessages(error) })
+        next(error)
     }
 }
 

@@ -1,7 +1,5 @@
 import { Router } from "express"
-import { requireAuth } from "../../controllers/auth/authorization.controller.js"
-import { getUser } from "../../controllers/auth/authHelper.js"
-import { readTransactions, filterTransactions } from "../../controllers/transactions/readTransaction.controller.js"
+import { filterTransactions } from "../../controllers/transactions/readTransaction.controller.js"
 import { getAllTransactions } from "../../controllers/transactions/transactionHelper.js"
 import { createTransaction } from "../../controllers/transactions/createTransaction.controller.js"
 import { updateTransaction } from "../../controllers/transactions/updateTransaction.controller.js"
@@ -13,17 +11,17 @@ import { sendReminder } from "../../controllers/transactions/reminder.controller
 const router = Router()
 
 router.route('/')
-    .get(requireAuth, getUser, readTransactions, getAllTransactions)
-    .post(requireAuth, getUser, createTransaction, getAllTransactions)
+    .get(getAllTransactions)
+    .post(createTransaction)
 router.route('/:transactionId')
-    .put(requireAuth, getUser, updateTransaction, getAllTransactions)
-    .delete(requireAuth, getUser, deleteTransaction, getAllTransactions)
+    .put(updateTransaction)
+    .delete(deleteTransaction)
 router.route('/filter')
-    .post(requireAuth, getUser, filterTransactions) /**** no getAllTransactions here */
+    .post( filterTransactions)
 router.route('/category')
-    .post(requireAuth, getUser, updateCategory, getAllTransactions)
+    .post(updateCategory)
 router.route('/analysis')
-    .post(requireAuth, getUser, getAnalysis)
+    .post( getAnalysis)
 router.route('/reminder')
     .get(sendReminder)
 

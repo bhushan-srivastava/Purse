@@ -1,23 +1,19 @@
 import Transactions from "../../models/transactions/transaction.model.js"
-import getErrorMessages from "../errorMessages.js"
 import { constructTransaction } from "./transactionHelper.js"
 
 async function createTransaction(req, res, next) {
     try {
-        const transaction = constructTransaction(req.body)
+        const transaction = constructTransaction({ ...req.body, user: req.user });
 
-        await Transactions.create(transaction)
+        const newTransaction = await Transactions.create(transaction);
 
-        // if (transaction !== createdTransaction) {
-        //     res.status(500).json({ message: 'Unable to add transaction' })
-        //     return
-        // }
-
-        req.body.okMessage = 'Transaction added successfully'
-        next()
+        res.status(201).json({ 
+            message: 'Transaction created successfully',
+            data: newTransaction 
+        });
     }
     catch (error) {
-        res.status(400).json({ message: getErrorMessages(error) })
+        next(error);
     }
 }
 

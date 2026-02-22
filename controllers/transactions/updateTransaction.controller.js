@@ -1,31 +1,28 @@
 import Transactions from "../../models/transactions/transaction.model.js"
-import getErrorMessages from "../errorMessages.js"
-import { constructTransaction } from "./transactionHelper.js"
+import AppError from "../appError.js";
 
 async function updateTransaction(req, res, next) {
     try {
-        /* not using upsert because cast to ObjectId can fail because the user can give any incorrect id in any format */
+        const { transactionId } = req.params;
+        const { user_id, ...updateData } = req.body;
 
-        const transaction = constructTransaction(req.body)
-
-        const updatedTransaction = await Transactions.replaceOne(
-            { _id: req.params.transactionId },
-            transaction,
-            { new: true /*, upsert: true */, runValidators: true }
-        )
+        const updatedTransaction = await Transactions.findOneAndUpdate(
+            { _id: transactionId, user_id: req.user._id },
+            updateData,
+            { new: true, runValidators: true }
+        );
 
         if (!updatedTransaction) {
-            await Transactions.create(transaction)
-            req.body.okMessage = 'Transaction added successfully'
-        }
-        else {
-            req.body.okMessage = 'Transaction updated successfully'
+            throw new AppError('Transaction not found', 404);
         }
 
-        next()
+        res.status(200).json({
+            message: 'Transaction updated successfully',
+            data: updatedTransaction
+        });
     }
     catch (error) {
-        res.status(400).json({ message: getErrorMessages(error) })
+        next(error);
     }
 }
 

@@ -1,11 +1,11 @@
 import Transactions from "../../models/transactions/transaction.model.js"
-import getErrorMessages from "../errorMessages.js"
+import AppError from "../appError.js";
 
-const constructTransaction = ({ email, user, ...rest }) => {
+const constructTransaction = ({ user, ...rest }) => {
     return { user_id: user._id, ...rest }
 }
 
-const constructFilter = async ({ email, user, ...filters }) => {
+const constructFilter = async ({ user, ...filters }) => {
     const { startDate, endDate, startAmount, endAmount, type, categories, recurring } = filters
 
     const filter = {};
@@ -14,45 +14,41 @@ const constructFilter = async ({ email, user, ...filters }) => {
 
     (startDate || endDate) && (filter.date = {});
     if (startDate && endDate && (startDate > endDate)) {
-        throw new Error('Start date cannot be greater than end date')
+        throw new AppError('Start date cannot be greater than end date', 400)
     }
     startDate && (filter.date.$gte = new Date(new Date(startDate).setHours(0, 0, 0, 0)));
     endDate && (filter.date.$lte = new Date(new Date(endDate).setHours(0, 0, 0, 0)));
 
-    (startAmount || endAmount) && (filter.amount = {});
-    if (startAmount && endAmount && (startAmount > endAmount)) {
-        throw new Error('Start amount cannot be greater than end amount')
+    (startAmount != null || endAmount != null) && (filter.amount = {});
+    if (startAmount != null && endAmount != null && (startAmount > endAmount)) {
+        throw new AppError('Start amount cannot be greater than end amount', 400)
     }
-    startAmount && (filter.amount.$gte = startAmount);
-    endAmount && (filter.amount.$lte = endAmount);
+    startAmount != null && (filter.amount.$gte = startAmount);
+    endAmount != null && (filter.amount.$lte = endAmount);
 
     if (type) {
         if (type === 'Spent' || type === 'Earned') {
             filter.type = type
         }
         else {
-            throw new Error('Type can be Spent/Earned')
+            throw new AppError('Type can be Spent/Earned', 400)
         }
     }
 
-    if (categories) {
+    if (Array.isArray(categories) && categories.length > 0) {
         const validCategories = await Transactions.distinct("category", { user_id: user._id })
 
         if (categories.every(category => validCategories.includes(category))) {
             filter.category = { $in: categories }
         }
         else {
-            throw new Error('Invalid category')
+            throw new AppError('Invalid category', 400)
         }
     }
 
-    // categories
-    //     && categories.every(category => validCategories.includes(category))
-    //     && (filter.category = { $in: categories });
-
-    if (recurring) {
+    if (recurring != null) {
         if (typeof recurring !== 'boolean') {
-            throw new Error('Recurring can be true or false')
+            throw new AppError('Recurring can be true or false', 400)
         }
         filter.recurring = recurring
     }
@@ -60,20 +56,34 @@ const constructFilter = async ({ email, user, ...filters }) => {
     return filter
 }
 
-async function getAllTransactions(req, res) {
+async function getAllTransactions(req, res, next) {
     try {
-        const transactions = await Transactions.find({ user_id: req.body.user._id })
+        const page = Math.max(parseInt(req.query.page || 1, 10), 1);
+        const limit = Math.max(parseInt(req.query.limit || 10, 10), 1);
+        const filter = { user_id: req.user._id };
 
-        const categories = await Transactions.distinct("category", { user_id: req.body.user._id })
+        const [total, transactions, categories] = await Promise.all([
+            Transactions.countDocuments(filter),
+            Transactions.find(filter)
+                .sort({ date: -1, createdAt: -1 }) // sort by date descending
+                .limit(limit)
+                .skip((page - 1) * limit)
+                .exec(),
+            Transactions.distinct("category", filter)
+        ]);
 
         res.status(200).json({
-            message: req.body.okMessage,
-            transactions: transactions,
-            categories: categories
-        })
+            message: 'Transactions fetched successfully',
+            data: transactions,
+            total,
+            page: parseInt(page),
+            limit: parseInt(limit),
+            pages: Math.ceil(total / limit),
+            categories // keeping for now to avoid client side error
+        });
     }
     catch (error) {
-        res.status(500).json({ message: getErrorMessages(error) })
+        next(error);
     }
 }
 

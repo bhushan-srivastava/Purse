@@ -12,7 +12,7 @@ const transactionSchema = new mongoose.Schema(
             type: String,
             trim: true,
             required: [true, 'Title is required'],
-            minLength: [4, 'Title must have atleast 4 characters'] // if err then change to 'minlength' (no camelCase)
+            minLength: [4, 'Title must have atleast 4 characters']
         },
         amount: {
             type: Number,
@@ -54,12 +54,6 @@ const transactionSchema = new mongoose.Schema(
         },
         remind_on: {
             type: Date,
-            // required: [
-            //     function () {
-            //         return this.recurring ? true : false
-            //     },
-            //     'When do you want an email reminder?'
-            // ],
             validate: {
                 validator: function (value) {
                     return validator.isDate(value) && (value > this.date)
@@ -71,7 +65,7 @@ const transactionSchema = new mongoose.Schema(
                     return new Date(new Date(value).setHours(0, 0, 0, 0))
                 }
 
-                return undefined
+                return false
             }
         }
     }

@@ -1,25 +1,24 @@
 import Users from "../../models/user/user.model.js"
-import getErrorMessages from "../errorMessages.js"
+import AppError from "../appError.js";
 
-async function editName(req, res) {
+async function editName(req, res, next) {
     try {
         if (!req.body.newName) {
-            throw new Error('New first name is required')
+            throw new AppError('New first name is required', 400)
         }
 
         const user = await Users.findByIdAndUpdate(
-            req.body.user._id,
+            req.user._id,
             { name: req.body.newName },
             { new: true, runValidators: true }
         )
 
         if (!user) {
-            throw new Error('Incorrect user')
+            throw new AppError('Incorrect user', 404)
         }
 
         if (user.name !== req.body.newName /* req.body.name */) {
-            res.status(500).json({ message: 'Unable to update name' })
-            return
+            throw new AppError('Unable to update name', 500)
         }
 
         const threeDays = 3 * 24 * 60 * 60 * 1000; // 3 days in milliseconds
@@ -27,7 +26,7 @@ async function editName(req, res) {
         res.status(200).json({ message: 'Name updated successfully' })
     }
     catch (error) {
-        res.status(400).json({ message: getErrorMessages(error) })
+        next(error)
     }
 }
 

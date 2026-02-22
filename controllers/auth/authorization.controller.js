@@ -1,33 +1,33 @@
-// import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import dotenv from "dotenv"
-import getErrorMessages from "../errorMessages.js";
-import validator from 'validator'
+import Users from "../../models/user/user.model.js";
+import AppError from "../appError.js";
 
-dotenv.config({ path: '../development.env' })
-
-// authZ
+const cookieName = process.env.AUTH_COOKIE_NAME || "purseToken";
 
 async function requireAuth(req, res, next) {
     try {
-        const token = req.cookies.purse;
+        const cookieToken = req.cookies?.[cookieName];
+        const token = cookieToken;
 
         if (!token) {
-            throw new Error('Unauthorized')
+            throw new AppError('Unauthorized', 401)
         }
 
-        // check json web token exists & is verified
         const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
+        const user = await Users.findOne({ email: decodedToken.email, activeSessions: decodedToken.jti });
 
-        if (!validator.isEmail(decodedToken.email)) {
-            throw new Error('Invalid email')
+        if (!user) {
+            throw new AppError('Unauthorized', 401)
         }
+        
+        req.user = user;
+        req.jti = decodedToken.jti;
 
-        req.body.email = decodedToken.email
         next();
+
     }
     catch (error) {
-        res.status(401).json({ message: getErrorMessages(error) })
+        next(new AppError('Unauthorized', 401))
     }
 };
 
