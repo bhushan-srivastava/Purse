@@ -1,0 +1,81 @@
+.main-content-layout .layout-header button {
+    margin: auto 5px;
+}
+
+.main-content-layout .layout-header button:first-of-type {
+    margin-left: 10px;
+}
+
+.transactions-table table {
+    table-layout: fixed !important;
+}
+
+.transactions-table .action-span {
+    display: flex;
+}
+
+.transactions-table thead>td {
+    font-weight: bolder;
+}
+
+/* .ant-form-item-label>label {
+    align-items: flex-end;
+} */
+
+.transactions-graph-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+li.ant-list-item {
+    padding: 0 !important;
+    display: block;
+    /* max-height: 50vh; */
+}
+
+.ant-list-item:last-child {
+    border-bottom: none !important;
+}
+
+.analysis-container {
+    max-height: 60vh;
+    /* max-height: 80vh; */
+    /* max-height: inherit; */
+}
+
+.green-color {
+    color: rgb(59, 194, 127);
+}
+
+.red-color {
+    color: rgb(245, 110, 83);
+}
+
+.rotate-device {
+    display: none;
+}
+
+@media screen and (max-width: 900px) {
+    .ant-table-expand-icon-col {
+        width: 35px;
+    }
+}
+
+@media screen and (orientation: portrait) {
+    .bar-chart {
+        display: none;
+    }
+
+    .rotate-device {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 80vw;
+    }
+
+    .rotate-device .icon {
+        font-size: xx-large;
+        margin: 20px;
+    }
+}

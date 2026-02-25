@@ -1,0 +1,101 @@
+import { Table, Button, Popconfirm } from "antd";
+import { EditFilled, DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons"
+import moment from 'moment'
+
+const TransactionsTable = ({
+    transactions,
+    setSelectedTransaction,
+    setTransactionFormOpen,
+    deleteRecord }) => {
+    const columns = [
+        {
+            title: 'Date',
+            dataIndex: 'date',
+            render: (date) => new Date(date).toDateString().substring(4),
+        },
+        {
+            title: 'Amt',
+            dataIndex: 'amount',
+        },
+        {
+            title: 'Type',
+            dataIndex: 'type',
+        },
+        {
+            title: 'Action',
+            render: (record) => {
+                return (
+                    <span className="action-span">
+                        <Button
+                            type='text'
+                            icon={<EditFilled />}
+                            onClick={() => {
+                                const tempRecord = { ...record }
+                                tempRecord.date = moment(record.date)
+                                if (tempRecord.remind_on) {
+                                    tempRecord.remind_on = moment(record.remind_on)
+                                }
+                                setSelectedTransaction(tempRecord)
+                                setTransactionFormOpen(true)
+                            }}
+                        />
+
+                        <Popconfirm
+                            title={"Delete?"}
+                            okText="Yes"
+                            cancelText="No"
+                            icon={<QuestionCircleOutlined />}
+                            okButtonProps={{ danger: true, type: "default" }}
+                            onConfirm={() => { deleteRecord(record) }}
+                        // onCancel={() => { message.error("error") }}
+                        >
+                            <Button type='text' danger={true} icon={<DeleteOutlined />} />
+                        </Popconfirm>
+                    </span>
+                )
+            }
+        }
+    ]
+
+    // const saveTransaction = () => { setTransactionFormOpen(false) }
+
+    // const onCancel = () => {
+    //     setSelectedTransaction({})
+    //     setTransactionFormOpen(false)
+    // }
+
+    return (
+        <>
+            <Table
+                className="transactions-table"
+                size="small"
+                rowKey="_id"
+                bordered={true}
+                dataSource={transactions}
+                columns={columns}
+                // pagination={{ pageSize: 5 }}
+                pagination={false}
+                showSorterTooltip={false}
+                expandedRowRender={
+                    (record) => {
+                        return (
+                            <span>
+                                Title: {record.title[0].toUpperCase()+ record.title.substring(1)},
+                                <br />
+                                Category: {record.category[0].toUpperCase() + record.category.substring(1)},
+                                <br />
+                                Recurring: {record.recurring ? "Yes" : "No"},
+                                <br />
+                                Remind on: {record.recurring && record.remind_on ? new Date(record.remind_on).toDateString()/*.substring(4)*/ : "NA"},
+                                <br />
+                                Description: {record.description ? record.description : "NA"}
+                            </span>
+                        )
+                    }
+                }
+            />
+        </>
+    );
+}
+
+export default TransactionsTable;
