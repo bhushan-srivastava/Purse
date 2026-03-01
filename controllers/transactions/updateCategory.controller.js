@@ -1,19 +1,16 @@
 import Transactions from "../../models/transactions/transaction.model.js"
+import AppError from "../appError.js";
 
 async function updateCategory(req, res, next) {
     try {
         const { selectedCategory, newName } = req.body;
 
         if (!selectedCategory) {
-            const error = new Error("No category selected");
-            error.statusCode = 400;
-            throw error;
+            throw new AppError("No category selected", 400);
         }
 
         if (!newName) {
-            const error = new Error("Category's new name is required");
-            error.statusCode = 400;
-            throw error;
+            throw new AppError("Category's new name is required", 400);
         }
 
         const result = await Transactions.updateMany(
@@ -26,9 +23,7 @@ async function updateCategory(req, res, next) {
         );
 
         if (result.matchedCount === 0) {
-            const error = new Error("Category not found");
-            error.statusCode = 404;
-            throw error;
+            throw new AppError("Category not found", 404);
         }
 
         res.status(200).json({ 

@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
         const verifySession = async () => {
             try {
                 const response = await fetch('/api/auth', {
-                    credentials: 'include'
+                    credentials: 'include' // send cookies to server
                 });
                 if (!response.ok) {
                     throw new Error();
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
                 credentials: 'include'
             });
         } finally {
-            // client logout even if server logout fails/succeeds
+            // client will logout even if server logout fails/succeeds
             clearAuthState();
             setIsLoading(false);
         }

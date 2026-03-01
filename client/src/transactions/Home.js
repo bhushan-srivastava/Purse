@@ -7,13 +7,13 @@ import TransactionsTable from './tables/TransactionsTable';
 import UserOptions from '../user/UserOptions';
 import { isEmpty } from './crud/transactions';
 
-const parseJson = async (response) => {
-    const contentType = response.headers.get('content-type') || '';
-    if (contentType.includes('application/json')) {
-        return response.json();
-    }
-    return {};
-};
+// const parseJson = async (response) => {
+//     const contentType = response.headers.get('content-type') || '';
+//     if (contentType.includes('application/json')) {
+//         return response.json();
+//     }
+//     return {};
+// };
 
 const Home = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -38,7 +38,7 @@ const Home = () => {
             const response = await fetch(`/api/transaction?${query.toString()}`, {
                 credentials: 'include'
             });
-            const responseData = await parseJson(response);
+            const responseData = await response.json();
             if (!response.ok) {
                 throw new Error(responseData.message || 'Failed to fetch transactions.');
             }
@@ -69,7 +69,7 @@ const Home = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(record)
             });
-            const responseData = await parseJson(response);
+            const responseData = await response.json();
             if (!response.ok) {
                 throw new Error(responseData.message || 'Failed to add transaction.');
             }
@@ -102,7 +102,7 @@ const Home = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(record)
             });
-            const responseData = await parseJson(response);
+            const responseData = await response.json();
             if (!response.ok) {
                 throw new Error(responseData.message || 'Failed to update transaction.');
             }
@@ -123,7 +123,7 @@ const Home = () => {
                 method: 'DELETE',
                 credentials: 'include'
             });
-            const responseData = await parseJson(response);
+            const responseData = await response.json();
             if (!response.ok) {
                 throw new Error(responseData.message || 'Failed to delete transaction.');
             }
@@ -150,7 +150,7 @@ const Home = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formValues)
             });
-            const responseData = await parseJson(response);
+            const responseData = await response.json();
             if (!response.ok) {
                 throw new Error(responseData.message || 'Failed to update category.');
             }
@@ -181,7 +181,7 @@ const Home = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
-            const responseData = await parseJson(response);
+            const responseData = await response.json();
             if (!response.ok) {
                 throw new Error(responseData.message || 'Failed to filter transactions.');
             }
