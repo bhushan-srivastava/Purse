@@ -83,7 +83,7 @@ const globalErrorHandler = (err, req, res, next) => {
         return;
     }
 
-    // prod
+    // prod, no stack trace sent to client
     res.status(statusCode).json({ status, message });
 };
 
