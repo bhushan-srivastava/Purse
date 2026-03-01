@@ -15,6 +15,7 @@ import { startReminderCron } from "./jobs/reminder.cron.js";
 
 dotenv.config();
 
+// console.log(process.env);
 
 const server = express();
 
@@ -46,12 +47,12 @@ server.all('*', (req, res, next) => {
 // user friendly messages to client
 server.use(globalErrorHandler);
 
-const port = process.env.PORT || 8082
+const port = process.env.PORT || 8080
 
 mongoose.set('strictQuery', true);
 mongoose.connect(process.env.DB_CONNECTION_STRING)
     .then((result) => {
-        startReminderCron(); // recurring txns reminder
+        startReminderCron(process.env.REMINDER_CRON_SCHEDULE,process.env.REMINDER_CRON_ENABLED); // recurring txns reminder
         server.listen(port)
         console.info(`listening on port ${port}`)
     })

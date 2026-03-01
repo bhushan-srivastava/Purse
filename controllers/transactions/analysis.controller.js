@@ -18,7 +18,7 @@ async function getAnalysis(req, res, next) {
             {
                 $addFields: {
                     type: '$_id.type',
-                    category: '$_id.category'
+                    category: '$_id.category',
                 }
             },
             {
@@ -46,12 +46,12 @@ async function getAnalysis(req, res, next) {
 
         for (const key in tableDataOb) {
             tableData.push({
-                category: key[0] + key.substring(1),
+                category: key[0].toUpperCase() + key.substring(1),
                 spent: tableDataOb[key]['Spent'] ?? 0,
                 earned: tableDataOb[key]['Earned'] ?? 0
             })
 
-            graphData.categories.push(key[0] + key.substring(1))
+            graphData.categories.push(key[0].toUpperCase() + key.substring(1))
             graphData.spent.push(tableDataOb[key]['Spent'] ?? 0)
             graphData.earned.push(tableDataOb[key]['Earned'] ?? 0)
         }

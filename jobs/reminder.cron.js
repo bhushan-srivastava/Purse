@@ -1,10 +1,12 @@
 import cron from "node-cron";
 import { sendRemindersForToday } from "../controllers/transactions/reminder.controller.js";
 
-const cronSchedule = process.env.REMINDER_CRON_SCHEDULE || "0 9 * * *";
-const cronEnabled = process.env.REMINDER_CRON_ENABLED != "false";
+// console.log(process.env);
 
-function startReminderCron() {
+// const cronSchedule = process.env.REMINDER_CRON_SCHEDULE || "0 9 * * *";
+// const cronEnabled = process.env.REMINDER_CRON_ENABLED != "false";
+
+function startReminderCron(cronSchedule,cronEnabled) {
     if (!cronEnabled) {
         console.info("Reminder cron disabled");
         return;
